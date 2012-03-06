@@ -9,8 +9,9 @@
 
 <% @slides.each do |slide| %>
   <tr>
+    <td><%= slideset.filepath %></td>
     <td><%= link_to 'Show', slide %></td>
-    <td><%= link_to 'Edit', edit_slide_path(slide) %></td>
+    <td><%= link_to 'Edit', edit_slideset_slide_path(slide) %></td>
     <td><%= link_to 'Destroy', slide, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
@@ -18,4 +19,4 @@
 
 <br />
 
-<%= link_to 'New Slide', new_slide_path %>
+<%= link_to 'New Slide', new_slideset_slide_path %>

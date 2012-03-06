@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Title</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,6 +10,7 @@
 
 <% @slidesets.each do |slideset| %>
   <tr>
+    <td><%= slideset.title %></td>
     <td><%= link_to 'Show', slideset %></td>
     <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
     <td><%= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete %></td>

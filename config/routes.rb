@@ -1,10 +1,10 @@
 SlideAnnotator::Application.routes.draw do
 
-  resources :slidesets
-
-  resources :slides
-
-  resources :annotations
+  resources :slidesets do
+    resources :slides do
+      resources :annotations
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
