@@ -8,6 +8,9 @@ gem 'rails', '3.2.2'
 gem 'sqlite3'
 gem 'annotate', '~> 2.4.1.beta'
 
+group :development, :test do
+  gem 'rspec-rails', '2.8.1'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
