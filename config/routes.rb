@@ -2,6 +2,8 @@ SlideAnnotator::Application.routes.draw do
 
   resources :slidesets
 
+  resources :slides
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
