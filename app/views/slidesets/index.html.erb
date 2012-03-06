@@ -1,0 +1,21 @@
+<h1>Listing slidesets</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @slidesets.each do |slideset| %>
+  <tr>
+    <td><%= link_to 'Show', slideset %></td>
+    <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
+    <td><%= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Slideset', new_slideset_path %>
