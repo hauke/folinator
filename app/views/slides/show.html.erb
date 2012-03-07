@@ -2,5 +2,36 @@
 
 <%= @slide.filepath %>
 
+<h2>Annotations</h2>
+<ul>
+<% @annotations.each do |annotation| %>
+  <li><%= annotation.annotation %> | <%= link_to 'Destroy', [@slideset, @slide, annotation], confirm: 'Are you sure?', method: :delete %> </li>
+<% end %>
+</ul>
+
+<%= form_for [@slideset, @slide, @annotation_new] do |f| %>
+  <% if @annotation_new.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@annotation_new.errors.count, "error") %> prohibited this annotation from being saved:</h2>
+
+      <ul>
+      <% @annotation_new.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :annotation %><br />
+    <%= f.text_field :annotation %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
 <%= link_to 'Edit', edit_slideset_slide_path(@slide) %> |
 <%= link_to 'Back', slideset_slides_path %>
