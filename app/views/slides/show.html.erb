@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= @slide.filepath %>
+<%= image_tag @slide.image_url if @slide.image? %>
 
 <h2>Annotations</h2>
 <ul>

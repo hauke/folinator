@@ -25,7 +25,7 @@ describe SlidesController do
   # Slide. As you add validations to Slide, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {filepath:"test/path/kram.jpg", slideset_id:@slideset.id}
+    {image:"test/path/kram.jpg", slideset_id:@slideset.id}
   end
   
   # This should return the minimal set of values that should be in the session

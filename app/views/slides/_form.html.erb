@@ -11,10 +11,9 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :filepath %><br />
-    <%= f.text_field :filepath %>
-  </div>
+  <p>
+    <%= f.file_field :image %>
+  </p>
 
   <div class="actions">
     <%= f.submit %>

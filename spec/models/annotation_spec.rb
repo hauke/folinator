@@ -1,10 +1,21 @@
+# == Schema Information
+#
+# Table name: annotations
+#
+#  id         :integer         not null, primary key
+#  annotation :string(255)
+#  slide_id   :integer
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#
+
 require 'spec_helper'
 
 describe Annotation do
   before do 
     @slideset = Slideset.new(title:"Test")
     @slideset.save
-    @slide = Slide.new(filepath:"Testslide")
+    @slide = Slide.new(image:"Testslide")
     @slide.slideset = @slideset
     @slide.save
     @annotation = Annotation.new(annotation:"this is a test")
