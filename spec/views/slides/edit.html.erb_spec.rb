@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "slides/edit" do
   before(:each) do
-    @slide = assign(:slide, stub_model(Slide))
+    @slideset=Slideset.create(title:"test")
+    @slide = assign(:slide, stub_model(Slide, :slideset_id => @slideset.id))
   end
 
   it "renders the edit slide form" do

@@ -15,7 +15,7 @@ describe Slide do
   before do
     @slideset = Slideset.new(title:"test")
     @slideset.save
-    @slide = Slide.new(image:"Testslide")
+    @slide = Slide.new(image: get_image_stream)
   end
   subject { @slide }
   

@@ -15,7 +15,7 @@ describe Annotation do
   before do 
     @slideset = Slideset.new(title:"Test")
     @slideset.save
-    @slide = Slide.new(image:"Testslide")
+    @slide = Slide.new(image: get_image_stream)
     @slide.slideset = @slideset
     @slide.save
     @annotation = Annotation.new(annotation:"this is a test")

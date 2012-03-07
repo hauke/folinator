@@ -20,14 +20,21 @@ require 'spec_helper'
 
 describe SlidesController do
   
-  before {     @slideset = Slideset.create( title: "test") } 
+  before do
+    @slideset = Slideset.create( title: "test") 
+    @file = fixture_file_upload( "/folie-0001-256-w50k.png", "image/png")
+  end
   # This should return the minimal set of attributes required to create a valid
   # Slide. As you add validations to Slide, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {image:"test/path/kram.jpg", slideset_id:@slideset.id}
+    {image: get_image_stream, slideset_id:@slideset.id}
   end
   
+
+  def valid_http_attributes
+    {image: @file, slideset_id:@slideset.id}
+  end
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SlidesController. Be sure to keep this updated too.
@@ -70,18 +77,18 @@ describe SlidesController do
     describe "with valid params" do
       it "creates a new Slide" do
         expect {
-          post :create, {:slide => valid_attributes, slideset_id:@slideset.id}, valid_session
+          post :create, {:slide => valid_http_attributes, slideset_id:@slideset.id}, valid_session
         }.to change(Slide, :count).by(1)
       end
 
       it "assigns a newly created slide as @slide" do
-        post :create, {:slide => valid_attributes,slideset_id:@slideset.id}, valid_session
+        post :create, {:slide => valid_http_attributes,slideset_id:@slideset.id}, valid_session
         assigns(:slide).should be_a(Slide)
         assigns(:slide).should be_persisted
       end
 
       it "redirects to the created slide" do
-        post :create, {:slide => valid_attributes, slideset_id:@slideset.id}, valid_session
+        post :create, {:slide => valid_http_attributes, slideset_id:@slideset.id}, valid_session
         response.should redirect_to([@slideset,Slide.last])
       end
     end

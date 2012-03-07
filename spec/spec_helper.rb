@@ -7,7 +7,9 @@ CarrierWave.configure do |config|
   config.storage = :file
   config.enable_processing = false
 end
-
+def get_image_stream
+ File.open("#{Rails.root}/spec/fixtures/folie-0001-256-w50k.png")
+end
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}

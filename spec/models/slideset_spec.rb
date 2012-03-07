@@ -20,7 +20,7 @@ describe Slideset do
   describe "can create slides" do
    before { @slideset.save }   
    it "should create slides" do
-     expect { @slideset.slides.create(image:"folie-0001-256-w50k.png") }.to change(Slide, :count).by(1)
+     expect { @slideset.slides.create(image: get_image_stream) }.to change(Slide, :count).by(1)
    end
   end
 end
