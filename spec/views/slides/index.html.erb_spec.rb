@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe "slides/index" do
   before(:each) do
+    @slideset=Slideset.create(title:"test")
     assign(:slides, [
-      stub_model(Slide),
-      stub_model(Slide)
+      stub_model(Slide, :slideset_id => @slideset.id),
+      stub_model(Slide, :slideset_id => @slideset.id)
     ])
   end
 
