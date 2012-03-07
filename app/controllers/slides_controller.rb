@@ -2,7 +2,8 @@ class SlidesController < ApplicationController
   # GET /slides
   # GET /slides.json
   def index
-    @slides = Slide.all
+    @slideset = Slideset.find(params[:slideset_id])
+    @slides = @slideset.slides
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,8 @@ class SlidesController < ApplicationController
   # GET /slides/1
   # GET /slides/1.json
   def show
-    @slide = Slide.find(params[:id])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,8 @@ class SlidesController < ApplicationController
   # GET /slides/new
   # GET /slides/new.json
   def new
-    @slide = Slide.new
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,17 +37,20 @@ class SlidesController < ApplicationController
 
   # GET /slides/1/edit
   def edit
-    @slide = Slide.find(params[:id])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
   end
 
   # POST /slides
   # POST /slides.json
   def create
-    @slide = Slide.new(params[:slide])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.new(params[:slide])
 
     respond_to do |format|
       if @slide.save
-        format.html { redirect_to @slide, notice: 'Slide was successfully created.' }
+        puts "\n\nredirect to #{slideset_slides_path(@slide.slideset, @slide)} in create\n\n"
+        format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slide was successfully created.' }
         format.json { render json: @slide, status: :created, location: @slide }
       else
         format.html { render action: "new" }
@@ -56,11 +62,12 @@ class SlidesController < ApplicationController
   # PUT /slides/1
   # PUT /slides/1.json
   def update
-    @slide = Slide.find(params[:id])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
 
     respond_to do |format|
       if @slide.update_attributes(params[:slide])
-        format.html { redirect_to @slide, notice: 'Slide was successfully updated.' }
+        format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -72,11 +79,12 @@ class SlidesController < ApplicationController
   # DELETE /slides/1
   # DELETE /slides/1.json
   def destroy
-    @slide = Slide.find(params[:id])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
     @slide.destroy
 
     respond_to do |format|
-      format.html { redirect_to slides_url }
+      format.html { redirect_to slideset_slides_url(@slideset) }
       format.json { head :no_content }
     end
   end

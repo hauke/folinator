@@ -9,10 +9,10 @@
 
 <% @slides.each do |slide| %>
   <tr>
-    <td><%= slideset.filepath %></td>
-    <td><%= link_to 'Show', slide %></td>
-    <td><%= link_to 'Edit', edit_slideset_slide_path(slide) %></td>
-    <td><%= link_to 'Destroy', slide, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= slide.filepath %></td>
+    <td><%= link_to 'Show', [slide.slideset, slide] %></td>
+    <td><%= link_to 'Edit', edit_slideset_slide_path(slide.slideset, slide) %></td>
+    <td><%= link_to 'Destroy', [slide.slideset, slide], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
