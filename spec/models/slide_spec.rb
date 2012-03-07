@@ -1,9 +1,20 @@
+# == Schema Information
+#
+# Table name: slides
+#
+#  id          :integer         not null, primary key
+#  image       :string(255)
+#  slideset_id :integer
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
+#
+
 require 'spec_helper'
 
 describe Slide do
   before do
     @slideset = Slideset.new(title:"test")
-    @slide = Slide.new(filepath:"Testslide")
+    @slide = Slide.new(image:"Testslide")
   end
   subject { @slide }
   

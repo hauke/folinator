@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20120306165159) do
   end
 
   create_table "slides", :force => true do |t|
-    t.string   "filepath"
+    t.string   "image"
     t.integer  "slideset_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
