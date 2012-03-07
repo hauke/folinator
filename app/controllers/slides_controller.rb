@@ -49,7 +49,6 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       if @slide.save
-        puts "\n\nredirect to #{slideset_slides_path(@slide.slideset, @slide)} in create\n\n"
         format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slide was successfully created.' }
         format.json { render json: @slide, status: :created, location: @slide }
       else
