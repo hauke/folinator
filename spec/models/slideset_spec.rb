@@ -8,8 +8,8 @@ describe Slideset do
   
   describe "can create slides" do
    before { @slideset.save }   
-   it "should create sliedes" do
-     expect { @slideset.slides.create }.to change(Slide, :count).by(1)
+   it "should create slides" do
+     expect { @slideset.slides.create(filepath:"/kuddel/wuddel") }.to change(Slide, :count).by(1)
    end
   end
 end

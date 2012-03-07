@@ -1,5 +1,23 @@
 require 'spec_helper'
 
 describe Annotation do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do 
+    @slideset = Slideset.new(title:"Test")
+    @slideset.save
+    @slide = Slide.new(filepath:"Testslide")
+    @slide.slideset = @slideset
+    @slide.save
+    @annotation = Annotation.new(annotation:"this is a test")
+  end
+  subject { @annotation }
+  
+  describe "slide:" do
+    describe "do not belong to a slide" do
+      it { should_not be_valid }
+    end
+    describe "belongs to a slide" do
+      before { @annotation.slide = @slide }
+      it { should be_valid }
+    end
+  end
 end
