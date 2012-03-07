@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "slides/new" do
-  before(:each) do
+  before(:each) do 
     assign(:slide, stub_model(Slide).as_new_record)
   end
 
