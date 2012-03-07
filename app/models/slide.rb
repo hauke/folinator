@@ -11,5 +11,10 @@
 
 class Slide < ActiveRecord::Base
   belongs_to :slideset
-  has_many :annotations
+  has_many :annotations, dependent: :destroy
+
+  validates :slideset_id, presence: true
+  validates :filepath, presence: true
+
+#TODO: order of slides
 end

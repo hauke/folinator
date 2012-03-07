@@ -11,4 +11,7 @@
 
 class Annotation < ActiveRecord::Base
   belongs_to :slide
+
+  validates :slide_id, presence: true
+  validates :annotation, presence: true
 end

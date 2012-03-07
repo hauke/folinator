@@ -9,5 +9,5 @@
 #
 
 class Lecture < ActiveRecord::Base
-  has_many :slidesets
+  has_many :slidesets, dependent: :destroy
 end
