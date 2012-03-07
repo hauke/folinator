@@ -40,11 +40,13 @@ class AnnotationsController < ApplicationController
   # POST /annotations
   # POST /annotations.json
   def create
-    @annotation = Annotation.new(params[:annotation])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:slide_id])
+    @annotation = @slide.annotations.new(params[:annotation])
 
     respond_to do |format|
       if @annotation.save
-        format.html { redirect_to @annotation, notice: 'Annotation was successfully created.' }
+        format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: 'Annotation was successfully created.' }
         format.json { render json: @annotation, status: :created, location: @annotation }
       else
         format.html { render action: "new" }
@@ -72,11 +74,13 @@ class AnnotationsController < ApplicationController
   # DELETE /annotations/1
   # DELETE /annotations/1.json
   def destroy
-    @annotation = Annotation.find(params[:id])
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:slide_id])
+    @annotation = @slide.annotations.find(params[:id])
     @annotation.destroy
 
     respond_to do |format|
-      format.html { redirect_to annotations_url }
+      format.html { redirect_to slideset_slide_path(@slideset, @slide) }
       format.json { head :no_content }
     end
   end

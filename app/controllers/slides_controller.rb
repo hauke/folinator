@@ -16,6 +16,8 @@ class SlidesController < ApplicationController
   def show
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    @annotations = @slide.annotations
+    @annotation_new = Annotation.new
 
     respond_to do |format|
       format.html # show.html.erb
