@@ -19,12 +19,13 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SlidesController do
-
+  
+  before {     @slideset = Slideset.create( title: "test") } 
   # This should return the minimal set of attributes required to create a valid
   # Slide. As you add validations to Slide, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {filepath:"test/path/kram.jpg", slideset_id:@slideset.id}
   end
   
   # This should return the minimal set of values that should be in the session
@@ -37,7 +38,7 @@ describe SlidesController do
   describe "GET index" do
     it "assigns all slides as @slides" do
       slide = Slide.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {slideset_id:@slideset.id}, valid_session
       assigns(:slides).should eq([slide])
     end
   end
@@ -45,14 +46,14 @@ describe SlidesController do
   describe "GET show" do
     it "assigns the requested slide as @slide" do
       slide = Slide.create! valid_attributes
-      get :show, {:id => slide.to_param}, valid_session
+      get :show, {:id => slide.to_param, slideset_id:@slideset.id}, valid_session
       assigns(:slide).should eq(slide)
     end
   end
 
   describe "GET new" do
     it "assigns a new slide as @slide" do
-      get :new, {}, valid_session
+      get :new, {slideset_id:@slideset.id}, valid_session
       assigns(:slide).should be_a_new(Slide)
     end
   end
@@ -60,7 +61,7 @@ describe SlidesController do
   describe "GET edit" do
     it "assigns the requested slide as @slide" do
       slide = Slide.create! valid_attributes
-      get :edit, {:id => slide.to_param}, valid_session
+      get :edit, {:id => slide.to_param, slideset_id:@slideset.id}, valid_session
       assigns(:slide).should eq(slide)
     end
   end
@@ -69,19 +70,19 @@ describe SlidesController do
     describe "with valid params" do
       it "creates a new Slide" do
         expect {
-          post :create, {:slide => valid_attributes}, valid_session
+          post :create, {:slide => valid_attributes, slideset_id:@slideset.id}, valid_session
         }.to change(Slide, :count).by(1)
       end
 
       it "assigns a newly created slide as @slide" do
-        post :create, {:slide => valid_attributes}, valid_session
+        post :create, {:slide => valid_attributes,slideset_id:@slideset.id}, valid_session
         assigns(:slide).should be_a(Slide)
         assigns(:slide).should be_persisted
       end
 
       it "redirects to the created slide" do
-        post :create, {:slide => valid_attributes}, valid_session
-        response.should redirect_to(Slide.last)
+        post :create, {:slide => valid_attributes, slideset_id:@slideset.id}, valid_session
+        response.should redirect_to([@slideset,Slide.last])
       end
     end
 
@@ -89,14 +90,14 @@ describe SlidesController do
       it "assigns a newly created but unsaved slide as @slide" do
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
-        post :create, {:slide => {}}, valid_session
+        post :create, {:slide => {}, slideset_id:@slideset.id}, valid_session
         assigns(:slide).should be_a_new(Slide)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
-        post :create, {:slide => {}}, valid_session
+        post :create, {:slide => {},slideset_id:@slideset.id}, valid_session
         response.should render_template("new")
       end
     end
@@ -111,19 +112,19 @@ describe SlidesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Slide.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => slide.to_param, :slide => {'these' => 'params'}}, valid_session
+        put :update, {:id => slide.to_param, :slide => {'these' => 'params'}, slideset_id:@slideset.id}, valid_session
       end
 
       it "assigns the requested slide as @slide" do
         slide = Slide.create! valid_attributes
-        put :update, {:id => slide.to_param, :slide => valid_attributes}, valid_session
+        put :update, {:id => slide.to_param, :slide => valid_attributes,slideset_id:@slideset.id}, valid_session
         assigns(:slide).should eq(slide)
       end
 
       it "redirects to the slide" do
         slide = Slide.create! valid_attributes
-        put :update, {:id => slide.to_param, :slide => valid_attributes}, valid_session
-        response.should redirect_to(slide)
+        put :update, {:id => slide.to_param, :slide => valid_attributes,slideset_id:@slideset.id}, valid_session
+        response.should redirect_to([@slideset,slide])
       end
     end
 
@@ -132,7 +133,7 @@ describe SlidesController do
         slide = Slide.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
-        put :update, {:id => slide.to_param, :slide => {}}, valid_session
+        put :update, {:id => slide.to_param, :slide => {},slideset_id:@slideset.id}, valid_session
         assigns(:slide).should eq(slide)
       end
 
@@ -140,7 +141,7 @@ describe SlidesController do
         slide = Slide.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
-        put :update, {:id => slide.to_param, :slide => {}}, valid_session
+        put :update, {:id => slide.to_param, :slide => {},slideset_id:@slideset.id}, valid_session
         response.should render_template("edit")
       end
     end
@@ -150,14 +151,14 @@ describe SlidesController do
     it "destroys the requested slide" do
       slide = Slide.create! valid_attributes
       expect {
-        delete :destroy, {:id => slide.to_param}, valid_session
+        delete :destroy, {:id => slide.to_param,slideset_id:@slideset.id}, valid_session
       }.to change(Slide, :count).by(-1)
     end
 
     it "redirects to the slides list" do
       slide = Slide.create! valid_attributes
-      delete :destroy, {:id => slide.to_param}, valid_session
-      response.should redirect_to(slides_url)
+      delete :destroy, {:id => slide.to_param,slideset_id:@slideset.id}, valid_session
+      response.should redirect_to(slideset_slides_url(@slideset))
     end
   end
 
