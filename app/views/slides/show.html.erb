@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
 
+<div id="slide">
 <%= image_tag @slide.image_url if @slide.image? %>
+</div>
 
+<div id="annotations">
 <h2>Annotations</h2>
 <ul>
 <% @annotations.each do |annotation| %>
@@ -31,7 +34,8 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>
 
 
-<%= link_to 'Edit', edit_slideset_slide_path(@slide) %> |
-<%= link_to 'Back', slideset_slides_path %>
+<%= link_to 'Edit', edit_slideset_slide_path(@slideset, @slide) %> |
+<%= link_to 'Back', slideset_slides_path(@slideset) %>
