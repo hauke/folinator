@@ -6,6 +6,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th>Slides</th>
   </tr>
 
 <% @slidesets.each do |slideset| %>
@@ -14,6 +15,7 @@
     <td><%= link_to 'Show', slideset %></td>
     <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
     <td><%= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to "#{slideset.slides.count} Slides", [slideset, :slides] %></td>
   </tr>
 <% end %>
 </table>
