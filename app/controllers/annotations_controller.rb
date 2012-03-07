@@ -62,7 +62,7 @@ class AnnotationsController < ApplicationController
 
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
-        format.html { redirect_to @annotation, notice: 'Annotation was successfully updated.' }
+        format.html { redirect_to [@annotation.slide.slideset,@annotation.slide], notice: 'Annotation was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

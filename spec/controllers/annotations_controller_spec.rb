@@ -19,12 +19,21 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe AnnotationsController do
-
+  
+  before do
+    @slideset = Slideset.create( title: "test") 
+    @slide = @slideset.slides.create(image: get_image_stream)
+    
+  end
   # This should return the minimal set of attributes required to create a valid
   # Annotation. As you add validations to Annotation, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {slide_id:@slide.id, annotation:"Test"}
+  end
+  
+  def valid_http_attributes
+    {slide_id:@slide.id, annotation:"Test", slideset_id:@slideset.id}
   end
   
   # This should return the minimal set of values that should be in the session
@@ -69,19 +78,19 @@ describe AnnotationsController do
     describe "with valid params" do
       it "creates a new Annotation" do
         expect {
-          post :create, {:annotation => valid_attributes}, valid_session
+          post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         }.to change(Annotation, :count).by(1)
       end
 
       it "assigns a newly created annotation as @annotation" do
-        post :create, {:annotation => valid_attributes}, valid_session
+        post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         assigns(:annotation).should be_a(Annotation)
         assigns(:annotation).should be_persisted
       end
 
       it "redirects to the created annotation" do
-        post :create, {:annotation => valid_attributes}, valid_session
-        response.should redirect_to(Annotation.last)
+        post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        response.should redirect_to([@slideset,@slide])
       end
     end
 
@@ -89,14 +98,14 @@ describe AnnotationsController do
       it "assigns a newly created but unsaved annotation as @annotation" do
         # Trigger the behavior that occurs when invalid params are submitted
         Annotation.any_instance.stub(:save).and_return(false)
-        post :create, {:annotation => {}}, valid_session
+        post :create, {:annotation => {}, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         assigns(:annotation).should be_a_new(Annotation)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Annotation.any_instance.stub(:save).and_return(false)
-        post :create, {:annotation => {}}, valid_session
+        post :create, {:annotation => {}, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         response.should render_template("new")
       end
     end
@@ -116,14 +125,14 @@ describe AnnotationsController do
 
       it "assigns the requested annotation as @annotation" do
         annotation = Annotation.create! valid_attributes
-        put :update, {:id => annotation.to_param, :annotation => valid_attributes}, valid_session
+        put :update, {:id => annotation.to_param, :annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         assigns(:annotation).should eq(annotation)
       end
 
       it "redirects to the annotation" do
         annotation = Annotation.create! valid_attributes
-        put :update, {:id => annotation.to_param, :annotation => valid_attributes}, valid_session
-        response.should redirect_to(annotation)
+        put :update, {:id => annotation.to_param, :annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        response.should redirect_to([@slideset,@slide])
       end
     end
 
@@ -150,14 +159,14 @@ describe AnnotationsController do
     it "destroys the requested annotation" do
       annotation = Annotation.create! valid_attributes
       expect {
-        delete :destroy, {:id => annotation.to_param}, valid_session
+        delete :destroy, {:id => annotation.to_param, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
       }.to change(Annotation, :count).by(-1)
     end
 
     it "redirects to the annotations list" do
       annotation = Annotation.create! valid_attributes
-      delete :destroy, {:id => annotation.to_param}, valid_session
-      response.should redirect_to(annotations_url)
+      delete :destroy, {:id => annotation.to_param, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+      response.should redirect_to([@slideset,@slide])
     end
   end
 
