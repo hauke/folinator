@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306165159) do
+ActiveRecord::Schema.define(:version => 20120308104534) do
 
   create_table "annotations", :force => true do |t|
     t.string   "annotation"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20120306165159) do
     t.integer  "slideset_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "position"
   end
 
   create_table "slidesets", :force => true do |t|

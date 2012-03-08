@@ -12,12 +12,14 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg', '~> 0.12.2'
+  gem 'pg', '~> 0.13.2'
 end
+
 group :test do
   gem 'factory_girl_rails'
   gem 'capybara'  
 end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -32,6 +34,7 @@ end
 
 gem 'jquery-rails'
 
+gem 'acts_as_list'
 gem "rmagick"
 gem "carrierwave"
 

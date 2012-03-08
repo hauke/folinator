@@ -11,7 +11,7 @@
 
 class Slideset < ActiveRecord::Base
   belongs_to :lecture
-  has_many :slides, dependent: :destroy
+  has_many :slides, dependent: :destroy, :order => "position"
 
 # lecture is currently ignored
 #  validates :lecture_id, presence: true

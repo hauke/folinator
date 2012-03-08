@@ -13,9 +13,9 @@ class Slide < ActiveRecord::Base
   belongs_to :slideset
   has_many :annotations, dependent: :destroy
 
+  acts_as_list :scope => :slideset
+
   validates :slideset_id, presence: true
   validates :image, presence: true
   mount_uploader :image, SlideUploader
-
-#TODO: order of slides
 end
