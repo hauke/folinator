@@ -6,9 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-def get_image_stream
- File.open("#{Rails.root}/spec/fixtures/folie-0001-256-w50k.png")
+def get_image_stream filename
+ File.open("#{Rails.root}/spec/fixtures/#{filename}")
 end
 
-slidesets = Slideset.create([{ title: 'Prozesse' }, { title: 'Netz' }])
-slides = Slide.create([{image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.last}, {image: get_image_stream, slideset: slidesets.last}])
+slidesets = Slideset.create([
+  { title: 'Prozesse' },
+  { title: 'Netze' }
+])
+
+slides = Slide.create([
+  {image: get_image_stream("folie-0001-256-w50k.png"), slideset: slidesets.first},
+  {image: get_image_stream("folie-0002-256-w50k.png"), slideset: slidesets.first},
+  {image: get_image_stream("folie-0003-256-w50k.png"), slideset: slidesets.first},
+  {image: get_image_stream("folie-0005-256-w50k.png"), slideset: slidesets.first},
+  {image: get_image_stream("folie-0006-256-w50k.png"), slideset: slidesets.last},
+  {image: get_image_stream("folie-0007-256-w50k.png"), slideset: slidesets.last},
+  {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets.last},
+])
