@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="slide">
-  <%= image_tag @slide.image_url if @slide.image? %>
+  <%= image_tag @slide.image_url(:normal) if @slide.image? %>
 </div>
 
 <div class="annotations">
