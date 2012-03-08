@@ -17,7 +17,7 @@ class SlidesController < ApplicationController
     @slides.uniq!
 
     respond_to do |format|
-      format.html { render :index }
+      format.html
       format.json { render json: @slides }
     end
   end
