@@ -1,6 +1,6 @@
 <h1>Listing slides (<%= @slideset.title %>)</h1>
 
-<%= form_tag edit_multiple_slideset_slides_path do %>
+<%= form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do %>
 <table>
   <tr>
     <th></th>
