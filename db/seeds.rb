@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+def get_image_stream
+ File.open("#{Rails.root}/spec/fixtures/folie-0001-256-w50k.png")
+end
+
+slidesets = Slideset.create([{ title: 'Prozesse' }, { title: 'Netz' }])
+slides = Slide.create([{image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.first}, {image: get_image_stream, slideset: slidesets.last}, {image: get_image_stream, slideset: slidesets.last}])
