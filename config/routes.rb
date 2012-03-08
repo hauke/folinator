@@ -3,6 +3,10 @@ SlideAnnotator::Application.routes.draw do
   resources :slidesets do
     resources :slides do
       resources :annotations
+
+      collection do
+        post 'edit_multiple'
+      end
     end
   end
 

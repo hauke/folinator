@@ -100,4 +100,15 @@ class SlidesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def edit_multiple
+    puts params
+    @slideset = Slideset.find(params[:slideset_id])
+    @slides = @slideset.slides.find(params[:slide_ids])
+    @slides.each do |slide|
+      slide.annotations.create(annotation: params[:annotation])
+    end
+    flash[:notice] = "Annotation #{params[:annotation]} added"
+    redirect_to slideset_slides_path(@slideset)
+  end
 end
