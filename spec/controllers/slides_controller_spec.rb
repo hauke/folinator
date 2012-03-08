@@ -168,5 +168,6 @@ describe SlidesController do
       response.should redirect_to(slideset_slides_url(@slideset))
     end
   end
+ 
 
 end
