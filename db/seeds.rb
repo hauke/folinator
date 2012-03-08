@@ -22,5 +22,16 @@ slides = Slide.create([
   {image: get_image_stream("folie-0005-256-w50k.png"), slideset: slidesets.first},
   {image: get_image_stream("folie-0006-256-w50k.png"), slideset: slidesets.last},
   {image: get_image_stream("folie-0007-256-w50k.png"), slideset: slidesets.last},
-  {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets.last},
+  {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets.last}
+])
+
+annotations = Annotation.create([
+  {annotation: "TCP", slide: slides[0]},
+  {annotation: "IP", slide: slides[0]},
+  {annotation: "IP", slide: slides[1]},
+  {annotation: "UDP", slide: slides[1]},
+  {annotation: "Sicherheit", slide: slides[2]},
+  {annotation: "Sicherheit", slide: slides[3]},
+  {annotation: "Sicherheit", slide: slides[6]},
+  {annotation: "IP", slide: slides[6]}
 ])

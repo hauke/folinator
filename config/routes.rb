@@ -6,6 +6,8 @@ SlideAnnotator::Application.routes.draw do
     end
   end
 
+  match 'searchresults' => 'slides#search_by_annotation'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -14,4 +14,12 @@ class Annotation < ActiveRecord::Base
 
   validates :slide_id, presence: true
   validates :annotation, presence: true
+
+  def self.search(search)
+    if search
+      find(:all, :conditions => ['annotation LIKE ?', "%#{search}%"])
+    else
+      find(:all)
+    end
+  end
 end

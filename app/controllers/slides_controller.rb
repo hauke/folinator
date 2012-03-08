@@ -11,6 +11,17 @@ class SlidesController < ApplicationController
     end
   end
 
+  def search_by_annotation
+    annotations = Annotation.search(params[:search])
+    @slides = annotations.map{ |annotation| annotation.slide }
+    @slides.uniq!
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @slides }
+    end
+  end
+
   # GET /slides/1
   # GET /slides/1.json
   def show

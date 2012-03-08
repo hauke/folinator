@@ -21,6 +21,8 @@
 <br />
 
 <div class="footer_menu">
-<%= link_to 'New Slide', new_slideset_slide_path(@slideset) %>
+<% if @slideset %>
+  <%= link_to 'New Slide', new_slideset_slide_path(@slideset) %>
+<% end %>
 <%= link_to 'Back', slidesets_path %>
 </div>
