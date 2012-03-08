@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<div id="slide">
-<%= image_tag @slide.image_url if @slide.image? %>
+<div class="slide">
+  <%= image_tag @slide.image_url if @slide.image? %>
 </div>
 
-<div id="annotations">
+<div class="annotations">
 <h2>Annotations</h2>
 <ul>
 <% @annotations.each do |annotation| %>
@@ -36,8 +36,13 @@
 <% end %>
 </div>
 
+<div class="clear"/>
+
+<div class="footer_menu">
 
 <p><%= link_to 'Edit', edit_slideset_slide_path(@slideset, @slide) %> |
 <%= link_to 'Back', slideset_slides_path(@slideset) %></p>
 
 <p><%= first_slide_link @slide %> | <%= previous_slide_link @slide %> | <%= next_slide_link @slide %> | <%= last_slide_link @slide %> </p>
+</div>
+
