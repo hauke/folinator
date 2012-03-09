@@ -39,6 +39,10 @@ gem 'acts_as_list'
 gem "rmagick"
 gem "carrierwave"
 
+# Authentication
+gem 'devise'
+gem 'devise_openid_authenticatable'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
