@@ -42,14 +42,6 @@ describe SlidesetsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested slideset as @slideset" do
-      slideset = Slideset.create! valid_attributes
-      get :show, {:id => slideset.to_param}, valid_session
-      assigns(:slideset).should eq(slideset)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new slideset as @slideset" do
       get :new, {}, valid_session

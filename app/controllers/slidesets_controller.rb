@@ -10,17 +10,6 @@ class SlidesetsController < ApplicationController
     end
   end
 
-  # GET /slidesets/1
-  # GET /slidesets/1.json
-  def show
-    @slideset = Slideset.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @slideset }
-    end
-  end
-
   # GET /slidesets/new
   # GET /slidesets/new.json
   def new
