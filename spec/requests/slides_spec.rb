@@ -53,4 +53,17 @@ describe "Slides" do
       should_not have_link("First")
     end
   end
+  describe "set Title-Annotation" do
+    before do
+      @annotation, @annotation2 = 2.times.map { Factory :annotation, :slide => @slide }
+    end
+    it "should show the title annotation in slide/index" do
+      visit slideset_slide_path(@slideset, @slide)
+      choose(@annotation.annotation)
+      click_button("Select as title")
+      click_link("Back") 
+      should have_content(@annotation.annotation) 
+      
+    end
+  end
 end
