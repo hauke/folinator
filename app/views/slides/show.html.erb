@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div class="slide">
   <%= image_tag @slide.image_url(:normal) if @slide.image? %>
 </div>
@@ -24,17 +22,6 @@
 
 
 <%= form_for [@slideset, @slide, @annotation_new] do |f| %>
-  <% if @annotation_new.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@annotation_new.errors.count, "error") %> prohibited this annotation from being saved:</h2>
-
-      <ul>
-      <% @annotation_new.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div class="field">
     <%= f.label :annotation %><br />
