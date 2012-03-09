@@ -4,6 +4,7 @@
 <table>
   <tr>
     <th></th>
+    <th>Title</th>
     <th>Images</th>
     <th></th>
     <th></th>
@@ -12,6 +13,7 @@
 <% @slides.each do |slide| %>
   <tr>
     <td><%= check_box_tag "slide_ids[]", slide.id %></td>
+    <td><%= link_to slide.title.annotation, [slide.slideset, slide] if slide.title %></td>
     <td><%= link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image? %></td>
     <td><%= link_to 'Show', [slide.slideset, slide] %></td>
     <td><%= link_to 'Edit', edit_slideset_slide_path(slide.slideset, slide) %></td>

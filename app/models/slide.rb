@@ -12,6 +12,7 @@
 class Slide < ActiveRecord::Base
   belongs_to :slideset
   has_many :annotations, dependent: :destroy
+  belongs_to :title, class_name: "Annotation", foreign_key: "title_id"
 
   acts_as_list :scope => :slideset
 

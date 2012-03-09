@@ -6,6 +6,9 @@ describe "Slides" do
     @slideset= Factory :slideset
     @slide, @slide2, @slide3 = 3.times.map{ Factory :slide, :slideset => @slideset }
   end
+  
+  subject { page }
+
   describe "GET /slides" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
@@ -41,6 +44,7 @@ describe "Slides" do
     it "should not go before the first slide" do
       visit slideset_slide_path(@slideset, @slide3)
       should_not have_link("Last")
+      should have_link("First")
     end
   end
   describe "GET first slide" do
@@ -51,6 +55,7 @@ describe "Slides" do
     it "should not go before the first slide" do
       visit slideset_slide_path(@slideset, @slide)
       should_not have_link("First")
+      should have_link("Last")
     end
   end
   describe "set Title-Annotation" do
@@ -59,11 +64,10 @@ describe "Slides" do
     end
     it "should show the title annotation in slide/index" do
       visit slideset_slide_path(@slideset, @slide)
-      choose(@annotation.annotation)
+      choose("annotation_id_#{@annotation.id}")
       click_button("Select as title")
-      click_link("Back") 
-      should have_content(@annotation.annotation) 
-      
+      click_link("Back")
+      should have_content(@annotation.annotation)
     end
   end
 end

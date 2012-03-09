@@ -4,6 +4,9 @@ SlideAnnotator::Application.routes.draw do
     resources :slides do
       resources :annotations
 
+      member do
+        post 'set_title'
+      end
       collection do
         post 'edit_multiple'
       end
