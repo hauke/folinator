@@ -10,6 +10,8 @@ SlideAnnotator::Application.routes.draw do
     end
   end
 
+  root to: 'slidesets#index'
+
   match 'searchresults' => 'slides#search_by_annotation'
 
   # The priority is based upon order of creation:
