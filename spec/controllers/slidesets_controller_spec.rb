@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SlidesetsController do
+  login_admin
 
   # This should return the minimal set of attributes required to create a valid
   # Slideset. As you add validations to Slideset, be sure to
