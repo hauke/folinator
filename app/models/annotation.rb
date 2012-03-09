@@ -11,6 +11,7 @@
 
 class Annotation < ActiveRecord::Base
   belongs_to :slide
+  has_one :slide_title, class_name: "Slide", foreign_key: "title_id"
 
   validates :slide_id, presence: true
   validates :annotation, presence: true

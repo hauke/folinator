@@ -6,11 +6,22 @@
 
 <div class="annotations">
 <h2>Annotations</h2>
-<ul>
+
+<%= form_tag set_title_slideset_slide_path(@slideset, @slide) do %>
+<table>
 <% @annotations.each do |annotation| %>
-  <li><%= annotation.annotation %> | <%= link_to 'Destroy', [@slideset, @slide, annotation], confirm: 'Are you sure?', method: :delete %> </li>
+  <tr>
+    <td><%= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title %></td>
+    <td><%= label_tag "annotation_id_#{annotation.id}", annotation.annotation %></td>
+    <td><%= link_to 'Destroy', [@slideset, @slide, annotation], confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
 <% end %>
-</ul>
+</table>
+  <div class="actions">
+    <%= submit_tag "Select as title" %>
+  </div>
+<% end %>
+
 
 <%= form_for [@slideset, @slide, @annotation_new] do |f| %>
   <% if @annotation_new.errors.any? %>

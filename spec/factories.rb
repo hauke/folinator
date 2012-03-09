@@ -14,6 +14,6 @@ FactoryGirl.define do
   
   factory :annotation do
     association :slide
-    annotation { Faker::Lorem.words(1) }
+    annotation { Faker::Lorem.words(1)[0] }
   end
 end
