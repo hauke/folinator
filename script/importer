@@ -27,7 +27,6 @@ end
  
 optparse.parse!
 
-
 slideset = Slideset.create(  title: options[:slideset] )
 slides = Dir["#{options[:path]}/*.*"]
 slides.sort!
@@ -36,10 +35,3 @@ slides.each do|f|
   file = File.open(f)
   Slide.create(image: file, slideset: slideset)
 end
-
-def get_image_stream
- File.open("#{Rails.root}/spec/fixtures/folie-0001-256-w50k.png")
-end
-
-
-  

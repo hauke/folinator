@@ -1,6 +1,7 @@
 require "spec_helper"
 
 
+
 FactoryGirl.define do
   factory :slide do
     association :slideset
@@ -9,5 +10,10 @@ FactoryGirl.define do
   
   factory :slideset do
     title { "test" }
+  end
+  
+  factory :annotation do
+    association :slide
+    annotation { Faker::Lorem.words(1) }
   end
 end

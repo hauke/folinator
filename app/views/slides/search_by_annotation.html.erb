@@ -1,5 +1,7 @@
 <h1>Listing slides</h1>
-
+<% if @slides.empty? %>
+<p>Nothing found</p>
+<%else %>
 <table>
   <tr>
     <th>Images</th>
@@ -17,7 +19,7 @@
   </tr>
 <% end %>
 </table>
-
+<% end %>
 <br />
 
 <div class="footer_menu">
