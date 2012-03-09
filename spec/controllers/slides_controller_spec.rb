@@ -168,6 +168,20 @@ describe SlidesController do
       response.should redirect_to(slideset_slides_url(@slideset))
     end
   end
- 
-
+  describe "Edit_multiple" do
+      it "write multiple annotations" do
+      slide = Slide.create! valid_attributes
+      slide2 = Slide.create! valid_attributes
+      post :edit_multiple, {:slide_ids => [slide.id, slide2.id],annotation: "Test",slideset_id:@slideset.id}, valid_session
+      response.should redirect_to slideset_slides_path(@slideset) 
+    end
+  end
+  describe "POST set_title" do
+    it "selects annotation as title" do
+      slide = Slide.create! valid_attributes
+      annotation = slide.annotations.create{"test"}
+      post :set_title, {id: slide.id, annotation_id: annotation.id, slideset_id:@slideset.id}, valid_session
+      response.should render_template("show")
+    end
+  end
 end
