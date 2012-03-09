@@ -179,7 +179,7 @@ describe SlidesController do
   describe "POST set_title" do
     it "selects annotation as title" do
       slide = Slide.create! valid_attributes
-      annotation = slide.annotations.create{"test"}
+      annotation = slide.annotations.create!(annotation: "test")
       post :set_title, {id: slide.id, annotation_id: annotation.id, slideset_id:@slideset.id}, valid_session
       response.should render_template("show")
     end
