@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe AnnotationsController do
+  login_admin
   
   before do
     @slideset = Slideset.create( title: "test") 
