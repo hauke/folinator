@@ -12,7 +12,7 @@ class AnnotationsController < ApplicationController
         format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: 'Annotation was successfully created.' }
         format.json { render json: @annotation, status: :created, location: @annotation }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to slideset_slide_path(@slideset, @slide), error: 'can not add Annotation.' }
         format.json { render json: @annotation.errors, status: :unprocessable_entity }
       end
     end
