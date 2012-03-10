@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   
-  before_filter :check_development_mode!
+  before_filter :check_development_or_test_mode!
   
   def create
     user = User.find(params[:user_id])
@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
   
   protected
   
-  def check_development_mode!
-    unless development_mode?
+  def check_development_or_test_mode!
+    unless development_or_test_mode?
       flash[:error] = "not in development mode"
       redirect_to :back
     end
