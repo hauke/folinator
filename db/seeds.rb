@@ -10,12 +10,12 @@ def get_image_stream filename
  File.open("#{Rails.root}/spec/fixtures/#{filename}")
 end
 
-slidesets = Slideset.create([
+slidesets = Slideset.create!([
   { title: 'Prozesse' },
   { title: 'Netze' }
 ])
 
-slides = Slide.create([
+slides = Slide.create!([
   {image: get_image_stream("folie-0001-256-w50k.png"), slideset: slidesets.first},
   {image: get_image_stream("folie-0002-256-w50k.png"), slideset: slidesets.first},
   {image: get_image_stream("folie-0003-256-w50k.png"), slideset: slidesets.first},
@@ -25,7 +25,7 @@ slides = Slide.create([
   {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets.last}
 ])
 
-annotations = Annotation.create([
+annotations = Annotation.create!([
   {annotation: "TCP", slide: slides[0]},
   {annotation: "IP", slide: slides[0]},
   {annotation: "IP", slide: slides[1]},
@@ -34,4 +34,10 @@ annotations = Annotation.create([
   {annotation: "Sicherheit", slide: slides[3]},
   {annotation: "Sicherheit", slide: slides[6]},
   {annotation: "IP", slide: slides[6]}
+])
+
+users = User.create!([
+  {identity_url: "https://openid.tzi.de/foo", name: "Foo Foo", email: "foo@tzi.de"},
+  {identity_url: "https://openid.tzi.de/bar", name: "Bar Bar", email: "bar@tzi.de"},
+  {identity_url: "https://openid.tzi.de/admin", name: "Admin", email: "admin@tzi.de", admin: true},
 ])

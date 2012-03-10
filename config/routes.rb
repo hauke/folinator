@@ -17,6 +17,8 @@ SlideAnnotator::Application.routes.draw do
 
   root to: 'slidesets#index'
 
+  post '/development/session' => 'sessions#create', :as => :development_session
+
   match 'searchresults' => 'slides#search_by_annotation'
 
   # The priority is based upon order of creation:
