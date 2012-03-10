@@ -14,5 +14,22 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @user = Factory :user
+  end
+  describe "test openid_fields" do  
+    before do
+      @user=User.build_from_identity_url("https://openid.tzi.de/Test")
+      @user.openid_fields = {'http://openid.tzi.de/spec/schema/displayName' => 'Test', 'http://openid.tzi.de/spec/schema/mail' => "Test@test.com"}
+    end
+    it "identity_url is https://openid.tzi.de/Test" do  
+      @user.identity_url.should eql("https://openid.tzi.de/Test")
+    end
+    it "name is Test" do
+      @user.name.should eql("Test")
+    end
+    it "email is Test@test.com" do
+      @user.email.should eql("Test@test.com")
+    end
+  end
 end
