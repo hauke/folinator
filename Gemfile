@@ -44,6 +44,8 @@ gem 'devise'
 gem 'devise_openid_authenticatable'
 gem 'cancan'
 
+gem 'rails3-jquery-autocomplete'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
