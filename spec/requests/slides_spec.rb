@@ -3,6 +3,11 @@ require 'spec_helper'
 
 describe "Slides" do
   before do 
+    @user = Factory :admin
+    @user.save
+    visit new_user_session_path
+    page.select("#{@user.name} (#{@user.email})", :from => 'user_id' ) 
+    click_button "Sign in"
     @slideset= Factory :slideset
     @slide, @slide2, @slide3 = 3.times.map{ Factory :slide, :slideset => @slideset }
   end
@@ -12,8 +17,8 @@ describe "Slides" do
   describe "GET /slides" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get slideset_slides_path(@slideset)
-      response.status.should be(200)
+      visit slideset_slides_path(@slideset)
+      should have_content("Listing slides (#{@slideset.title})")
     end
   end
   describe "GET next slide" do

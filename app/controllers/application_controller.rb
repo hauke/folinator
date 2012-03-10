@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :authenticate_user! unless Rails.env.test?
-
+  before_filter :authenticate_user! 
   helper_method :development_or_test_mode?
 
 protected

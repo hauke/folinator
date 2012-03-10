@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe "Search" do
   before do 
+    @user = Factory :admin
+    @user.save
+    visit new_user_session_path
+    page.select("#{@user.name} (#{@user.email})", :from => 'user_id' ) 
+    click_button "Sign in"
     @slideset = Factory :slideset
     @slides = 3.times.map{ FactoryGirl.create(:slide, :slideset => @slideset) }
     @slides.each do |slide|
