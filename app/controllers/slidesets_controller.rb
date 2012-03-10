@@ -3,6 +3,7 @@ class SlidesetsController < ApplicationController
   # GET /slidesets.json
   def index
     @slidesets = Slideset.all
+    authorize! :read, @slidesets
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,7 @@ class SlidesetsController < ApplicationController
   # GET /slidesets/new.json
   def new
     @slideset = Slideset.new
+    authorize! :create, @slideset
 
     respond_to do |format|
       format.html # new.html.erb
@@ -24,12 +26,14 @@ class SlidesetsController < ApplicationController
   # GET /slidesets/1/edit
   def edit
     @slideset = Slideset.find(params[:id])
+    authorize! :update, @slideset
   end
 
   # POST /slidesets
   # POST /slidesets.json
   def create
     @slideset = Slideset.new(params[:slideset])
+    authorize! :create, @slideset
 
     respond_to do |format|
       if @slideset.save
@@ -46,6 +50,7 @@ class SlidesetsController < ApplicationController
   # PUT /slidesets/1.json
   def update
     @slideset = Slideset.find(params[:id])
+    authorize! :update, @slideset
 
     respond_to do |format|
       if @slideset.update_attributes(params[:slideset])
@@ -62,6 +67,7 @@ class SlidesetsController < ApplicationController
   # DELETE /slidesets/1.json
   def destroy
     @slideset = Slideset.find(params[:id])
+    authorize! :destroy, @slideset
     @slideset.destroy
 
     respond_to do |format|

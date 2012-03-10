@@ -3,15 +3,23 @@
 <table>
   <tr>
     <th>Title</th>
-    <th></th>
-    <th></th>
+    <% if can? :edit, @slidesets %>
+      <th></th>
+    <% end %>
+    <% if can? :destroy, @slidesets %>
+      <th></th>
+    <% end %>
   </tr>
 
 <% @slidesets.each do |slideset| %>
   <tr>
     <td><%= link_to "#{slideset.title} (#{slideset.slides.count} Slides)", [slideset, :slides] %></td>
-    <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
-    <td><%= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete %></td>
+    <% if can? :edit, slideset %>
+      <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
+    <% end %>
+    <% if can? :destroy, slideset %>
+      <td><%= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
@@ -19,5 +27,7 @@
 <br />
 
 <div class="footer_menu">
-<%= link_to 'New Slideset', new_slideset_path %>
+<% if can? :create, @slidesets %>
+  <%= link_to 'New Slideset', new_slideset_path %>
+<% end %>
 </div>

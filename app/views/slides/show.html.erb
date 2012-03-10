@@ -38,8 +38,12 @@
 
 <div class="footer_menu">
 
-<p><%= link_to 'Edit', edit_slideset_slide_path(@slideset, @slide) %> |
-<%= link_to 'Back', slideset_slides_path(@slideset) %></p>
+<p>
+  <% if can? :edit, @slide %>
+    <%= link_to 'Edit', edit_slideset_slide_path(@slideset, @slide) %> |
+  <% end %>
+  <%= link_to 'Back', slideset_slides_path(@slideset) %>
+</p>
 
 <p><%= first_slide_link @slide %> | <%= previous_slide_link @slide %> | <%= next_slide_link @slide %> | <%= last_slide_link @slide %> </p>
 </div>

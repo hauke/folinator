@@ -4,6 +4,7 @@ class SlidesController < ApplicationController
   def index
     @slideset = Slideset.find(params[:slideset_id])
     @slides = @slideset.slides
+    authorize! :read, @slides
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +16,7 @@ class SlidesController < ApplicationController
     annotations = Annotation.search(params[:search])
     @slides = annotations.map{ |annotation| annotation.slide }
     @slides.uniq!
+    authorize! :read, @slides
 
     respond_to do |format|
       format.html
@@ -29,6 +31,7 @@ class SlidesController < ApplicationController
     @slide = @slideset.slides.find(params[:id])
     @annotations = @slide.annotations
     @annotation_new = Annotation.new
+    authorize! :read, @slide
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,6 +44,7 @@ class SlidesController < ApplicationController
   def new
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.new
+    authorize! :create, @slide
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,6 +56,7 @@ class SlidesController < ApplicationController
   def edit
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    authorize! :update, @slide
   end
 
   # POST /slides
@@ -59,6 +64,7 @@ class SlidesController < ApplicationController
   def create
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.new(params[:slide])
+    authorize! :create, @slide
 
     respond_to do |format|
       if @slide.save
@@ -76,6 +82,7 @@ class SlidesController < ApplicationController
   def update
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    authorize! :update, @slide
 
     respond_to do |format|
       if @slide.update_attributes(params[:slide])
@@ -93,6 +100,7 @@ class SlidesController < ApplicationController
   def destroy
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    authorize! :destroy, @slide
     @slide.destroy
 
     respond_to do |format|
@@ -105,7 +113,9 @@ class SlidesController < ApplicationController
     @slideset = Slideset.find(params[:slideset_id])
     @slides = @slideset.slides.find(params[:slide_ids])
     @slides.each do |slide|
-      slide.annotations.create(annotation: params[:annotation])
+      annotation = slide.annotations.new(annotation: params[:annotation])
+      authorize! :create, annotation
+      annotation.save!
     end
     flash[:notice] = "Annotation #{params[:annotation]} added"
     redirect_to slideset_slides_path(@slideset)
@@ -114,6 +124,7 @@ class SlidesController < ApplicationController
   def set_title
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    authorize! :set_title,  @slide
     @annotations = @slide.annotations
     @annotation_new = Annotation.new
     @annotation = @annotations.find(params[:annotation_id])

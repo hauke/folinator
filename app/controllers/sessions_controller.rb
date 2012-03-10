@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   skip_before_filter :authenticate_user!
+  skip_authorization_check
 
   before_filter :check_development_or_test_mode!
 

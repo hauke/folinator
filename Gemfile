@@ -42,6 +42,7 @@ gem "carrierwave"
 # Authentication
 gem 'devise'
 gem 'devise_openid_authenticatable'
+gem 'cancan'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
