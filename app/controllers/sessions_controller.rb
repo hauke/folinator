@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
-  
+
+  skip_before_filter :authenticate_user!
+
   before_filter :check_development_or_test_mode!
-  
+
   def create
     user = User.find(params[:user_id])
     session["warden.user.user.key"] = ["User", user.id, nil]
