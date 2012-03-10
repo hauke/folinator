@@ -15,6 +15,8 @@ class Annotation < ActiveRecord::Base
 
   validates :slide_id, presence: true
   validates :annotation, presence: true
+  
+  scope :distincttag, :group => ('annotations.annotation')
 
   def self.search(search)
     if search

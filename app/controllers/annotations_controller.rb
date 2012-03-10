@@ -1,7 +1,7 @@
 class AnnotationsController < ApplicationController
 
   skip_authorization_check # TODO remove this line, we have to secure the autocomplete wih cancan
-  autocomplete :annotation, :annotation, :full => true
+  autocomplete :annotation, :annotation, :full => true, scopes: ["distincttag"]
 
   # POST /annotations
   # POST /annotations.json
