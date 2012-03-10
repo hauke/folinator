@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../config/environment',  __FILE__)
+require 'optparse'
+
+options = {}
+ 
+optparse = OptionParser.new do|opts|
+
+  opts.banner = "Usage: importer.rb [options]"
+  
+  options[:login] = ""
+  opts.on( '-l', '--login LOGIN', 'Login of the admin user') do |login|
+    options[:login] = login
+  end
+  
+  
+  options[:new]
+  opts.on( '-n', '--new', 'give admin rights to user') do
+    options[:new] = true
+  end
+  
+  options[:delete]
+  opts.on( '-d', '--delete', 'withdraw admin rights') do
+    options[:delete] = true
+  end
+  
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+end
+ 
+optparse.parse!
+
+puts options
+
+if options[:new]
+  if user = User.find_by_identity_url("https://openid.tzi.de/#{options[:login]}")
+    user.admin = true
+    puts "#{user.name} is an admin now" 
+  else
+    if user = User.create!(identity_url: "https://openid.tzi.de/#{options[:login]}")
+      puts "New user #{user.name} is an admin now"  
+    end
+  end
+end
+if options[:delete]
+  if user = User.find_by_identity_url("https://openid.tzi.de/#{options[:login]}")
+    user.admin = true
+    puts "#{user.name} is no admin anymore"
+  else
+    puts "No user of this name, known"
+  end
+end  
