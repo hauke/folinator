@@ -32,7 +32,7 @@ class SlidesController < ApplicationController
     @annotations = @slide.annotations
     @annotation_new = Annotation.new
     authorize! :read, @slide
-
+    @surrounding_annotations = surrounding_annotations
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @slide }
@@ -133,5 +133,40 @@ class SlidesController < ApplicationController
       format.html { render :show }
       format.json { head :no_content }
     end
+  end
+  
+  def copy_annotations 
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    @annotations = Annotation.find(params[:annotation_id])
+    @annotations.each do |annotation|
+      new_annotation = @slide.annotations.new(annotation: annotation.annotation)
+      authorize! :create, annotation
+      new_annotation.save
+    end
+    fill_for_show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { head :no_content }
+    end
+  end  
+protected
+  def fill_for_show
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    @annotations = @slide.annotations
+    @annotation_new = Annotation.new
+    authorize! :read, @slide
+    @surrounding_annotations = surrounding_annotations
+  end
+  
+  
+  def surrounding_annotations
+    surrounding_annotations = []
+    
+    surrounding_annotations += @slide.higher_item.annotations if @slide.higher_item     
+    surrounding_annotations += @slide.lower_item.annotations if @slide.lower_item 
+    
+    surrounding_annotations.uniq
   end
 end

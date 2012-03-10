@@ -8,6 +8,7 @@ SlideAnnotator::Application.routes.draw do
 
       member do
         post 'set_title'
+        post 'copy_annotations'
       end
       collection do
         post 'edit_multiple'

@@ -21,6 +21,23 @@
 <% end %>
 
 
+
+
+<h3>Annotations from surrounding slides</h3>
+<%= form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do%>
+<table>
+<% if @surrounding_annotations.each do |annotation| %>
+  <tr>
+     <td><%= check_box_tag "annotation_id[]", annotation.id %></td>
+     <td><%= label_tag "annotation_id_#{annotation.id}", annotation.annotation %><td>
+<% end %>
+<% end %>
+     </table>
+  <div class="actions">
+    <%= submit_tag "Add" %>
+  </div>
+<% end %>
+
 <%= form_for [@slideset, @slide, @annotation_new] do |f| %>
 
   <div class="field">
