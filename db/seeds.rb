@@ -26,6 +26,11 @@ slides = Slide.create!([
 ])
 
 annotations = Annotation.create!([
+  {annotation: "Semaphore", slide: slides[0]},
+  {annotation: "Dijkstra", slide: slides[0]},
+  {annotation: "Warteschlange", slide: slides[1]},
+  {annotation: "Prozesse", slide: slides[1]},
+  {annotation: "Reader / Writer Problem", slide: slides[2]},
   {annotation: "TCP", slide: slides[0]},
   {annotation: "IP", slide: slides[0]},
   {annotation: "IP", slide: slides[1]},
@@ -35,6 +40,12 @@ annotations = Annotation.create!([
   {annotation: "Sicherheit", slide: slides[6]},
   {annotation: "IP", slide: slides[6]}
 ])
+slides[0].annotations[0].slide_title = slides[0]
+slides[0].title.save!
+slides[1].annotations[0].slide_title = slides[1]
+slides[1].title.save!
+slides[2].annotations[0].slide_title = slides[2]
+slides[2].title.save!
 
 users = User.create!([
   {identity_url: "https://openid.tzi.de/foo", name: "Foo Foo", email: "foo@tzi.de"},
