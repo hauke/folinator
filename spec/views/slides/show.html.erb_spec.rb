@@ -7,6 +7,7 @@ describe "slides/show" do
     @slideset.slides << @slide
     @annotations = []
     @annotation_new = Annotation.new
+    @surrounding_annotations = []
   end
 
   it "renders attributes in <p>" do

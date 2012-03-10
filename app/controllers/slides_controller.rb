@@ -135,6 +135,7 @@ class SlidesController < ApplicationController
     @annotation_new = Annotation.new
     @annotation = @annotations.find(params[:annotation_id])
     @annotation.slide_title = @slide
+    fill_for_show
     respond_to do |format|
       format.html { render :show }
       format.json { head :no_content }
@@ -144,7 +145,7 @@ class SlidesController < ApplicationController
   def copy_annotations 
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
-    @annotations = Annotation.find(params[:annotation_id])
+    @annotations = Annotation.find(params[:annotations_id])
     @annotations.each do |annotation|
       new_annotation = @slide.annotations.new(annotation: annotation.annotation)
       authorize! :create, annotation
