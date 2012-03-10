@@ -59,21 +59,6 @@ describe SlidesController do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new slide as @slide" do
-      get :new, {slideset_id:@slideset.id}, valid_session
-      assigns(:slide).should be_a_new(Slide)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested slide as @slide" do
-      slide = Slide.create! valid_attributes
-      get :edit, {:id => slide.to_param, slideset_id:@slideset.id}, valid_session
-      assigns(:slide).should eq(slide)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Slide" do
@@ -106,7 +91,7 @@ describe SlidesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
         post :create, {:slide => {},slideset_id:@slideset.id}, valid_session
-        response.should render_template("new")
+        response.should render_template("index")
       end
     end
   end

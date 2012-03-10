@@ -5,6 +5,7 @@ class SlidesController < ApplicationController
     @slideset = Slideset.find(params[:slideset_id])
     @slides = @slideset.slides
     authorize! :read, @slides
+    @slide_new = Slide.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -52,26 +53,25 @@ class SlidesController < ApplicationController
     end
   end
 
-  # GET /slides/1/edit
-  def edit
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :update, @slide
-  end
-
   # POST /slides
   # POST /slides.json
   def create
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.new(params[:slide])
     authorize! :create, @slide
+    if params[:slide_after]
+      position = @slide_after = @slideset.slides.find(params[:slide_after]).position + 1
+    else
+      position = 0
+    end
+    @slide.insert_at(position)
 
     respond_to do |format|
       if @slide.save
         format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully created.' }
         format.json { render json: @slide, status: :created, location: @slide }
       else
-        format.html { render action: "new" }
+        format.html { render action: "index" }
         format.json { render json: @slide.errors, status: :unprocessable_entity }
       end
     end
