@@ -7,6 +7,8 @@
 #  slideset_id :integer
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
+#  position    :integer
+#  title_id    :integer
 #
 
 class Slide < ActiveRecord::Base
