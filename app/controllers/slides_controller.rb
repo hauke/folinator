@@ -111,6 +111,12 @@ class SlidesController < ApplicationController
 
   def edit_multiple
     @slideset = Slideset.find(params[:slideset_id])
+    unless (params[:slide_ids])
+      authorize! :read, @slideset
+      flash[:alert] = "No slides to annotate selected."
+      redirect_to slideset_slides_path(@slideset)
+      return
+    end
     @slides = @slideset.slides.find(params[:slide_ids])
     @slides.each do |slide|
       annotation = slide.annotations.new(annotation: params[:annotation])

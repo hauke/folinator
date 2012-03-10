@@ -44,37 +44,6 @@ describe AnnotationsController do
     {}
   end
 
-  describe "GET index" do
-    it "assigns all annotations as @annotations" do
-      annotation = Annotation.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:annotations).should eq([annotation])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested annotation as @annotation" do
-      annotation = Annotation.create! valid_attributes
-      get :show, {:id => annotation.to_param}, valid_session
-      assigns(:annotation).should eq(annotation)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new annotation as @annotation" do
-      get :new, {}, valid_session
-      assigns(:annotation).should be_a_new(Annotation)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested annotation as @annotation" do
-      annotation = Annotation.create! valid_attributes
-      get :edit, {:id => annotation.to_param}, valid_session
-      assigns(:annotation).should eq(annotation)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Annotation" do
@@ -107,51 +76,7 @@ describe AnnotationsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Annotation.any_instance.stub(:save).and_return(false)
         post :create, {:annotation => {}, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested annotation" do
-        annotation = Annotation.create! valid_attributes
-        # Assuming there are no other annotations in the database, this
-        # specifies that the Annotation created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Annotation.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => annotation.to_param, :annotation => {'these' => 'params'}}, valid_session
-      end
-
-      it "assigns the requested annotation as @annotation" do
-        annotation = Annotation.create! valid_attributes
-        put :update, {:id => annotation.to_param, :annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
-        assigns(:annotation).should eq(annotation)
-      end
-
-      it "redirects to the annotation" do
-        annotation = Annotation.create! valid_attributes
-        put :update, {:id => annotation.to_param, :annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         response.should redirect_to([@slideset,@slide])
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the annotation as @annotation" do
-        annotation = Annotation.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Annotation.any_instance.stub(:save).and_return(false)
-        put :update, {:id => annotation.to_param, :annotation => {}}, valid_session
-        assigns(:annotation).should eq(annotation)
-      end
-
-      it "re-renders the 'edit' template" do
-        annotation = Annotation.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Annotation.any_instance.stub(:save).and_return(false)
-        put :update, {:id => annotation.to_param, :annotation => {}}, valid_session
-        response.should render_template("edit")
       end
     end
   end
