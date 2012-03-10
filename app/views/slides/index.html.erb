@@ -21,7 +21,7 @@
     <td><%= link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image? %></td>
     <td><%= link_to 'Show', [slide.slideset, slide] %></td>
     <% if can? :edit, slide %>
-      <td><%= link_to 'Edit', edit_slideset_slide_path(slide.slideset, slide) %></td>
+      <td><%= link_to 'Edit', edit_slideset_slide_path(slide.slideset.id, slide) %></td>
     <% end %>
     <% if can? :destroy, slide %>
       <td><%= link_to 'Destroy', [slide.slideset, slide], confirm: 'Are you sure?', method: :delete %></td>
@@ -35,9 +35,20 @@
 
 <br />
 
-<div class="footer_menu">
 <% if can? :create, @slides %>
-  <%= link_to 'New Slide', new_slideset_slide_path(@slideset) %>
+
+<%= form_for [@slideset, @slide_new] do |f| %>
+
+  <p>
+    <%= f.file_field :image %>
+  </p>
+  <p>After: <%= select_tag :slide_after, options_for_select(["first"] + @slideset.slides.map{|slide| ["#{slide.id} (#{slide.title ? slide.title.annotation : ""})", slide.id] }) %> slide</p>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
+<% end %>
+<div class="footer_menu">
 <%= link_to 'Back', slidesets_path %>
 </div>
