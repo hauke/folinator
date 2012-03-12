@@ -176,6 +176,7 @@ describe SlidesController do
       slide = Slide.create! valid_attributes
       slide2 = Slide.create! valid_attributes
       annotations = 3.times.map { Factory :annotation, :slide => slide2 }
+      slide2.reload
       expect {
       post :copy_annotations, {id: slide.id, annotations_id: [slide2.annotations[1].id], slideset_id: @slideset.id},      
       valid_session

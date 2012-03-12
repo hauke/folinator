@@ -11,7 +11,7 @@
 
 class DoubleAnnotation < ActiveModel::Validator
   def validate(record)
-    if !record.slide.annotations.select{|item| item.annotation == record.annotation}.empty?
+    if record.slide && !record.slide.annotations.select{|item| item.annotation == record.annotation && item != record}.empty?
       record.errors[:base] << "Annotation already there"
     end
   end

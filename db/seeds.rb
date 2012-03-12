@@ -40,6 +40,8 @@ annotations = Annotation.create!([
   {annotation: "Sicherheit", slide: slides[6]},
   {annotation: "IP", slide: slides[6]}
 ])
+slides.each{|slide| slide.reload}
+
 slides[0].annotations[0].slide_title = slides[0]
 slides[0].title.save!
 slides[1].annotations[0].slide_title = slides[1]
