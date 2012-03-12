@@ -20,4 +20,11 @@ describe "Slidesets" do
       should have_content(@slideset.title)
     end
   end
+  
+  describe "POST /edit"
+    it "can add description" do
+    visit edit_slideset_path(@slideset)
+    fill_in("slideset_description", :with => "Testtesttest")
+    expect { click_button "Update Slideset" }.to change{current_path}.to(slidesets_path)  and have_content("Testtesttest")
+  end
 end

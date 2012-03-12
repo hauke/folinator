@@ -39,12 +39,12 @@
 <% end %>
 
 <%= form_for [@slideset, @slide, @annotation_new] do |f| %>
-
+<%= 3.times do %>
   <div class="field">
     <%= f.label :annotation %><br />
     <%= f.autocomplete_field :annotation, autocomplete_annotation_annotation_annotations_path %>
   </div>
-
+<% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

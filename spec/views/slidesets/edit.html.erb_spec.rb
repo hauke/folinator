@@ -12,4 +12,6 @@ describe "slidesets/edit" do
     assert_select "form", :action => slidesets_path(@slideset), :method => "post" do
     end
   end
+
+
 end

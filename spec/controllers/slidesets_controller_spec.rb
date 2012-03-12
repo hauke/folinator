@@ -116,7 +116,7 @@ describe SlidesetsController do
       it "redirects to the slideset" do
         slideset = Slideset.create! valid_attributes
         put :update, {:id => slideset.to_param, :slideset => valid_attributes}, valid_session
-        response.should redirect_to(slideset)
+        response.should redirect_to(slidesets_path)
       end
     end
 
