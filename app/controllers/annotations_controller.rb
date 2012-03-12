@@ -8,11 +8,21 @@ class AnnotationsController < ApplicationController
   def create
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:slide_id])
-    @annotation = @slide.annotations.new(params[:annotation])
-    authorize! :create, @annotation
+    params[:annotation].each do |annotation|
+      puts annotation
+      @annotation = @slide.annotations.new(annotation: annotation)
+      authorize! :create, @annotation
 
+        if @annotation.save
+          flash[:notice]= 'Annotation was successfully created.'
+        else
+          flash[:error]= 'can not add Annotation.' 
+        end
+      
+    end
+    
     respond_to do |format|
-      if @annotation.save
+      unless flash[:error]
         format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: 'Annotation was successfully created.' }
         format.json { render json: @annotation, status: :created, location: @annotation }
       else

@@ -38,15 +38,15 @@
   </div>
 <% end %>
 
-<%= form_for [@slideset, @slide, @annotation_new] do |f| %>
-<%= 3.times do %>
+<%= form_tag slideset_slide_annotations_path(@slideset, @slide) do %>
+<%= 3.times do |number|%>
   <div class="field">
-    <%= f.label :annotation %><br />
-    <%= f.autocomplete_field :annotation, autocomplete_annotation_annotation_annotations_path %>
+    <%= label_tag :annotation %><br />
+    <%= autocomplete_field_tag "annotation[]",number, autocomplete_annotation_annotation_annotations_path %>
   </div>
 <% end %>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag("Annotation hinzufügen") %>
   </div>
 <% end %>
 </div>
