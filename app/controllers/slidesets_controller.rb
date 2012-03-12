@@ -54,7 +54,7 @@ class SlidesetsController < ApplicationController
 
     respond_to do |format|
       if @slideset.update_attributes(params[:slideset])
-        format.html { redirect_to @slideset, notice: 'Slideset was successfully updated.' }
+        format.html { redirect_to slidesets_path, notice: 'Slideset was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

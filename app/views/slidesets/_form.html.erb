@@ -4,6 +4,11 @@
     <%= f.text_field :title %>
   </div>
 
+  <h3>New Description</h3>
+  <p>
+     <%= f.text_area(:description, :cols => 20, :rows => 40)  %>
+  </p>
+    
   <div class="actions">
     <%= f.submit %>
   </div>

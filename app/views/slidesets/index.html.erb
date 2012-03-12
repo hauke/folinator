@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Title</th>
+    <th>Description<th>
     <% if can? :edit, @slidesets %>
       <th></th>
     <% end %>
@@ -14,6 +15,7 @@
 <% @slidesets.each do |slideset| %>
   <tr>
     <td><%= link_to "#{slideset.title} (#{slideset.slides.count} Slides)", [slideset, :slides] %></td>
+    <td><%= slideset.description %></td>
     <% if can? :edit, slideset %>
       <td><%= link_to 'Edit', edit_slideset_path(slideset) %></td>
     <% end %>
