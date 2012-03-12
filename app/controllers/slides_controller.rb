@@ -169,11 +169,10 @@ protected
   
   
   def surrounding_annotations
-    surrounding_annotations = []
-    
-    surrounding_annotations += @slide.higher_item.annotations if @slide.higher_item     
-    surrounding_annotations += @slide.lower_item.annotations if @slide.lower_item 
-    
-    surrounding_annotations.uniq
+    surrounding_annotations = {}
+    surrounding_annotations.merge! Hash[*@slide.higher_item.annotations.map{|annotation| [annotation.annotation, annotation] }.flatten] if @slide.higher_item
+    surrounding_annotations.merge! Hash[*@slide.lower_item.annotations.map{|annotation| [annotation.annotation, annotation] }.flatten] if @slide.lower_item
+    surrounding_annotations.delete_if {|key, value| @slide.annotations.map{|annotation|  annotation.annotation}.include?(key) }
+    surrounding_annotations.values
   end
 end
