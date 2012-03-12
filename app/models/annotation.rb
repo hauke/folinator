@@ -9,12 +9,21 @@
 #  updated_at :datetime        not null
 #
 
+class DoubleAnnotation < ActiveModel::Validator
+  def validate(record)
+    if !record.slide.annotations.select{|item| item.annotation == record.annotation}.empty?
+      record.errors[:base] << "Annotation already there"
+    end
+  end
+end
+
 class Annotation < ActiveRecord::Base
   belongs_to :slide
   has_one :slide_title, class_name: "Slide", foreign_key: "title_id"
 
   validates :slide_id, presence: true
   validates :annotation, presence: true
+  validates_with DoubleAnnotation
   
   scope :distincttag, :group => ('annotations.annotation')
 
