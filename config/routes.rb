@@ -13,6 +13,7 @@ SlideAnnotator::Application.routes.draw do
         post 'decrease_position'
       end
       collection do
+        post 'sort'
         post 'edit_multiple'
       end
     end

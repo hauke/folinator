@@ -3,7 +3,7 @@
 <%= form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do %>
 <ol id="slides">
 <% @slides.each do |slide| %>
-  <li>
+  <li id="slide_<%= slide.id %>">
     <div class="title">
       <%= check_box_tag "slide_ids[]", slide.id %>
       <%= link_to slide.title.annotation, [slide.slideset, slide] if slide.title %>

@@ -183,7 +183,19 @@ class SlidesController < ApplicationController
       format.html { render :show }
       format.json { head :no_content }
     end
-  end  
+  end
+
+  def sort
+    @slideset = Slideset.find(params[:slideset_id])
+    @slides = @slideset.slides
+    authorize! :update, @slides
+    @slides.each do |slide|
+      slide.position = params['slide'].index(slide.id.to_s) + 1
+      slide.save
+    end
+    render :nothing => true
+  end
+
 protected
   def fill_for_show
     @slideset = Slideset.find(params[:slideset_id])
