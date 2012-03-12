@@ -5,7 +5,7 @@
   %h1
   Listing slides (#{@search})
 
-  %ol#slides
+  %ol#search_result
     - @slides.each do |slide|
       %li{:id => "slide_#{slide.id}"}
         .title
