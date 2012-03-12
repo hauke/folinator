@@ -1,6 +1,6 @@
 
 $(function(){
-  $("ol#slides").sortable({
+  $("ol.sortable").sortable({
     update: function(){
       $.ajax({
         type: 'post',

@@ -1,7 +1,7 @@
 %h1
   Listing slides (#{@slideset.title})
 = form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do
-  %ol#slides
+  %ol#slides{ :class => ( can?(:create, @slides) ? 'sortable': '') }
     - @slides.each do |slide|
       %li{:id => "slide_#{slide.id}"}
         .title
