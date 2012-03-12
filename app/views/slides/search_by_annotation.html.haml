@@ -1,0 +1,25 @@
+%h1 Listing slides
+- if @slides.empty?
+  %p Nothing found
+- else
+  %table
+    %tr
+      %th Title
+      %th Images
+      %th
+      - if can? :edit, @slides
+        %th
+      - if can? :destroy, @slides
+        %th
+    - @slides.each do |slide|
+      %tr
+        %td= link_to slide.title.annotation, [slide.slideset, slide] if slide.title
+        %td= link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
+        %td= link_to 'Show', [slide.slideset, slide]
+        - if can? :edit, slide
+          %td= link_to 'Edit', edit_slideset_slide_path(slide.slideset, slide)
+        - if can? :destroy, slide
+          %td= link_to 'Destroy', [slide.slideset, slide], confirm: 'Are you sure?', method: :delete
+%br/
+.footer_menu
+  = link_to 'Back', slidesets_path

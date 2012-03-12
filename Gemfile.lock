@@ -71,6 +71,7 @@ GEM
     faker (1.0.1)
       i18n (~> 0.4)
     ffi (1.0.11)
+    haml (3.1.4)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -177,6 +178,7 @@ DEPENDENCIES
   devise_openid_authenticatable
   factory_girl_rails
   faker
+  haml
   jquery-rails
   pg (~> 0.13.2)
   rails (= 3.2.2)

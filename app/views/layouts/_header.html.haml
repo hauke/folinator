@@ -1,0 +1,10 @@
+%header
+  = link_to( image_tag("logo.png", alt: "Slide Annotator", class: "round"), root_path)
+  %nav.round
+    %ul
+      %li
+        = form_tag searchresults_path, :method => 'get' do
+          = autocomplete_field_tag :search, params[:search], autocomplete_annotation_annotation_annotations_path
+          = submit_tag "Search", :name => nil
+      %li= link_to "Slidesets", root_path
+      %li= link_to "Logout", destroy_user_session_path, :method => :delete

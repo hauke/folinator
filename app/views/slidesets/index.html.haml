@@ -1,0 +1,22 @@
+%h1 Listing slidesets
+%table
+  %tr
+    %th Title
+    %th Description
+    %th
+      - if can? :edit, @slidesets
+        %th
+      - if can? :destroy, @slidesets
+        %th
+  - @slidesets.each do |slideset|
+    %tr
+      %td= link_to "#{slideset.title} (#{slideset.slides.count} Slides)", [slideset, :slides]
+      %td= slideset.description
+      - if can? :edit, slideset
+        %td= link_to 'Edit', edit_slideset_path(slideset)
+      - if can? :destroy, slideset
+        %td= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete
+%br/
+.footer_menu
+  - if can? :create, @slidesets
+    = link_to 'New Slideset', new_slideset_path

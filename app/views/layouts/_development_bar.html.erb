@@ -1,5 +1,0 @@
-  <%= form_tag development_session_path do %>
-    <%= select_tag 'user_id', options_for_select([""] + User.all.map{|user| ["#{user.name} (#{user.email})", user.id] }) %>
-    <%= submit_tag 'Sign in' %>
-  <% end %>
-
