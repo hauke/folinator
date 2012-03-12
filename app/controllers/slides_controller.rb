@@ -17,6 +17,7 @@ class SlidesController < ApplicationController
     annotations = Annotation.search(params[:search])
     @slides = annotations.map{ |annotation| annotation.slide }
     @slides.uniq!
+    @search = params[:search]
     authorize! :read, @slides
 
     respond_to do |format|
