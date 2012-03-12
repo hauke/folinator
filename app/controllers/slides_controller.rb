@@ -39,7 +39,7 @@ class SlidesController < ApplicationController
       format.json { render json: @slide }
     end
   end
-
+  
   # GET /slides/new
   # GET /slides/new.json
   def new
@@ -142,6 +142,33 @@ class SlidesController < ApplicationController
     end
   end
   
+  def increase_position
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    authorize! :update, @slide
+    @slide.increment_position
+    @slides = @slideset.slides
+    @slide_new = Slide.new
+    respond_to do |format|
+      format.html { render :index }
+      format.json { head :no_content }
+    end
+  end
+    
+    
+  def decrease_position
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    authorize! :update, @slide
+    @slide.decrement_position
+    @slides = @slideset.slides
+    @slide_new = Slide.new
+    respond_to do |format|
+      format.html { render :index }
+      format.json { head :no_content }
+    end
+  end
+    
   def copy_annotations 
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
