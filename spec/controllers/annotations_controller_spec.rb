@@ -48,18 +48,18 @@ describe AnnotationsController do
     describe "with valid params" do
       it "creates a new Annotation" do
         expect {
-          post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+          post :create, {:annotation => ["Test"], slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         }.to change(Annotation, :count).by(1)
       end
 
       it "assigns a newly created annotation as @annotation" do
-        post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        post :create, {:annotation => ["Test"], slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         assigns(:annotation).should be_a(Annotation)
         assigns(:annotation).should be_persisted
       end
 
       it "redirects to the created annotation" do
-        post :create, {:annotation => valid_attributes, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        post :create, {:annotation => ["Test"], slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         response.should redirect_to([@slideset,@slide])
       end
     end
@@ -68,7 +68,7 @@ describe AnnotationsController do
       it "assigns a newly created but unsaved annotation as @annotation" do
         # Trigger the behavior that occurs when invalid params are submitted
         Annotation.any_instance.stub(:save).and_return(false)
-        post :create, {:annotation => {}, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        post :create, {:annotation => ["Test"], slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         assigns(:annotation).should be_a_new(Annotation)
       end
 

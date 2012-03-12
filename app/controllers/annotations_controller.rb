@@ -9,7 +9,7 @@ class AnnotationsController < ApplicationController
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:slide_id])
     params[:annotation].each do |annotation|
-      puts annotation
+      next if annotation.blank?
       @annotation = @slide.annotations.new(annotation: annotation)
       authorize! :create, @annotation
 
