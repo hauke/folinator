@@ -21,12 +21,10 @@
           %td
   .actions
     = submit_tag "Add"
+  %h3 Add annotations
   = form_tag slideset_slide_annotations_path(@slideset, @slide) do
-    - 3.times do
-      .field{ class: 'autoextend'}
-        = label_tag :annotation
-        %br/
-        = autocomplete_field_tag "annotation[]","", autocomplete_annotation_annotation_annotations_path
+    .field{ class: 'autoextend'}
+      = autocomplete_field_tag "annotation[]","", autocomplete_annotation_annotation_annotations_path
     .actions
       = submit_tag("Annotation hinzufügen")
 .clear
