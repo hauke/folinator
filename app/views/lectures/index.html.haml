@@ -6,7 +6,7 @@
     %th
   - @lectures.each do |lecture|
     %tr
-      %td= link_to 'Show', lecture
+      %td= link_to lecture.title, lecture
       %td= link_to 'Edit', edit_lecture_path(lecture)
       %td= link_to 'Destroy', lecture, confirm: 'Are you sure?', method: :delete
 %br/

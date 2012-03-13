@@ -15,6 +15,7 @@ class LecturesController < ApplicationController
   # GET /lectures/1.json
   def show
     @lecture = Lecture.find(params[:id])
+    @slidesets = @lecture.slidesets
     authorize! :read,  @lecture
 
     respond_to do |format|

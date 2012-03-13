@@ -6,6 +6,7 @@ class SlidesController < ApplicationController
     @slides = @slideset.slides
     authorize! :read, @slides
     @slide_new = Slide.new
+    @lecture = @slideset.lecture
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,21 +1,10 @@
 class SlidesetsController < ApplicationController
-  # GET /slidesets
-  # GET /slidesets.json
-  def index
-    @slidesets = Slideset.all
-    authorize! :read, @slidesets
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @slidesets }
-    end
-  end
-
   # GET /slidesets/new
   # GET /slidesets/new.json
   def new
     @slideset = Slideset.new
     authorize! :create, @slideset
+    @lecture = @slideset.lecture
 
     respond_to do |format|
       format.html # new.html.erb
