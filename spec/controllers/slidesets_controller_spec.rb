@@ -44,7 +44,7 @@ describe SlidesetsController do
 
   describe "GET new" do
     it "assigns a new slideset as @slideset" do
-      get :new, {}, valid_session
+      get :new, {lecture_id: @lecture.id}, valid_session
       assigns(:slideset).should be_a_new(Slideset)
     end
   end
@@ -61,19 +61,19 @@ describe SlidesetsController do
     describe "with valid params" do
       it "creates a new Slideset" do
         expect {
-          post :create, {:slideset => valid_http_attributes}, valid_session
+          post :create, {:slideset => valid_http_attributes, lecture_id: @lecture.id}, valid_session
         }.to change(Slideset, :count).by(1)
       end
 
       it "assigns a newly created slideset as @slideset" do
-        post :create, {:slideset => valid_http_attributes}, valid_session
+        post :create, {:slideset => valid_http_attributes, lecture_id: @lecture.id}, valid_session
         assigns(:slideset).should be_a(Slideset)
         assigns(:slideset).should be_persisted
       end
 
       it "redirects to the created slideset" do
-        post :create, {:slideset => valid_http_attributes}, valid_session
-        response.should redirect_to(slideset_slides_path(Slideset.last))
+        post :create, {:slideset => valid_http_attributes, lecture_id: @lecture.id}, valid_session
+        response.should redirect_to(lecture_path(Slideset.last.lecture))
       end
     end
 
@@ -81,14 +81,14 @@ describe SlidesetsController do
       it "assigns a newly created but unsaved slideset as @slideset" do
         # Trigger the behavior that occurs when invalid params are submitted
         Slideset.any_instance.stub(:save).and_return(false)
-        post :create, {:slideset => {}}, valid_session
+        post :create, {:slideset => {}, lecture_id: @lecture.id}, valid_session
         assigns(:slideset).should be_a_new(Slideset)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Slideset.any_instance.stub(:save).and_return(false)
-        post :create, {:slideset => {}}, valid_session
+        post :create, {:slideset => {}, lecture_id: @lecture.id}, valid_session
         response.should render_template("new")
       end
     end

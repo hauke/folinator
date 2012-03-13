@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "slidesets/edit" do
   before(:each) do
-    @slideset = assign(:slideset, stub_model(Slideset))
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
   end
 
   it "renders the edit slideset form" do

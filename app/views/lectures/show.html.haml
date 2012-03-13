@@ -19,6 +19,6 @@
 %br/
 .footer_menu
   - if can? :create, @slidesets
-    = link_to 'New Slideset', new_slideset_path
+    = link_to 'New Slideset', new_lecture_slideset_path(@lecture, @slideset)
     |
     \#{link_to 'Back', lectures_path}

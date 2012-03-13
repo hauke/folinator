@@ -2,9 +2,9 @@ class SlidesetsController < ApplicationController
   # GET /slidesets/new
   # GET /slidesets/new.json
   def new
-    @slideset = Slideset.new
+    @lecture = Lecture.find(params[:lecture_id])
+    @slideset = @lecture.slidesets.new
     authorize! :create, @slideset
-    @lecture = @slideset.lecture
 
     respond_to do |format|
       format.html # new.html.erb
@@ -16,17 +16,19 @@ class SlidesetsController < ApplicationController
   def edit
     @slideset = Slideset.find(params[:id])
     authorize! :update, @slideset
+    @lecture = @slideset.lecture
   end
 
   # POST /slidesets
   # POST /slidesets.json
   def create
-    @slideset = Slideset.new(params[:slideset])
+    @lecture = Lecture.find(params[:lecture_id])
+    @slideset = @lecture.slidesets.new(params[:slideset])
     authorize! :create, @slideset
 
     respond_to do |format|
       if @slideset.save
-        format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slideset was successfully created.' }
+        format.html { redirect_to lecture_path(@lecture), notice: 'Slideset was successfully created.' }
         format.json { render json: @slideset, status: :created, location: @slideset }
       else
         format.html { render action: "new" }

@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "slidesets/new" do
   before(:each) do
-    assign(:slideset, stub_model(Slideset).as_new_record)
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
   end
 
   it "renders new slideset form" do
