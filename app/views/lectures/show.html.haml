@@ -1,5 +1,6 @@
-%ul
+%ul{:id => "page_path"}
   %li= link_to 'Home', root_path
+  >
   %li= link_to @lecture.title, lecture_path(@lecture)
 %h1 Listing slidesets
 %table
