@@ -27,8 +27,8 @@
           %td= check_box_tag "annotations_id[]", annotation.id
           %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
           %td
-  .actions
-    = submit_tag "Add"
+    .actions
+      = submit_tag "Add"
   %h3 Add annotations
   = form_tag slideset_slide_annotations_path(@slideset, @slide) do
     .field{ class: 'autoextend'}
