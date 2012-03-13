@@ -17,17 +17,22 @@ lectures = Lecture.create!([
 
 slidesets = Slideset.create!([
   { title: 'Prozesse', lecture: lectures[0] },
-  { title: 'Netze', lecture: lectures[0] }
+  { title: 'Netze', lecture: lectures[0] },
+  { title: 'IP', lecture: lectures[1] }
 ])
 
 slides = Slide.create!([
-  {image: get_image_stream("folie-0001-256-w50k.png"), slideset: slidesets.first},
-  {image: get_image_stream("folie-0002-256-w50k.png"), slideset: slidesets.first},
-  {image: get_image_stream("folie-0003-256-w50k.png"), slideset: slidesets.first},
-  {image: get_image_stream("folie-0005-256-w50k.png"), slideset: slidesets.first},
-  {image: get_image_stream("folie-0006-256-w50k.png"), slideset: slidesets.last},
-  {image: get_image_stream("folie-0007-256-w50k.png"), slideset: slidesets.last},
-  {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets.last}
+  {image: get_image_stream("folie-0001-256-w50k.png"), slideset: slidesets[0]},
+  {image: get_image_stream("folie-0002-256-w50k.png"), slideset: slidesets[0]},
+  {image: get_image_stream("folie-0003-256-w50k.png"), slideset: slidesets[0]},
+  {image: get_image_stream("folie-0005-256-w50k.png"), slideset: slidesets[0]},
+  {image: get_image_stream("folie-0006-256-w50k.png"), slideset: slidesets[1]},
+  {image: get_image_stream("folie-0007-256-w50k.png"), slideset: slidesets[1]},
+  {image: get_image_stream("folie-0008-256-w50k.png"), slideset: slidesets[1]},
+  {image: get_image_stream("folie-0001-256-w50k.png"), slideset: slidesets[2]},
+  {image: get_image_stream("folie-0002-256-w50k.png"), slideset: slidesets[2]},
+  {image: get_image_stream("folie-0003-256-w50k.png"), slideset: slidesets[2]},
+  {image: get_image_stream("folie-0005-256-w50k.png"), slideset: slidesets[2]},
 ])
 
 annotations = Annotation.create!([
@@ -43,7 +48,10 @@ annotations = Annotation.create!([
   {annotation: "Sicherheit", slide: slides[2]},
   {annotation: "Sicherheit", slide: slides[3]},
   {annotation: "Sicherheit", slide: slides[6]},
-  {annotation: "IP", slide: slides[6]}
+  {annotation: "IP", slide: slides[6]},
+  {annotation: "Header", slide: slides[7]},
+  {annotation: "TTL", slide: slides[7]},
+  {annotation: "TTL", slide: slides[8]}
 ])
 slides.each{|slide| slide.reload}
 
@@ -53,6 +61,11 @@ slides[1].annotations[0].slide_title = slides[1]
 slides[1].title.save!
 slides[2].annotations[0].slide_title = slides[2]
 slides[2].title.save!
+
+slides[7].annotations[0].slide_title = slides[7]
+slides[7].title.save!
+slides[8].annotations[0].slide_title = slides[8]
+slides[8].title.save!
 
 users = User.create!([
   {identity_url: "https://openid.tzi.de/foo", name: "Foo Foo", email: "foo@tzi.de"},

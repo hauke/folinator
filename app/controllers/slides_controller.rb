@@ -20,7 +20,7 @@ class SlidesController < ApplicationController
         annotations = Annotation.search(params[:search])
       when "lecture"
         @lecture = Lecture.find(params[:lecture_id])
-        Annotation.search_by_lecture((params[:search]), @lecture)
+        annotations = Annotation.search_by_lecture((params[:search]), @lecture)
       when "slideset"
         @slideset = Slideset.find(params[:slideset_id])
         annotations = Annotation.search_by_slideset((params[:search]), @slideset)

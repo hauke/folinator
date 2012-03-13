@@ -47,7 +47,7 @@ class Annotation < ActiveRecord::Base
 
   def self.search_by_lecture(search, lecture)
     if search
-      find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
+      find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
     else
       find(:all)
     end
