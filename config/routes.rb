@@ -2,6 +2,8 @@ SlideAnnotator::Application.routes.draw do
 
   devise_for :users
 
+  resources :lectures
+
   resources :slidesets do
     resources :slides do
       resources :annotations do

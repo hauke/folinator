@@ -10,6 +10,11 @@ FactoryGirl.define do
   
   factory :slideset do
     title { "test" }
+    association :lecture
+  end
+
+  factory :lecture do
+    title { "test" }
   end
   
   factory :annotation do
