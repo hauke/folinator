@@ -22,7 +22,8 @@ describe AnnotationsController do
   login_admin
   
   before do
-    @slideset = Slideset.create( title: "test") 
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
     @slide = @slideset.slides.create(image: get_image_stream)
     
   end

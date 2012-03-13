@@ -21,13 +21,20 @@ require 'spec_helper'
 describe SlidesetsController do
   login_admin
 
+  before do
+    @lecture = Factory :lecture
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Slideset. As you add validations to Slideset, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { title:"Test" }
+    { title: "Test", lecture: @lecture }
   end
-  
+
+  def valid_http_attributes
+    { title: "Test", lecture_id: @lecture.id }
+  end
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SlidesetsController. Be sure to keep this updated too.
@@ -54,18 +61,18 @@ describe SlidesetsController do
     describe "with valid params" do
       it "creates a new Slideset" do
         expect {
-          post :create, {:slideset => valid_attributes}, valid_session
+          post :create, {:slideset => valid_http_attributes}, valid_session
         }.to change(Slideset, :count).by(1)
       end
 
       it "assigns a newly created slideset as @slideset" do
-        post :create, {:slideset => valid_attributes}, valid_session
+        post :create, {:slideset => valid_http_attributes}, valid_session
         assigns(:slideset).should be_a(Slideset)
         assigns(:slideset).should be_persisted
       end
 
       it "redirects to the created slideset" do
-        post :create, {:slideset => valid_attributes}, valid_session
+        post :create, {:slideset => valid_http_attributes}, valid_session
         response.should redirect_to(slideset_slides_path(Slideset.last))
       end
     end
@@ -101,13 +108,13 @@ describe SlidesetsController do
 
       it "assigns the requested slideset as @slideset" do
         slideset = Slideset.create! valid_attributes
-        put :update, {:id => slideset.to_param, :slideset => valid_attributes}, valid_session
+        put :update, {:id => slideset.to_param, :slideset => valid_http_attributes}, valid_session
         assigns(:slideset).should eq(slideset)
       end
 
       it "redirects to the slideset" do
         slideset = Slideset.create! valid_attributes
-        put :update, {:id => slideset.to_param, :slideset => valid_attributes}, valid_session
+        put :update, {:id => slideset.to_param, :slideset => valid_http_attributes}, valid_session
         response.should redirect_to(slideset_slides_path(slideset))
       end
     end

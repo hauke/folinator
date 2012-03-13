@@ -16,8 +16,9 @@ require 'spec_helper'
 
 describe Slide do
   before do
-    @slideset = Slideset.new(title:"test")
-    @slideset.save
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture:  @lecture
+    @slideset.save!
     @slide = Slide.new(image: get_image_stream)
   end
   subject { @slide }

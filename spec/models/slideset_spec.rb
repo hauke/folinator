@@ -15,7 +15,8 @@ require 'spec_helper'
 
 describe Slideset do
   before do	
-    @slideset= Slideset.new(title:"Testset")
+    @lecture = Factory :lecture
+    @slideset= Factory :slideset, lecture: @lecture
   end
   subject { @slideset }
   

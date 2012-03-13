@@ -14,12 +14,13 @@
 require 'spec_helper'
 
 describe Annotation do
-  before do 
-    @slideset = Slideset.new(title:"Test")
-    @slideset.save
+  before do
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
+    @slideset.save!
     @slide = Slide.new(image: get_image_stream)
     @slide.slideset = @slideset
-    @slide.save
+    @slide.save!
     @annotation = Annotation.new(annotation:"this is a test")
   end
   subject { @annotation }

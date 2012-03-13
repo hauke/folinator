@@ -22,7 +22,8 @@ describe SlidesController do
   login_admin
   
   before do
-    @slideset = Slideset.create( title: "test") 
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
     @file = fixture_file_upload( "/folie-0001-256-w50k.png", "image/png")
   end
   # This should return the minimal set of attributes required to create a valid

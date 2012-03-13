@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "slides/edit" do
   before(:each) do
-    @slideset=Slideset.create(title:"test")
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
     @slide = assign(:slide, stub_model(Slide, :slideset_id => @slideset.id))
   end
 
