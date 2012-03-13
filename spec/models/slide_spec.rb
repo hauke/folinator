@@ -5,6 +5,7 @@
 #  id          :integer         not null, primary key
 #  image       :string(255)
 #  slideset_id :integer
+#  deleted     :boolean
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
 #  position    :integer

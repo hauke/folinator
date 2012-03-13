@@ -4,6 +4,7 @@
 #
 #  id         :integer         not null, primary key
 #  title      :string(255)
+#  deleted    :boolean
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
 #
