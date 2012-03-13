@@ -36,6 +36,16 @@ class SlidesController < ApplicationController
       format.json { render json: @slide }
     end
   end
+
+  # GET /slides/1
+  # GET /slides/1.json
+  def edit
+    fill_for_show
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @slide }
+    end
+  end
   
   # GET /slides/new
   # GET /slides/new.json
