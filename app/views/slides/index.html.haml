@@ -16,7 +16,7 @@
           - if can? :destroy, slide
             | #{link_to 'Destroy', [slide.slideset, slide], confirm: 'Are you sure?', method: :delete}
   %p
-    Annotation: #{text_field_tag "annotation"}
+    Annotation: #{autocomplete_field_tag "annotation","", autocomplete_annotation_annotation_annotations_path}
   = submit_tag "Add annotation"
 %br/
 - if can? :create, @slides
