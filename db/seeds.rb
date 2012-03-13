@@ -10,9 +10,14 @@ def get_image_stream filename
  File.open("#{Rails.root}/spec/fixtures/#{filename}")
 end
 
+lectures = Lecture.create!([
+  {title: "Technische Informatik 2"},
+  {title: "Rechnernetze 1"},
+])
+
 slidesets = Slideset.create!([
-  { title: 'Prozesse' },
-  { title: 'Netze' }
+  { title: 'Prozesse', lecture: lectures[0] },
+  { title: 'Netze', lecture: lectures[0] }
 ])
 
 slides = Slide.create!([
