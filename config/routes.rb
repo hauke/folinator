@@ -30,7 +30,7 @@ SlideAnnotator::Application.routes.draw do
     get :autocomplete_annotation_annotation, :on => :collection
   end
 
-  root to: 'slidesets#index'
+  root to: 'lectures#index'
 
   post '/development/session' => 'sessions#create', :as => :development_session
 
