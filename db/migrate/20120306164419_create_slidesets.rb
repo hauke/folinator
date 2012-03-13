@@ -3,7 +3,7 @@ class CreateSlidesets < ActiveRecord::Migration
     create_table :slidesets do |t|
       t.string :title
       t.integer :lecture_id
-      t.boolean :deleted
+      t.boolean :deleted, null: false, default: false
 
       t.timestamps
     end

@@ -29,12 +29,7 @@ class SlidesController < ApplicationController
   # GET /slides/1
   # GET /slides/1.json
   def show
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    @annotations = @slide.annotations
-    @annotation_new = Annotation.new
-    authorize! :read, @slide
-    @surrounding_annotations = surrounding_annotations
+    fill_for_show
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @slide }
@@ -203,6 +198,9 @@ protected
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
     @annotations = @slide.annotations
+    if !is_admin
+      @annotations.select!{|annotation| !annotation.deleted}
+    end
     @annotation_new = Annotation.new
     authorize! :read, @slide
     @surrounding_annotations = surrounding_annotations

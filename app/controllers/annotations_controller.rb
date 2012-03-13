@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AnnotationsController < ApplicationController
 
   skip_authorization_check # TODO remove this line, we have to secure the autocomplete wih cancan
@@ -44,6 +45,42 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to slideset_slide_path(@slideset, @slide) }
       format.json { head :no_content }
+    end
+  end
+
+  def mark_deleted
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:slide_id])
+    @annotation = @slide.annotations.find(params[:id])
+    authorize! :mark_deleted, @annotation
+    @annotation.deleted = true
+
+    respond_to do |format|
+      if @annotation.save
+        format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: "Die Annotation \"#{@annotation.annotation}\" wurde erfolgreich gelöscht" }
+        format.json { render json: @annotation, status: :created, location: @annotation }
+      else
+        format.html { redirect_to slideset_slide_path(@slideset, @slide) }
+        format.json { render json: @annotation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unmark_deleted
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:slide_id])
+    @annotation = @slide.annotations.find(params[:id])
+    authorize! :unmark_deleted, @annotation
+    @annotation.deleted = false
+
+    respond_to do |format|
+      if @annotation.save
+        format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: "Die Annotation \"#{@annotation.annotation}\" wurde erfolgreich wiederhergestellt" }
+        format.json { render json: @annotation, status: :created, location: @annotation }
+      else
+        format.html { redirect_to slideset_slide_path(@slideset, @slide) }
+        format.json { render json: @annotation.errors, status: :unprocessable_entity }
+      end
     end
   end
 end

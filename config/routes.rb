@@ -4,7 +4,12 @@ SlideAnnotator::Application.routes.draw do
 
   resources :slidesets do
     resources :slides do
-      resources :annotations
+      resources :annotations do
+        member do
+          post 'mark_deleted'
+          post 'unmark_deleted'
+        end
+      end
 
       member do
         post 'set_title'

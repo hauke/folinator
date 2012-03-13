@@ -7,7 +7,7 @@ class Ability
       can :manage, :all
     else
       can :read, :all
-      can [:create, :destroy], Annotation
+      can [:create, :mark_deleted], Annotation
       can :set_title, Slide
     end
     

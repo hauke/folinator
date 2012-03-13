@@ -8,7 +8,14 @@
         %tr
           %td= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title
           %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
-          %td= link_to 'Destroy', [@slideset, @slide, annotation], confirm: 'Are you sure?', method: :delete
+          - if !can? :delete, annotation
+            %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
+          - if can? :delete, annotation
+            - if annotation.deleted
+              %td= link_to 'Wiederherstellen', unmark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+            - else
+              %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
+            %td= link_to 'endgültig Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" endgütig löschen?", method: :delete
     .actions
       = submit_tag "Select as title"
   %h3 Annotations from surrounding slides

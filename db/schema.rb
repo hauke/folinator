@@ -16,25 +16,25 @@ ActiveRecord::Schema.define(:version => 20120312103931) do
   create_table "annotations", :force => true do |t|
     t.string   "annotation"
     t.integer  "slide_id"
-    t.boolean  "deleted"
+    t.boolean  "deleted",        :default => false, :null => false
     t.integer  "last_author_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "lectures", :force => true do |t|
     t.string   "title"
-    t.boolean  "deleted"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "deleted",    :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "slides", :force => true do |t|
     t.string   "image"
     t.integer  "slideset_id"
-    t.boolean  "deleted"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "deleted",     :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "position"
     t.integer  "title_id"
   end
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(:version => 20120312103931) do
   create_table "slidesets", :force => true do |t|
     t.string   "title"
     t.integer  "lecture_id"
-    t.boolean  "deleted"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "deleted",     :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.text     "description"
   end
 
