@@ -22,14 +22,14 @@ describe "Search" do
       @slide4.annotations.create(annotation: "Test")
     end
     it "should find slide4" do
-      visit slidesets_path
+      visit lectures_path
       fill_in "search", with: "Test" 
       expect { click_button "Search"}.to change{current_path}.to(searchresults_path)
     end
   end
   describe "Find nothing" do
     it "should find nothing" do
-      visit slidesets_path
+      visit lectures_path
       fill_in "search", with: "Test" 
       click_button "Search"
       page.should have_content('Nothing found')

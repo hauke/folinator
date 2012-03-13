@@ -35,14 +35,6 @@ describe SlidesetsController do
     {}
   end
 
-  describe "GET index" do
-    it "assigns all slidesets as @slidesets" do
-      slideset = Slideset.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:slidesets).should eq([slideset])
-    end
-  end
-
   describe "GET new" do
     it "assigns a new slideset as @slideset" do
       get :new, {}, valid_session
@@ -74,7 +66,7 @@ describe SlidesetsController do
 
       it "redirects to the created slideset" do
         post :create, {:slideset => valid_attributes}, valid_session
-        response.should redirect_to(Slideset.last)
+        response.should redirect_to(slideset_slides_path(Slideset.last))
       end
     end
 
@@ -116,7 +108,7 @@ describe SlidesetsController do
       it "redirects to the slideset" do
         slideset = Slideset.create! valid_attributes
         put :update, {:id => slideset.to_param, :slideset => valid_attributes}, valid_session
-        response.should redirect_to(slidesets_path)
+        response.should redirect_to(slideset_slides_path(slideset))
       end
     end
 

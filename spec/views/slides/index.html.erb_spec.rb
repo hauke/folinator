@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe "slides/index" do
   before(:each) do
-    @slideset=Slideset.create(title:"test")
+    @lecture = Factory :lecture
+    @slideset = Factory :slideset, lecture: @lecture
+    
     assign(:slides, [
       stub_model(Slide, :slideset_id => @slideset.id),
       stub_model(Slide, :slideset_id => @slideset.id)

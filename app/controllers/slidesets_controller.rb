@@ -26,7 +26,7 @@ class SlidesetsController < ApplicationController
 
     respond_to do |format|
       if @slideset.save
-        format.html { redirect_to @slideset, notice: 'Slideset was successfully created.' }
+        format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slideset was successfully created.' }
         format.json { render json: @slideset, status: :created, location: @slideset }
       else
         format.html { render action: "new" }
@@ -43,7 +43,7 @@ class SlidesetsController < ApplicationController
 
     respond_to do |format|
       if @slideset.update_attributes(params[:slideset])
-        format.html { redirect_to slidesets_path, notice: 'Slideset was successfully updated.' }
+        format.html { redirect_to slideset_slides_path(@slideset), notice: 'Slideset was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
