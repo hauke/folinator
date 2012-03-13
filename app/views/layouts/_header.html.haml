@@ -1,5 +1,17 @@
 %header
-  = link_to( image_tag("logo.png", alt: "Slide Annotator", class: "round"), root_path)
+  #header_left
+    = link_to( image_tag("logo.png", alt: "Slide Annotator", class: "round"), root_path)
+    %ul{:id => "page_path"}
+      %li= link_to 'Home', root_path
+      - if @lecture && @lecture.title
+        >
+        %li= link_to @lecture.title, lecture_path(@lecture)
+      - if @slideset && @slideset.title
+        >
+        %li= link_to @slideset.title, slideset_slides_path(@slideset)
+      - if @slide && @slide.title
+        >
+        %li= link_to @slide.title.annotation, slideset_slide_path(@slideset, @slide)
   %nav.round
     %ul
       %li

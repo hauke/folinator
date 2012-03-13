@@ -12,5 +12,6 @@
       %section.round
         - flash.each do |key, msg|
           %p{:class => key}= msg
-        = yield
+        #content
+          = yield
       = render 'layouts/footer'
