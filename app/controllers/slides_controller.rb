@@ -157,6 +157,7 @@ class SlidesController < ApplicationController
     @annotation_new = Annotation.new
     @annotation = @annotations.find(params[:annotation_id])
     @annotation.slide_title = @slide
+    rename_annotation
     fill_for_show
     respond_to do |format|
       format.html { render :show }
@@ -205,6 +206,32 @@ protected
     @surrounding_annotations = surrounding_annotations
   end
   
+#   Parameters: {"utf8"=>"✓", "authenticity_token"=>"EAqW9QgppJ4nnCfZIg4/zftl3ObeQqphG+7NwY/k3tQ=", "annotation_id"=>"1", #"annotation_1"=>"", "rename_scope_1"=>"lecture", "annotation_2"=>"", "annotation_6"=>"UDP", "rename_scope_6"=>"lecture", #"annotation_7"=>"", "commit"=>"Select as title", "slideset_id"=>"1", "id"=>"1"}
+  
+  def rename_annotation
+    puts params
+    @annotations.each do |annotation|
+            puts params["annotation_#{annotation.id}".to_sym]
+      if not params["annotation_#{annotation.id}".to_sym].blank?
+        puts params["annotation_#{annotation.id}".to_sym]
+        case params["rename_scope_#{annotation.id}".to_sym]
+          when "all"
+            annotations = Annotation.search(annotation.annotation)
+          when "lecture"
+            lecture = @slide.slideset.lecture 
+            annotations = Annotation.search_by_lecture(annotation.annotation, lecture)
+          when "slideset"
+            slideset = @slide.slideset
+            annotations = Annotation.search_by_slideset(annotation.annotation, slideset)
+        end
+        return unless annotations
+        annotations.each do |annos|
+          annos.annotation = params["annotation_#{annotation.id}".to_sym]  
+          annos.save        
+        end
+      end
+    end 
+  end
   
   def surrounding_annotations
     surrounding_annotations = {}

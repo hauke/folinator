@@ -16,6 +16,17 @@
             - else
               %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
             %td= link_to 'endgültig Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" endgütig löschen?", method: :delete
+        %tr
+          %td{colspan:4}
+            = autocomplete_field_tag "annotation_#{annotation.id}","", autocomplete_annotation_annotation_annotations_path
+        %tr
+          %td{colspan:4} 
+            = radio_button_tag "rename_scope_#{annotation.id}", 'all'
+            = label_tag "rename_scope_#{annotation.id}_all", "Alles"
+            = radio_button_tag "rename_scope_#{annotation.id}", 'lecture' 
+            = label_tag "rename_scope_#{annotation.id}_lecture", "Vorlesung"
+            = radio_button_tag "rename_scope_#{annotation.id}", 'slideset'
+            = label_tag "rename_scope_#{annotation.id}_slideset", "Foliensatz"
     .actions
       = submit_tag "Select as title"
   %h3 Annotations from surrounding slides
