@@ -1,3 +1,6 @@
+%ul
+  %li= link_to 'Home', root_path
+  %li= link_to @lecture.title, lecture_path(@lecture)
 %h1 Editing lecture
 = render 'form'
 = link_to 'Show', @lecture

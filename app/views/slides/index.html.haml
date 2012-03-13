@@ -1,3 +1,7 @@
+%ul
+  %li= link_to 'Home', root_path
+  %li= link_to @slideset.lecture.title, lecture_path(@slideset.lecture)
+  %li= link_to @slideset.title, slideset_slides_path(@slideset)
 %h1
   Listing slides (#{@slideset.title})
 = form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do
