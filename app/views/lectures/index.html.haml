@@ -1,0 +1,13 @@
+%h1 Listing lectures
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @lectures.each do |lecture|
+    %tr
+      %td= link_to 'Show', lecture
+      %td= link_to 'Edit', edit_lecture_path(lecture)
+      %td= link_to 'Destroy', lecture, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Lecture', new_lecture_path
