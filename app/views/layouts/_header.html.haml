@@ -18,15 +18,14 @@
         = form_tag searchresults_path, :method => 'post' do
           = autocomplete_field_tag :search, params[:search], autocomplete_annotation_annotation_annotations_path
           = submit_tag "Search", :name => nil
-          = label_tag :search_scope_all, "Alles"
           = radio_button_tag "search_scope", 'all', !@lecture && !@slideset
+          = label_tag :search_scope_all, "Alles"
           - if @lecture
-            = label_tag :search_scope_lecture, "Vorlesung"
             = radio_button_tag "search_scope", 'lecture', !@slideset
+            = label_tag :search_scope_lecture, "Vorlesung"
           - if @slideset
-            = label_tag :search_scope_slideset, "Foliensatz"
             = radio_button_tag "search_scope", 'slideset', @slideset
+            = label_tag :search_scope_slideset, "Foliensatz"
           = hidden_field_tag 'lecture_id', @lecture.id if @lecture
           = hidden_field_tag 'slideset_id', @slideset.id if @slideset
-      %li= link_to "Slidesets", root_path
       %li= link_to "Logout", destroy_user_session_path, :method => :delete
