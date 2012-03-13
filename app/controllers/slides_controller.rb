@@ -23,6 +23,7 @@ class SlidesController < ApplicationController
         annotations = Annotation.search_by_lecture((params[:search]), @lecture)
       when "slideset"
         @slideset = Slideset.find(params[:slideset_id])
+        @lecture = @slideset.lecture
         annotations = Annotation.search_by_slideset((params[:search]), @slideset)
     end
 
@@ -61,6 +62,7 @@ class SlidesController < ApplicationController
   # GET /slides/new.json
   def new
     @slideset = Slideset.find(params[:slideset_id])
+    @lecture = @slideset.lecture
     @slide = @slideset.slides.new
     authorize! :create, @slide
 
@@ -117,6 +119,7 @@ class SlidesController < ApplicationController
   # DELETE /slides/1.json
   def destroy
     @slideset = Slideset.find(params[:slideset_id])
+    @lecture = @slideset.lecture
     @slide = @slideset.slides.find(params[:id])
     authorize! :destroy, @slide
     @slide.destroy
@@ -129,6 +132,7 @@ class SlidesController < ApplicationController
 
   def edit_multiple
     @slideset = Slideset.find(params[:slideset_id])
+    @lecture = @slideset.lecture
     unless (params[:slide_ids])
       authorize! :read, @slideset
       flash[:alert] = "No slides to annotate selected."
@@ -156,33 +160,6 @@ class SlidesController < ApplicationController
     fill_for_show
     respond_to do |format|
       format.html { render :show }
-      format.json { head :no_content }
-    end
-  end
-  
-  def increase_position
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :update, @slide
-    @slide.increment_position
-    @slides = @slideset.slides
-    @slide_new = Slide.new
-    respond_to do |format|
-      format.html { render :index }
-      format.json { head :no_content }
-    end
-  end
-    
-    
-  def decrease_position
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :update, @slide
-    @slide.decrement_position
-    @slides = @slideset.slides
-    @slide_new = Slide.new
-    respond_to do |format|
-      format.html { render :index }
       format.json { head :no_content }
     end
   end
@@ -218,6 +195,7 @@ protected
   def fill_for_show
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:id])
+    @lecture = @slideset.lecture
     @annotations = @slide.annotations
     if !is_admin
       @annotations.select!{|annotation| !annotation.deleted}
