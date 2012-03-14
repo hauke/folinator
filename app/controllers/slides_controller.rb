@@ -30,6 +30,15 @@ class SlidesController < ApplicationController
 
     @slides = annotations.map{ |annotation| annotation.slide }
     @slides.uniq!
+    @lectures = {}
+    @slides.each do |slide|
+      slideset = slide.slideset
+      lecture = slideset.lecture
+      @lectures[lecture] = {} unless @lectures[lecture]
+      @lectures[lecture][slideset] = [] unless @lectures[lecture][slideset]
+      @lectures[lecture][slideset] << slide
+    end
+    
     @search = params[:search]
     authorize! :read, @slides
 

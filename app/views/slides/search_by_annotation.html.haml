@@ -2,5 +2,12 @@
 - if @slides.empty?
   %p Keine Folien gefunden
 - else
-  %ol#search_result
-    = render 'slide_list_elem'
+  - @lectures.each do |lecture, slidesets|
+    - slidesets.each do |slideset, slides|
+      %h3
+        = link_to lecture.title, lecture_path(lecture)
+        \|
+        = link_to slideset.title, slideset_slides_path(slideset)
+      - @slides = slides
+      %ol#search_result
+        = render 'slide_list_elem'
