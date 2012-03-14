@@ -2,7 +2,7 @@
   #header_left
     = link_to( image_tag("logo_uni_bremen.gif", alt: "Folinator"), root_path)
     %ul{:id => "page_path"}
-      %li= link_to 'Home', root_path
+      %li= link_to 'Folinator', root_path
       - if @lecture && @lecture.title
         %li >
         %li= link_to @lecture.title, lecture_path(@lecture)
