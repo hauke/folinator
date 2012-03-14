@@ -61,10 +61,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def username
-    return name if name
+  def identifier
     user_match = identity_url.match(/^https:\/\/openid.tzi.de\/(.*)/)
     return user_match[1] if user_match.length == 2
     identity_url
+  end
+
+  def username
+    return name if name
+    return identifier
   end
 end
