@@ -1,0 +1,11 @@
+- @slides.each do |slide|
+  %li{:id => "slide_#{slide.id}"}
+    .title
+      = check_box_tag "slide_ids[]", slide.id
+      = link_to slide.title.annotation, [slide.slideset, slide] if slide.title
+    .image
+      = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
+    .functions
+      = link_to 'Anzeigen', [slide.slideset, slide]
+      - if can? :delete, slide
+        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie #{slide.title} entgültig löschen wollen?", method: :delete}

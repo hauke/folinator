@@ -33,7 +33,7 @@ describe "Search" do
       visit lectures_path
       fill_in "search", with: "Test" 
       click_button "Suchen"
-      page.should have_content('Nothing found')
+      page.should have_content('Keine Folien gefunden')
     end
   end
 end

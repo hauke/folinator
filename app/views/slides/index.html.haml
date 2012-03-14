@@ -1,19 +1,7 @@
 %h1 Foliensatz #{@slideset.title}
 = form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do
   %ol#slides{ :class => ( can?(:create, @slides) ? 'sortable': '') }
-    - @slides.each do |slide|
-      %li{:id => "slide_#{slide.id}"}
-        .title
-          = check_box_tag "slide_ids[]", slide.id
-          = link_to slide.title.annotation, [slide.slideset, slide] if slide.title
-        .image
-          = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
-        .functions
-          = link_to 'Anzeigen', [slide.slideset, slide]
-          - if can? :edit, slide
-            | #{link_to 'Bearbeiten', edit_slideset_slide_path(slide.slideset.id, slide)}
-          - if can? :delete, slide
-            | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie #{slide.title} entgültig löschen wollen?", method: :delete}
+    = render 'slide_list_elem'
   %p Schlagwort zu allen ausgewählten Folien hinzufügen
   %p  Schlagwort: #{autocomplete_field_tag "annotation","", autocomplete_annotation_annotation_annotations_path}
   = submit_tag "Schlagwort hinzufügen"
