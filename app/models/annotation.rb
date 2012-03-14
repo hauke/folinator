@@ -42,14 +42,14 @@ class Annotation < ActiveRecord::Base
   end
 
   def self.find_for_rename(search)
-    find(:all, :conditions => ['annotation = ? AND deleted = ?', "%#{search}%", false])
+    find(:all, :conditions => ['annotation = ? AND deleted = ?', search, false])
   end
 
   def self.find_for_rename_by_slideset(search, slideset)
-   find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = ?', "%#{search}%", false, slideset.id])
+   find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = ?', search, false, slideset.id])
   end
 
   def self.find_for_rename_by_lecture(search, lecture)
-    find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
+    find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', search, false, lecture.id])
   end
 end
