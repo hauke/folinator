@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SlidesController < ApplicationController
   # GET /slides
   # GET /slides.json

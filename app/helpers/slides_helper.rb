@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SlidesHelper
 
   def next_slide_link slide

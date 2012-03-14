@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSlidesets < ActiveRecord::Migration
   def change
     create_table :slidesets do |t|

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
