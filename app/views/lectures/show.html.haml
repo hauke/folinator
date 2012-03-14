@@ -1,24 +1,21 @@
-%h1 Listing slidesets
-%table
+%h1 Foliensätze von #{@lecture.title}
+%table.table-striped.table-bordered.table-condensed
   %tr
     %th Title
-    %th Description
-    %th
-      - if can? :edit, @slidesets
-        %th
-      - if can? :destroy, @slidesets
-        %th
+    %th Beschreibung
+    - if can? :edit, @slidesets
+      %th
+    - if can? :destroy, @slidesets
+      %th
   - @slidesets.each do |slideset|
     %tr
-      %td= link_to "#{slideset.title} (#{slideset.slides.count} Slides)", [slideset, :slides]
-      %td= slideset.description
+      %td= link_to "#{slideset.title} (#{slideset.slides.count} Folien)", [slideset, :slides]
+      %td= simple_format(slideset.description)
       - if can? :edit, slideset
-        %td= link_to 'Edit', edit_slideset_path(slideset)
-      - if can? :destroy, slideset
-        %td= link_to 'Destroy', slideset, confirm: 'Are you sure?', method: :delete
-%br/
-.footer_menu
-  - if can? :create, @slidesets
-    = link_to 'New Slideset', new_lecture_slideset_path(@lecture, @slideset)
-    |
-    \#{link_to 'Back', lectures_path}
+        %td= link_to 'Bearbeiten', edit_slideset_path(slideset)
+      - if can? :delete, slideset
+        %td= link_to 'Löschen', slideset, confirm: 'Sind sie sich sicher, dass sie #{slideset.title} entgültig löschen wollen?', method: :delete
+- if can? :create, @slidesets
+  %br/
+  .footer_menu
+    = link_to 'Neuen Foliensatz hinzufügen', new_lecture_slideset_path(@lecture, @slideset)

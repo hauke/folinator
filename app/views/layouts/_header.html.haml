@@ -1,31 +1,33 @@
-%header
+%header.clearfix
   #header_left
-    = link_to( image_tag("logo.png", alt: "Slide Annotator", class: "round"), root_path)
+    = link_to( image_tag("logo_uni_bremen.gif", alt: "Folinator"), root_path)
     %ul{:id => "page_path"}
-      %li= link_to 'Home', root_path
+      %li= link_to 'Folinator', root_path
       - if @lecture && @lecture.title
-        >
+        %li >
         %li= link_to @lecture.title, lecture_path(@lecture)
       - if @slideset && @slideset.title
-        >
+        %li >
         %li= link_to @slideset.title, slideset_slides_path(@slideset)
       - if @slide && @slide.title
-        >
+        %li >
         %li= link_to @slide.title.annotation, slideset_slide_path(@slideset, @slide)
-  %nav.round
-    %ul
-      %li
-        = form_tag searchresults_path, :method => 'post' do
-          = autocomplete_field_tag :search, params[:search], autocomplete_annotation_annotation_annotations_path
-          = submit_tag "Search", :name => nil
-          = radio_button_tag "search_scope", 'all', !@lecture && !@slideset
-          = label_tag :search_scope_all, "Alles"
+  #header_right
+    #searchbox
+      = form_tag searchresults_path, :method => 'post', class: "form-search" do
+        = autocomplete_field_tag :search, params[:search], autocomplete_annotation_annotation_annotations_path
+        = submit_tag "Suchen", :name => nil
+        %ul
+          %li= radio_button_tag "search_scope", 'all', !@lecture && !@slideset
+          %li= label_tag :search_scope_all, "Alles"
           - if @lecture
-            = radio_button_tag "search_scope", 'lecture', !@slideset
-            = label_tag :search_scope_lecture, "Vorlesung"
+            %li= radio_button_tag "search_scope", 'lecture', !@slideset
+            %li= label_tag :search_scope_lecture, "Vorlesung"
+            %li= hidden_field_tag 'lecture_id', @lecture.id
           - if @slideset
-            = radio_button_tag "search_scope", 'slideset', @slideset
-            = label_tag :search_scope_slideset, "Foliensatz"
-          = hidden_field_tag 'lecture_id', @lecture.id if @lecture
-          = hidden_field_tag 'slideset_id', @slideset.id if @slideset
-      %li= link_to "Logout", destroy_user_session_path, :method => :delete
+            %li= radio_button_tag "search_scope", 'slideset', @slideset
+            %li= label_tag :search_scope_slideset, "Foliensatz"
+            %li= hidden_field_tag 'slideset_id', @slideset.id
+    %p.logout
+      - if @current_user
+        = link_to "#{@current_user.identifier} ausloggen", destroy_user_session_path, :method => :delete

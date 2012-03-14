@@ -12,10 +12,20 @@
 #  updated_at   :datetime        not null
 #
 
+class OnlyTziOpenID < ActiveModel::Validator
+  def validate(record)
+    if (record.identity_url =~ /^https:\/\/openid.tzi.de\//) != 0
+      record.errors[:base] << "Only users from https://openid.tzi.de allowed"
+    end
+  end
+end
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :openid_authenticatable
+
+  validates_with OnlyTziOpenID
 
   # Setup accessible (or protected) attributes for your model
 #  attr_accessible :identity_url
@@ -49,5 +59,16 @@ class User < ActiveRecord::Base
           logger.error "Unknown OpenID field: #{key}"
       end
     end
+  end
+
+  def identifier
+    user_match = identity_url.match(/^https:\/\/openid.tzi.de\/(.*)/)
+    return user_match[1] if user_match.length == 2
+    identity_url
+  end
+
+  def username
+    return name if name
+    return identifier
   end
 end

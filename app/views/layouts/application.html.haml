@@ -7,11 +7,10 @@
     = csrf_meta_tags
   %body
     = render 'layouts/development_bar' if development_or_test_mode?
-    .container
-      = render 'layouts/header'
-      %section.round
-        - flash.each do |key, msg|
-          %p{:class => key}= msg
-        #content
-          = yield
-      = render 'layouts/footer'
+    = render 'layouts/header'
+    %section.round
+      - flash.each do |key, msg|
+        %p{:class => key}= msg
+      #content
+        = yield
+    = render 'layouts/footer'

@@ -1,5 +1,4 @@
-%h1
-  Listing slides (#{@slideset.title})
+%h1 Foliensatz #{@slideset.title}
 = form_tag edit_multiple_slideset_slides_path(@slideset, @slide) do
   %ol#slides{ :class => ( can?(:create, @slides) ? 'sortable': '') }
     - @slides.each do |slide|
@@ -10,22 +9,20 @@
         .image
           = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
         .functions
-          = link_to 'Show', [slide.slideset, slide]
+          = link_to 'Anzeigen', [slide.slideset, slide]
           - if can? :edit, slide
-            | #{link_to 'Edit', edit_slideset_slide_path(slide.slideset.id, slide)}
-          - if can? :destroy, slide
-            | #{link_to 'Destroy', [slide.slideset, slide], confirm: 'Are you sure?', method: :delete}
-  %p
-    Annotation: #{autocomplete_field_tag "annotation","", autocomplete_annotation_annotation_annotations_path}
-  = submit_tag "Add annotation"
+            | #{link_to 'Bearbeiten', edit_slideset_slide_path(slide.slideset.id, slide)}
+          - if can? :delete, slide
+            | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie #{slide.title} entgültig löschen wollen?", method: :delete}
+  %p Schlagwort zu allen ausgewählten Folien hinzufügen
+  %p  Schlagwort: #{autocomplete_field_tag "annotation","", autocomplete_annotation_annotation_annotations_path}
+  = submit_tag "Schlagwort hinzufügen"
 %br/
 - if can? :create, @slides
   = form_for [@slideset, @slide_new] do |f|
     %p
       = f.file_field :image
     %p
-      After: #{select_tag :slide_after, options_for_select(["first"] + @slideset.slides.map{|slide| ["#{slide.id} (#{slide.title ? slide.title.annotation : ""})", slide.id] })} slide
+      Nach: #{select_tag :slide_after, options_for_select(["Anfang"] + @slideset.slides.map{|slide| ["#{slide.id} (#{slide.title ? slide.title.annotation : ""})", slide.id] })} Folie einfügen
     .actions
-      = f.submit
-.footer_menu
-  = link_to 'Back', lecture_path(@lecture)
+      = f.submit "Folie hinzufügen"

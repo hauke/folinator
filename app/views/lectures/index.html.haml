@@ -1,13 +1,19 @@
-%h1 Listing lectures
-%table
+%h1 Liste der Vorlesungen
+%table.table-striped.table-bordered.table-condensed 
   %tr
-    %th
-    %th
-    %th
+    %th Name
+    - if can? :edit, @lectures
+      %th
+    - if can? :delete, @lectures
+      %th
   - @lectures.each do |lecture|
     %tr
       %td= link_to lecture.title, lecture
-      %td= link_to 'Edit', edit_lecture_path(lecture)
-      %td= link_to 'Destroy', lecture, confirm: 'Are you sure?', method: :delete
-%br/
-= link_to 'New Lecture', new_lecture_path
+      - if can? :edit, lecture
+        %td= link_to 'Bearbeiten', edit_lecture_path(lecture)
+      - if can? :delete, lecture
+        %td= link_to 'Löschen', lecture, confirm: "Sind sie sich sicher, dass sie #{lecture.title} entgültig löschen wollen?", method: :delete
+- if can? :create, @lectures
+  %br/
+  .footer_menu
+    = link_to 'Neue Vorlesung hinzufügen', new_lecture_path

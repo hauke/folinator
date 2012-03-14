@@ -8,7 +8,7 @@ gem 'haml'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.5'
-  gem 'annotate', '~> 2.4.1.beta'
+  gem 'annotate'
   gem 'rspec-rails', '~> 2.8.1'
   gem 'faker'
 end
@@ -46,6 +46,8 @@ gem 'devise_openid_authenticatable'
 gem 'cancan'
 
 gem 'rails3-jquery-autocomplete'
+
+gem 'bootstrap-sass'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

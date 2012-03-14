@@ -25,14 +25,14 @@ describe "Search" do
     it "should find slide4" do
       visit lectures_path
       fill_in "search", with: "Test" 
-      expect { click_button "Search"}.to change{current_path}.to(searchresults_path)
+      expect { click_button "Suchen"}.to change{current_path}.to(searchresults_path)
     end
   end
   describe "Find nothing" do
     it "should find nothing" do
       visit lectures_path
       fill_in "search", with: "Test" 
-      click_button "Search"
+      click_button "Suchen"
       page.should have_content('Nothing found')
     end
   end

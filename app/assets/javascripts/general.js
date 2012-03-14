@@ -12,3 +12,6 @@ $(function() {
   });
 })
 
+$(function() {
+  $(".autoclick").click();
+})

@@ -7,5 +7,7 @@
       %ul
         - @lecture.errors.full_messages.each do |msg|
           %li= msg
+  Titel:
+  = f.text_field :title
   .actions
     = f.submit
