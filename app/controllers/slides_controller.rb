@@ -206,14 +206,9 @@ protected
     @surrounding_annotations = surrounding_annotations
   end
   
-#   Parameters: {"utf8"=>"✓", "authenticity_token"=>"EAqW9QgppJ4nnCfZIg4/zftl3ObeQqphG+7NwY/k3tQ=", "annotation_id"=>"1", #"annotation_1"=>"", "rename_scope_1"=>"lecture", "annotation_2"=>"", "annotation_6"=>"UDP", "rename_scope_6"=>"lecture", #"annotation_7"=>"", "commit"=>"Select as title", "slideset_id"=>"1", "id"=>"1"}
-  
   def rename_annotation
-    puts params
     @annotations.each do |annotation|
-            puts params["annotation_#{annotation.id}".to_sym]
       if not params["annotation_#{annotation.id}".to_sym].blank?
-        puts params["annotation_#{annotation.id}".to_sym]
         case params["rename_scope_#{annotation.id}".to_sym]
           when "all"
             annotations = Annotation.search(annotation.annotation)
