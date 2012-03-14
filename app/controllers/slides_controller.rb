@@ -83,13 +83,7 @@ class SlidesController < ApplicationController
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.new(params[:slide])
     authorize! :create, @slide
-    if params[:slide_after] && params[:slide_after] != "first"
-      position = @slideset.slides.find(params[:slide_after]).position + 1
-    else
-      position = 0
-      position = @slideset.slides[0].position if !@slideset.slides.empty? && @slideset.slides[0].position
-    end
-    @slide.insert_at(position)
+    @slide.insert_at(params[:slide_after].to_i + 1)
 
     respond_to do |format|
       if @slide.save

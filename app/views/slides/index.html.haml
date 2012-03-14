@@ -11,6 +11,6 @@
     %p
       = f.file_field :image
     %p
-      Nach: #{select_tag :slide_after, options_for_select(["Anfang"] + @slideset.slides.map{|slide| ["#{slide.id} (#{slide.title ? slide.title.annotation : ""})", slide.id] })} Folie einfügen
+      Nach: #{select_tag :slide_after, options_for_select([["0 Anfang", 0]] + @slideset.slides.map{|slide| ["#{slide.position} (#{slide.title ? slide.title.annotation : ""})", slide.position] })} Folie einfügen
     .actions
       = f.submit "Folie hinzufügen"
