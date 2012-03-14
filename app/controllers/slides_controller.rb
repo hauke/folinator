@@ -211,13 +211,13 @@ protected
       if not params["annotation_#{annotation.id}".to_sym].blank?
         case params["rename_scope_#{annotation.id}".to_sym]
           when "all"
-            annotations = Annotation.search(annotation.annotation)
+            annotations = Annotation.find_for_rename(annotation.annotation)
           when "lecture"
             lecture = @slide.slideset.lecture 
-            annotations = Annotation.search_by_lecture(annotation.annotation, lecture)
+            annotations = Annotation.find_for_rename_by_lecture(annotation.annotation, lecture)
           when "slideset"
             slideset = @slide.slideset
-            annotations = Annotation.search_by_slideset(annotation.annotation, slideset)
+            annotations = Annotation.find_for_rename_by_slideset(annotation.annotation, slideset)
         end
         return unless annotations
         annotations.each do |annos|

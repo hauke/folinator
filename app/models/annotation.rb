@@ -30,26 +30,26 @@ class Annotation < ActiveRecord::Base
   scope :distincttag, :group => ('annotations.annotation'), :conditions => ['deleted = ?', false]
 
   def self.search(search)
-    if search
-      find(:all, :conditions => ['annotation LIKE ? AND deleted = ?', "%#{search}%", false])
-    else
-      find(:all)
-    end
+    find(:all, :conditions => ['annotation LIKE ? AND deleted = ?', "%#{search}%", false])
   end
 
   def self.search_by_slideset(search, slideset)
-    if search
-      find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = ?', "%#{search}%", false, slideset.id])
-    else
-      find(:all)
-    end
+   find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = ?', "%#{search}%", false, slideset.id])
   end
 
   def self.search_by_lecture(search, lecture)
-    if search
-      find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
-    else
-      find(:all)
-    end
+    find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
+  end
+
+  def self.find_for_rename(search)
+    find(:all, :conditions => ['annotation = ? AND deleted = ?', "%#{search}%", false])
+  end
+
+  def self.find_for_rename_by_slideset(search, slideset)
+   find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id = ?', "%#{search}%", false, slideset.id])
+  end
+
+  def self.find_for_rename_by_lecture(search, lecture)
+    find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
   end
 end
