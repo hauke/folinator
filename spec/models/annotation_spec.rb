@@ -35,8 +35,8 @@ describe Annotation do
     @annotation = @slidesets[0].slides[0].annotations.create!(annotation: "Karl")
     @annotation2 = @slidesets2[0].slides[0].annotations.create!(annotation: "Karl Heinz Meier")
     @annotation3 = @slidesets2[1].slides[0].annotations.create!(annotation: "Karl Heinz Müller")
-    @annotation5 = @slidesets2[1].slides[1].annotations.create!(annotation: "Karl Heinz Meier")  
     @annotation4 = @slidesets2[1].slides[2].annotations.create!(annotation: "Karl")
+    @annotation5 = @slidesets2[1].slides[1].annotations.create!(annotation: "Karl Heinz Meier")  
   end
   subject { @annotation1 }
   
@@ -69,6 +69,28 @@ describe Annotation do
   describe "find to rename in scope slideset" do
     it "should find only one Karl Heinz Meier" do
       anno = Annotation.find_for_rename_by_slideset("Karl Heinz Meier", @slidesets2[1])
+      anno.should eq([@annotation5])
+    end
+  end
+  describe "search" do
+    it"should find Karl Heinz Meier" do
+      anno = Annotation.search("Karl Heinz Meier")
+      anno.should eq([@annotation2, @annotation5]) 
+    end 
+    it "should find only all Karls" do
+      anno = Annotation.search("Karl")
+      anno.should eq([@annotation, @annotation2, @annotation3, @annotation4, @annotation5])
+    end
+  end
+  describe "search in scope lecture" do
+    it "should find only one Karl" do
+      anno = Annotation.search_by_lecture("Karl", @lecture)
+      anno.should eq([@annotation])
+    end
+  end
+  describe "search in scope slideset" do
+    it "should find only one Karl Heinz Meier" do
+      anno = Annotation.search_by_slideset("Karl Heinz Meier", @slidesets2[1])
       anno.should eq([@annotation5])
     end
   end

@@ -17,7 +17,7 @@ require 'spec_helper'
 # stubs and message expectations in this spec.  Stubs are only used when there
 # is no simpler way to get a handle on the object needed for the example.
 # Message expectations are only used when there is no simpler way to specify
-# that an instance is receiving a specific message.
+# that an instance isModeratoren: Enkidi Li Halan, Blechpirat
 
 describe SlidesController do
   login_admin
