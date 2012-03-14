@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSlides < ActiveRecord::Migration
   def change
     create_table :slides do |t|

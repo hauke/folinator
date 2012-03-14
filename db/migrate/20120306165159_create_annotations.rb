@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateAnnotations < ActiveRecord::Migration
   def change
     create_table :annotations do |t|
