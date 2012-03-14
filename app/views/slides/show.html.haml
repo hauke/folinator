@@ -33,14 +33,14 @@
               = label_tag "rename_scope_#{annotation.id}_slideset", "Foliensatz"
     .actions
       = submit_tag "Select as title"
-  %h3 Annotations from surrounding slides
-  = form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do
-    %table
-      - @surrounding_annotations.each do |annotation|
-        %tr
-          %td= check_box_tag "annotations_id[]", annotation.id
-          %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
-          %td
+  %h3{class: "annotation-surrounding-head"} Annotations from surrounding slides
+  .annotation-surrounding.annotation-surrounding-hide
+    = form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do
+      %table
+        - @surrounding_annotations.each do |annotation|
+          %tr
+            %td= check_box_tag "annotations_id[]", annotation.id
+            %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
     .actions
       = submit_tag "Add"
   %h3 Add annotations
