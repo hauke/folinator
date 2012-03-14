@@ -48,16 +48,6 @@ class SlidesController < ApplicationController
       format.json { render json: @slide }
     end
   end
-
-  # GET /slides/1
-  # GET /slides/1.json
-  def edit
-    fill_for_show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @slide }
-    end
-  end
   
   # GET /slides/new
   # GET /slides/new.json
@@ -110,7 +100,7 @@ class SlidesController < ApplicationController
         format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "show" }
         format.json { render json: @slide.errors, status: :unprocessable_entity }
       end
     end

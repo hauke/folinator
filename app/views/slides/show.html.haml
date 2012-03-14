@@ -6,7 +6,12 @@
     .center
       %p #{first_slide_link @slide} | #{previous_slide_link @slide} | #{next_slide_link @slide} | #{last_slide_link @slide}
       - if can? :edit, @slide
-        %p= link_to 'Bearbeiten', edit_slideset_slide_path(@slideset, @slide)
+        %h4 Folie ersetzen
+        = form_for [@slideset, @slide] do |f|
+          %p
+            = f.file_field :image
+          .actions
+            = f.submit "Folie ersetzen"
   .span6
     %h2 Schlagworte
     = form_tag set_title_slideset_slide_path(@slideset, @slide) do
