@@ -4,7 +4,6 @@ div#header_left
   float: left
 
 div#header_right
-  margin-right: 10px
   float: right
 
 div#searchbox
@@ -22,5 +21,55 @@ div#searchbox
 .annotation-surrounding-hide
   display: none
 
-header
+header, footer
   background-color: #E2E2E2
+  padding:
+    right: 10px
+    left: 10px
+
+section
+  margin: 20px
+
+h1
+  margin-bottom: 20px
+
+body
+  font-size: 1em
+
+/*  copied from blueprint*/
+.error, .alert, .notice, .success, .info
+  padding: 0.8em
+  margin-bottom: 1em
+  border: 2px solid #ddd
+
+.error, .alert
+  background: #fbe3e4
+  color: #8a1f11
+  border-color: #fbc2c4
+
+.notice
+  background: #fff6bf
+  color: #514721
+  border-color: #ffd324
+
+.success
+  background: #e6efc2
+  color: #264409
+  border-color: #c6d880
+
+.info
+  background: #d5edf8
+  color: #205791
+  border-color: #92cae4
+
+.error a, .alert a
+  color: #8a1f11
+
+.notice a 
+  color: #514721
+
+.success a
+  color: #264409
+
+.info a
+  color: #205791
