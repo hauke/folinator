@@ -29,4 +29,5 @@
             %li= label_tag :search_scope_slideset, "Foliensatz"
             %li= hidden_field_tag 'slideset_id', @slideset.id
     %p.logout
-      = link_to "#{@current_user.identifier} ausloggen", destroy_user_session_path, :method => :delete
+      - if @current_user
+        = link_to "#{@current_user.identifier} ausloggen", destroy_user_session_path, :method => :delete
