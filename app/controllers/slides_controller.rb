@@ -221,9 +221,10 @@ protected
             annotations = Annotation.find_for_rename_by_slideset(annotation.annotation, slideset)
         end
         return unless annotations
+        
         annotations.each do |annos|
           annos.annotation = params["annotation_#{annotation.id}".to_sym]  
-          annos.save        
+          annos.save   
         end
       end
     end 

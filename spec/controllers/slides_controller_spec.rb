@@ -180,9 +180,17 @@ describe SlidesController do
       annotations = 3.times.map { Factory :annotation, :slide => slide2 }
       slide2.reload
       expect {
-      post :copy_annotations, {id: slide.id, annotations_id: [slide2.annotations[1].id], slideset_id: @slideset.id},      
-      valid_session
+        post :copy_annotations, {id: slide.id, annotations_id: [slide2.annotations[1].id], slideset_id: @slideset.id},      
+        valid_session
       }.to change(slide.annotations, :count).by(1)
     end
   end
+  describe "POST rename annotation"
+    it "should give a new name to a annotation" do
+      slide= Slide.create! valid_attributes
+      annotation = Factory :annotation, :slide => slide
+      anno= annotation.annotation
+      post :set_title, {id: slide.id,annotation_id: annotation.id, "annotation_#{annotation.id}".to_sym => "Test", "rename_scope_#{annotation.id}".to_sym => "all" , slideset_id: @slideset.id}, valid_session
+      response.should render_template("show")
+    end
 end
