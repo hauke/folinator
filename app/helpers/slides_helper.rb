@@ -3,7 +3,7 @@ module SlidesHelper
 
   def next_slide_link slide
     if slide.lower_item
-      link_to 'Vor', slideset_slide_path(slide.slideset, slide.lower_item)
+      link_to 'Vor', slideset_slide_path(slide.slideset, slide.lower_item), accesskey: "V"
     else
       "Vor"
     end
@@ -11,7 +11,7 @@ module SlidesHelper
 
   def previous_slide_link slide
     if slide.higher_item
-      link_to 'Zurück', slideset_slide_path(slide.slideset, slide.higher_item)
+      link_to 'Zurück', slideset_slide_path(slide.slideset, slide.higher_item), accesskey: "Z"
     else
       "Zurück"
     end
