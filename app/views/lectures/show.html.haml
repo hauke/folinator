@@ -10,7 +10,7 @@
   - @slidesets.each do |slideset|
     %tr
       %td= link_to "#{slideset.title} (#{slideset.slides.count} Folien)", [slideset, :slides]
-      %td= slideset.description
+      %td= simple_format(slideset.description)
       - if can? :edit, slideset
         %td= link_to 'Bearbeiten', edit_slideset_path(slideset)
       - if can? :delete, slideset

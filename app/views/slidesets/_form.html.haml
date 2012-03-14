@@ -1,10 +1,8 @@
 = form_for([@lecture, @slideset]) do |f|
   .field
     = f.label :title
-    %br/
     = f.text_field :title
-  %h3 New Description
-  %p
-    = f.text_area(:description, :cols => 20, :rows => 40)
+    %p Beschreibung
+    = f.text_area(:description)
   .actions
     = f.submit
