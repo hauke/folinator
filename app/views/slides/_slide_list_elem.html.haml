@@ -2,7 +2,8 @@
   %li{:id => "slide_#{slide.id}"}
     .title
       = check_box_tag "slide_ids[]", slide.id
-      = link_to slide.title.annotation, [slide.slideset, slide] if slide.title
+      = link_to "#{slide.position} #{slide.title.annotation}", [slide.slideset, slide] if slide.title
+      = link_to slide.position, [slide.slideset, slide] unless slide.title
     .image
       = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
     .functions

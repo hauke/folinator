@@ -38,6 +38,11 @@ class SlidesController < ApplicationController
       @lectures[lecture][slideset] = [] unless @lectures[lecture][slideset]
       @lectures[lecture][slideset] << slide
     end
+    @lectures.each do |lecture, slidesets|
+      slidesets.each do |slideset, slides|
+        slides.sort!{|x,y| x.position <=> y.position } 
+      end
+    end
     
     @search = params[:search]
     authorize! :read, @slides

@@ -1,5 +1,7 @@
-- if @slide.title
-  %h1= @slide.title.annotation
+%h1
+  = @slide.position
+  - if @slide.title
+    = @slide.title.annotation
 .row
   .span6
     = image_tag @slide.image_url(:normal) if @slide.image?
