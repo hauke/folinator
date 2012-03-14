@@ -31,31 +31,33 @@ describe Annotation do
         Factory :annotation, :slide => slide
       end
     end
+    @annotation1 = Annotation.new(annotation: "Test")
     @annotation = @slidesets[0].slides[0].annotations.create!(annotation: "Karl")
     @annotation2 = @slidesets2[0].slides[0].annotations.create!(annotation: "Karl Heinz Meier")
     @annotation3 = @slidesets2[1].slides[0].annotations.create!(annotation: "Karl Heinz Müller")
     @annotation5 = @slidesets2[1].slides[1].annotations.create!(annotation: "Karl Heinz Meier")  
     @annotation4 = @slidesets2[1].slides[2].annotations.create!(annotation: "Karl")
   end
-  subject { @annotation }
+  subject { @annotation1 }
   
   describe "slide:" do
     describe "do not belong to a slide" do
+      before {}
       it { should_not be_valid }
     end
     describe "belongs to a slide" do
-      before { @annotation.slide = @slide }
+      before { @annotation1.slide = @slides[2] }
       it { should be_valid }
     end
   end
   describe "find to rename" do
     it"should find Karl Heinz Meier" do
       anno = Annotation.find_for_rename("Karl Heinz Meier")
-      anno.should eq([@annotation2]) 
+      anno.should eq([@annotation2, @annotation5]) 
     end 
     it "should find only Karl" do
       anno = Annotation.find_for_rename("Karl")
-      anno.should eq([@annotation])
+      anno.should eq([@annotation, @annotation4])
     end
   end
   describe "find to rename in scope lecture" do
@@ -65,9 +67,9 @@ describe Annotation do
     end
   end
   describe "find to rename in scope slideset" do
-    it "should find only one Karl" do
+    it "should find only one Karl Heinz Meier" do
       anno = Annotation.find_for_rename_by_slideset("Karl Heinz Meier", @slidesets2[1])
-      anno.should eq([@annotation])
+      anno.should eq([@annotation5])
     end
   end
 end
