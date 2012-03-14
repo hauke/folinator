@@ -53,7 +53,9 @@
           = submit_tag "Speichern"
         - else
           = submit_tag "Als Titel setzen"
-    %h3{class: "annotation-surrounding-head"} Schlagworte von benachbarten Folien
+    .annotation-surrounding-head
+      <i class="icon-plus-sign"></i>
+      Schlagworte von benachbarten Folien
     .annotation-surrounding.annotation-surrounding-hide
       = form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do
         %table.table-striped.table-bordered.table-condensed
