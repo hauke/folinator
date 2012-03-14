@@ -19,49 +19,49 @@ describe "Slides" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       visit slideset_slides_path(@slideset)
-      should have_content("Listing slides (#{@slideset.title})")
+      should have_content("Foliensatz #{@slideset.title}")
     end
   end
-  describe "GET next slide" do
-    it "should take me to next slide" do
+  describe "GET Vor slide" do
+    it "should take me to Vor slide" do
       visit slideset_slide_path(@slideset, @slide)
-      expect { click_link "Next"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide2))
+      expect { click_link "Vor"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide2))
     end
-    it "should not go past the last slide" do
+    it "should not go past the Ende slide" do
       visit slideset_slide_path(@slideset, @slide3)
-      should_not have_link("Next")
+      should_not have_link("Vor")
     end
   end
-  describe "GET previous slide" do 
-    it "should take me to previous slide" do
+  describe "GET Zurück slide" do 
+    it "should take me to Zurück slide" do
       visit slideset_slide_path(@slideset, @slide2)
-      expect { click_link "Previous"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide))
+      expect { click_link "Zurück"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide))
     end
-    it "should not go before the first slide" do
+    it "should not go before the Anfang slide" do
       visit slideset_slide_path(@slideset, @slide)
-      should_not have_link("Previous")
+      should_not have_link("Zurück")
     end
   end
-  describe "GET last slide" do
-    it "should take me to last slide" do
+  describe "GET Ende slide" do
+    it "should take me to Ende slide" do
       visit slideset_slide_path(@slideset, @slide)
-      expect { click_link "Last"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide3))
+      expect { click_link "Ende"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide3))
     end
-    it "should not go before the first slide" do
+    it "should not go before the Anfang slide" do
       visit slideset_slide_path(@slideset, @slide3)
-      should_not have_link("Last")
-      should have_link("First")
+      should_not have_link("Ende")
+      should have_link("Anfang")
     end
   end
-  describe "GET first slide" do
-    it "should take me to last slide" do
+  describe "GET Anfang slide" do
+    it "should take me to Ende slide" do
       visit slideset_slide_path(@slideset, @slide3)
-      expect { click_link "First"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide))
+      expect { click_link "Anfang"}.to change{current_path}.to(slideset_slide_path(@slideset, @slide))
     end
-    it "should not go before the first slide" do
+    it "should not go before the Anfang slide" do
       visit slideset_slide_path(@slideset, @slide)
-      should_not have_link("First")
-      should have_link("Last")
+      should_not have_link("Anfang")
+      should have_link("Ende")
     end
   end
   describe "set Title-Annotation" do
@@ -71,8 +71,7 @@ describe "Slides" do
     it "should show the title annotation in slide/index" do
       visit slideset_slide_path(@slideset, @slide)
       choose("annotation_id_#{@annotation.id}")
-      click_button("Select as title")
-      click_link("Back")
+      click_button("Speichern")
       should have_content(@annotation.annotation)
     end
   end
