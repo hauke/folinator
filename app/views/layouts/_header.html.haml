@@ -14,7 +14,7 @@
         %li= link_to @slide.title.annotation, slideset_slide_path(@slideset, @slide)
   #header_right
     #searchbox
-      = form_tag searchresults_path, :method => 'post' do
+      = form_tag searchresults_path, :method => 'post', class: "form-search" do
         = autocomplete_field_tag :search, params[:search], autocomplete_annotation_annotation_annotations_path
         = submit_tag "Suchen", :name => nil
         %ul
