@@ -32,7 +32,7 @@ FactoryGirl.define do
   factory :user do
     name         { Faker::Name.name }
     email        { Factory.next :email }
-    identity_url { 'openid.tzi.org/' << email.split("@").first }
+    identity_url { 'https://openid.tzi.de/' << email.split("@").first }
   end
 
   factory :admin, :parent => :user do
