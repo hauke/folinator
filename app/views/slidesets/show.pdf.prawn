@@ -1,6 +1,3 @@
-#pdf.page.size = "A4"
-#pdf.page.margin = 0
-
 @slideset.slides.each do |slide|
   slide.annotations.each do |annotation|
     pdf.text annotation.annotation, size: 42
