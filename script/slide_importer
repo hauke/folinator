@@ -34,10 +34,14 @@ end
 optparse.parse!
 
 if options[:lecture] 
-  lecture_id = Lecture.find_by_title(options[:lecture]).id 
+  unless Lecture.find_by_title(options[:lecture])
+    $stderr.puts "Keine Veranstalltung dieses Namens bekannt"
+    exit 1  
+  end
+  lecture_id = Lecture.find_by_title(options[:lecture]).id
 else 
   $stderr.puts "Keine Veranstalltung angegeben"
-  exit 1
+  exit 1  
 end
 if options[:slideset]
   slideset = Slideset.create(  title: options[:slideset], lecture_id: lecture_id )

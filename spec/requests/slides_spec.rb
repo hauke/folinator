@@ -74,5 +74,5 @@ describe "Slides" do
       click_button("Speichern")
       should have_content(@annotation.annotation)
     end
-  end
+  end    
 end
