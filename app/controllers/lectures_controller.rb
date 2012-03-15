@@ -6,6 +6,10 @@ class LecturesController < ApplicationController
     @lectures = Lecture.all
     authorize! :read,  @lectures
 
+    if !is_admin
+      @lectures.select!{|lecture| !lecture.deleted}
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lectures }
@@ -18,6 +22,10 @@ class LecturesController < ApplicationController
     @lecture = Lecture.find(params[:id])
     @slidesets = @lecture.slidesets
     authorize! :read,  @lecture
+
+    if !is_admin
+      @slidesets.select!{|slideset| !slideset.deleted}
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -87,6 +95,38 @@ class LecturesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to lectures_url }
       format.json { head :no_content }
+    end
+  end
+
+  def mark_deleted
+    @lecture = Lecture.find(params[:id])
+    authorize! :mark_deleted, @lecture
+    @lecture.deleted = true
+
+    respond_to do |format|
+      if @lecture.save
+        format.html { redirect_to lectures_path, notice: "Die Vorlesung \"#{@lecture.title}\" wurde erfolgreich ausgeblendet" }
+        format.json { render json: @lecture, status: :created, location: @lecture }
+      else
+        format.html { redirect_to lectures_path }
+        format.json { render json: @lecture.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unmark_deleted
+    @lecture = Lecture.find(params[:id])
+    authorize! :unmark_deleted, @lecture
+    @lecture.deleted = false
+
+    respond_to do |format|
+      if @lecture.save
+        format.html { redirect_to lectures_path, notice: "Die Vorlesung \"#{@lecture.title}\" wurde erfolgreich eingeblendet" }
+        format.json { render json: @lecture, status: :created, location: @lecture }
+      else
+        format.html { redirect_to lectures_path }
+        format.json { render json: @lecture.errors, status: :unprocessable_entity }
+      end
     end
   end
 end

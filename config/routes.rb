@@ -5,6 +5,11 @@ SlideAnnotator::Application.routes.draw do
 
   resources :lectures do
     resources :slidesets
+
+    member do
+      post 'mark_deleted'
+      post 'unmark_deleted'
+    end
   end
 
   resources :slidesets do
@@ -19,13 +24,17 @@ SlideAnnotator::Application.routes.draw do
       member do
         post 'set_title'
         post 'copy_annotations'
-        post 'increase_position'
-        post 'decrease_position'
+        post 'mark_deleted'
+        post 'unmark_deleted'
       end
       collection do
         post 'sort'
         post 'edit_multiple'
       end
+    end
+    member do
+      post 'mark_deleted'
+      post 'unmark_deleted'
     end
   end
 

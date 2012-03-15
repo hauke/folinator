@@ -1,5 +1,5 @@
 %h1 Suchergebnisse für #{@search}
-- if @slides.empty?
+- if @lectures.empty?
   %p Keine Folien gefunden
 - else
   - @lectures.each do |lecture, slidesets|

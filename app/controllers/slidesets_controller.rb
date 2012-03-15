@@ -59,12 +59,47 @@ class SlidesetsController < ApplicationController
   # DELETE /slidesets/1.json
   def destroy
     @slideset = Slideset.find(params[:id])
+    @lecture =  @slideset.lecture
     authorize! :destroy, @slideset
     @slideset.destroy
 
     respond_to do |format|
-      format.html { redirect_to slidesets_url }
+      format.html { redirect_to lecture_path(@lecture) }
       format.json { head :no_content }
+    end
+  end
+
+  def mark_deleted
+    @slideset = Slideset.find(params[:id])
+    @lecture = @slideset.lecture
+    authorize! :mark_deleted, @slideset
+    @slideset.deleted = true
+
+    respond_to do |format|
+      if @slideset.save
+        format.html { redirect_to lecture_path(@lecture), notice: "Der Foliensatz \"#{@slideset.title}\" wurde erfolgreich ausgeblendet" }
+        format.json { render json: @slideset, status: :created, location: @slideset }
+      else
+        format.html { redirect_to lecture_path(@lecture) }
+        format.json { render json: @slideset.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unmark_deleted
+    @slideset = Slideset.find(params[:id])
+    @lecture = @slideset.lecture
+    authorize! :unmark_deleted, @slideset
+    @slideset.deleted = false
+
+    respond_to do |format|
+      if @slideset.save
+        format.html { redirect_to lecture_path(@lecture), notice: "Der Foliensatz \"#{@slideset.title}\" wurde erfolgreich eingeblendet" }
+        format.json { render json: @slideset, status: :created, location: @slideset }
+      else
+        format.html { redirect_to lecture_path(@lecture) }
+        format.json { render json: @slideset.errors, status: :unprocessable_entity }
+      end
     end
   end
 end
