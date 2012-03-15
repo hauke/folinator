@@ -9,4 +9,4 @@
     .functions
       = link_to 'Anzeigen', [slide.slideset, slide]
       - if can? :delete, slide
-        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie #{slide.title} entgültig löschen wollen?", method: :delete}
+        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.position}\" entgültig löschen wollen?", method: :delete}
