@@ -55,7 +55,6 @@ class AnnotationsController < ApplicationController
     authorize! :mark_deleted, @annotation
     @annotation.deleted = true
     @annotation.last_author = current_user
-
     respond_to do |format|
       if @annotation.save
         format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: "Die Annotation \"#{@annotation.annotation}\" wurde erfolgreich gelöscht" }

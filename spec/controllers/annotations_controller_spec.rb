@@ -98,5 +98,30 @@ describe AnnotationsController do
       response.should redirect_to([@slideset,@slide])
     end
   end
-
+  
+  
+  describe "POST mark-deleted" do
+    it "puts the delelted -Flak on true" do
+      annotation = Annotation.create! valid_attributes
+      expect {
+        post :mark_deleted, { :id => annotation.to_param, slide_id:@slide.id, slideset_id:@slideset.id }, valid_session
+        annotation.reload
+      }.to change(annotation, :deleted).to(true)
+    end
+  end
+  
+  describe "POST unmark-deleted" do
+    before do
+      @annotation = Annotation.create! valid_attributes
+      post :mark_deleted, { :id => @annotation.to_param, slide_id:@slide.id, slideset_id:@slideset.id }, valid_session
+      @annotation.reload
+    end
+    it "puts the delelted-Flak on false" do
+      
+      expect {
+        post :unmark_deleted, { :id => @annotation.to_param, slide_id:@slide.id, slideset_id:@slideset.id }, valid_session
+        @annotation.reload
+      }.to change(@annotation, :deleted).to(false)
+    end
+  end
 end

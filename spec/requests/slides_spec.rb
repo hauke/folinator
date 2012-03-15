@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "Slides" do
   before do 
-    @user = Factory :admin
+    @user = Factory :admin 
     @user.save
     visit new_user_session_path
     page.select("#{@user.name} (#{@user.email})", :from => 'user_id' ) 
@@ -74,5 +74,15 @@ describe "Slides" do
       click_button("Speichern")
       should have_content(@annotation.annotation)
     end
-  end    
+  end  
+  describe "Last Author" do
+    before do  
+      @annotation = Factory :annotation, :slide => @slide
+    end
+    it "should remember last Author" do
+      visit slideset_slide_path(@slideset, @slide)
+      expect { click_link "Ausblenden" 
+      @annotation.reload}.to change(@annotation, :last_author_id).to(@user.id)   
+    end 
+  end   
 end
