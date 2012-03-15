@@ -30,4 +30,4 @@
             %li= hidden_field_tag 'slideset_id', @slideset.id
     %p.logout
       - if @current_user
-        = link_to "#{@current_user.identifier} ausloggen", destroy_user_session_path, :method => :delete
+        = link_to "#{@current_user.identifier} ausloggen", destroy_user_session_path
