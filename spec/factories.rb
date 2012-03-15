@@ -21,6 +21,7 @@ FactoryGirl.define do
   factory :annotation do
     association :slide
     annotation { Faker::Lorem.words(1)[0] }
+    association :last_author, :factory => :user
   end
 end
 

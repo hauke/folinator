@@ -23,6 +23,7 @@ describe SlidesController do
   login_admin
   
   before do
+    @user = Factory :user
     @lecture = Factory :lecture
     @slideset = Factory :slideset, lecture: @lecture
     @file = fixture_file_upload( "/folie-0001-256-w50k.png", "image/png")
@@ -167,7 +168,7 @@ describe SlidesController do
   describe "POST set_title" do
     it "selects annotation as title" do
       slide = Slide.create! valid_attributes
-      annotation = slide.annotations.create!(annotation: "test")
+      annotation = slide.annotations.create!(annotation: "test", last_author: @user)
       post :set_title, {id: slide.id, annotation_id: annotation.id, slideset_id:@slideset.id}, valid_session
       response.should render_template("show")
     end

@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :openid_authenticatable
 
+  has_many :annotations, foreign_key: "last_author_id"
+
   validates_with OnlyTziOpenID
 
   # Setup accessible (or protected) attributes for your model

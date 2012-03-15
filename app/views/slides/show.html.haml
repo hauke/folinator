@@ -25,8 +25,10 @@
             %th Title
             %th Schlagwort
             %th
-            - if can? :edit, @slidesets
+            - if can? :edit, @annotations
               %th
+            - if can? :edit, @annotations
+              %th Letzer Author
           - @annotations.each do |annotation|
             %tr
               %td= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title, title: "#{annotation.annotation} zum Titel der Folie machen"
@@ -45,6 +47,8 @@
                 - else
                   %td= link_to 'Ausblenden', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
                 %td= link_to 'Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie das Schlagwort \"#{annotation.annotation}\" endgütig löschen?", method: :delete
+                - if can? :edit, annotation
+                  %td= annotation.last_author.identifier
             - if can? :edit, @annotation
               %tr{class: "annotation-admin"}
                 %td

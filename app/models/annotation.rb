@@ -22,8 +22,10 @@ end
 
 class Annotation < ActiveRecord::Base
   belongs_to :slide
+  belongs_to :last_author, class_name: "User"
   has_one :slide_title, class_name: "Slide", foreign_key: "title_id"
 
+  validates :last_author_id, presence: true
   validates :slide_id, presence: true
   validates :annotation, presence: true
   validates_with DoubleAnnotation

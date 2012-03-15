@@ -16,6 +16,7 @@ require 'spec_helper'
 
 describe Annotation do
   before do
+    @user = Factory :user
     @lecture, @lecture2 = 2.times.map{Factory :lecture}
     @slidesets = 2.times.map{Factory :slideset, lecture: @lecture}
     @slidesets2 = 2.times.map{Factory :slideset, lecture: @lecture2}
@@ -31,12 +32,12 @@ describe Annotation do
         Factory :annotation, :slide => slide
       end
     end
-    @annotation1 = Annotation.new(annotation: "Test")
-    @annotation = @slidesets[0].slides[0].annotations.create!(annotation: "Karl")
-    @annotation2 = @slidesets2[0].slides[0].annotations.create!(annotation: "Karl Heinz Meier")
-    @annotation3 = @slidesets2[1].slides[0].annotations.create!(annotation: "Karl Heinz Müller")
-    @annotation4 = @slidesets2[1].slides[2].annotations.create!(annotation: "Karl")
-    @annotation5 = @slidesets2[1].slides[1].annotations.create!(annotation: "Karl Heinz Meier")  
+    @annotation1 = Annotation.new(annotation: "Test", last_author: @user)
+    @annotation = @slidesets[0].slides[0].annotations.create!(annotation: "Karl", last_author: @user)
+    @annotation2 = @slidesets2[0].slides[0].annotations.create!(annotation: "Karl Heinz Meier", last_author: @user)
+    @annotation3 = @slidesets2[1].slides[0].annotations.create!(annotation: "Karl Heinz Müller", last_author: @user)
+    @annotation4 = @slidesets2[1].slides[2].annotations.create!(annotation: "Karl", last_author: @user)
+    @annotation5 = @slidesets2[1].slides[1].annotations.create!(annotation: "Karl Heinz Meier", last_author: @user)
   end
   subject { @annotation1 }
   

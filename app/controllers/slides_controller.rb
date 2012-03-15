@@ -147,7 +147,7 @@ class SlidesController < ApplicationController
     end
     @slides = @slideset.slides.find(params[:slide_ids])
     @slides.each do |slide|
-      annotation = slide.annotations.new(annotation: params[:annotation])
+      annotation = slide.annotations.new(annotation: params[:annotation], last_author: current_user)
       authorize! :create, annotation
       annotation.save!
     end
@@ -176,7 +176,7 @@ class SlidesController < ApplicationController
     @slide = @slideset.slides.find(params[:id])
     @annotations = Annotation.find(params[:annotations_id])
     @annotations.each do |annotation|
-      new_annotation = @slide.annotations.new(annotation: annotation.annotation)
+      new_annotation = @slide.annotations.new(annotation: annotation.annotation, last_author: current_user)
       authorize! :create, annotation
       new_annotation.save
     end

@@ -23,6 +23,7 @@ describe AnnotationsController do
   login_admin
   
   before do
+    @user = Factory :user
     @lecture = Factory :lecture
     @slideset = Factory :slideset, lecture: @lecture
     @slide = @slideset.slides.create(image: get_image_stream)
@@ -32,7 +33,7 @@ describe AnnotationsController do
   # Annotation. As you add validations to Annotation, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {slide_id:@slide.id, annotation:"Test"}
+    {slide_id:@slide.id, annotation:"Test", last_author: @user}
   end
   
   def valid_http_attributes

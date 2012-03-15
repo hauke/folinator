@@ -11,15 +11,23 @@ def get_image_stream filename
  File.open("#{Rails.root}/spec/fixtures/#{filename}")
 end
 
+users = User.create!([
+  {identity_url: "https://openid.tzi.de/foo", name: "Foo Foo", email: "foo@tzi.de"},
+  {identity_url: "https://openid.tzi.de/bar", name: "Bar Bar", email: "bar@tzi.de"},
+  {identity_url: "https://openid.tzi.de/admin", name: "Admin", email: "admin@tzi.de", admin: true},
+])
+
 lectures = Lecture.create!([
   {title: "Technische Informatik 2"},
   {title: "Rechnernetze 1"},
 ])
 
 slidesets = Slideset.create!([
-  { title: 'Prozesse', lecture: lectures[0] },
-  { title: 'Netze', lecture: lectures[0] },
-  { title: 'IP', lecture: lectures[1] }
+  { title: 'Prozesse', lecture: lectures[0], description: "- Organisatorisches zu TeI2\n- Aufgaben eines Betriebssystems\n- Geschichtlicher Überblick\n- Warum UNIX?\n- Wichtige Begriffe: Prozeß, Datei, Shell"},
+  { title: 'Netze', lecture: lectures[0], description: "- Shell-Kommandos zur Dateiverwaltung, Verzeichnisstruktur\n- Hard-Links vs. Symbolic-Links
+- Dateien als universelles Konzept in UNIX: normale Dateien, Verzeichnisse, Gerätedateien, Symbolic-Links,...\n- Dateizugriffsrechte
+- Ein-/Ausgabeumlenkung" },
+  { title: 'IP', lecture: lectures[1], description: "- Prozeßhierarchie\n- Vordergrundprozesse vs. Hintergrundprozesse\n- Shell-Kommandos zur Prozeßsteuerung\n- Signale\n- Interprozeßkommunikation: Pipes\n- Effizientes Arbeiten mit der Shell" }
 ])
 
 slides = Slide.create!([
@@ -37,22 +45,22 @@ slides = Slide.create!([
 ])
 
 annotations = Annotation.create!([
-  {annotation: "Semaphore", slide: slides[0]},
-  {annotation: "Dijkstra", slide: slides[0]},
-  {annotation: "Warteschlange", slide: slides[1]},
-  {annotation: "Prozesse", slide: slides[1]},
-  {annotation: "Reader / Writer Problem", slide: slides[2]},
-  {annotation: "TCP", slide: slides[0]},
-  {annotation: "IP", slide: slides[0]},
-  {annotation: "IP", slide: slides[1]},
-  {annotation: "UDP", slide: slides[1]},
-  {annotation: "Sicherheit", slide: slides[2]},
-  {annotation: "Sicherheit", slide: slides[3]},
-  {annotation: "Sicherheit", slide: slides[6]},
-  {annotation: "IP", slide: slides[6]},
-  {annotation: "Header", slide: slides[7]},
-  {annotation: "TTL", slide: slides[7]},
-  {annotation: "TTL", slide: slides[8]}
+  {annotation: "Semaphore", slide: slides[0], last_author: users[2]},
+  {annotation: "Dijkstra", slide: slides[0], last_author: users[0]},
+  {annotation: "Warteschlange", slide: slides[1], last_author: users[1]},
+  {annotation: "Prozesse", slide: slides[1], last_author: users[2]},
+  {annotation: "Reader / Writer Problem", slide: slides[2], last_author: users[0]},
+  {annotation: "TCP", slide: slides[0], last_author: users[1]},
+  {annotation: "IP", slide: slides[0], last_author: users[2]},
+  {annotation: "IP", slide: slides[1], last_author: users[0]},
+  {annotation: "UDP", slide: slides[1], last_author: users[1]},
+  {annotation: "Sicherheit", slide: slides[2], last_author: users[2]},
+  {annotation: "Sicherheit", slide: slides[3], last_author: users[0]},
+  {annotation: "Sicherheit", slide: slides[6], last_author: users[1]},
+  {annotation: "IP", slide: slides[6], last_author: users[2]},
+  {annotation: "Header", slide: slides[7], last_author: users[0]},
+  {annotation: "TTL", slide: slides[7], last_author: users[1]},
+  {annotation: "TTL", slide: slides[8], last_author: users[2]}
 ])
 slides.each{|slide| slide.reload}
 
@@ -67,9 +75,3 @@ slides[7].annotations[0].slide_title = slides[7]
 slides[7].title.save!
 slides[8].annotations[0].slide_title = slides[8]
 slides[8].title.save!
-
-users = User.create!([
-  {identity_url: "https://openid.tzi.de/foo", name: "Foo Foo", email: "foo@tzi.de"},
-  {identity_url: "https://openid.tzi.de/bar", name: "Bar Bar", email: "bar@tzi.de"},
-  {identity_url: "https://openid.tzi.de/admin", name: "Admin", email: "admin@tzi.de", admin: true},
-])

@@ -11,7 +11,7 @@ class AnnotationsController < ApplicationController
     @slide = @slideset.slides.find(params[:slide_id])
     params[:annotation].each do |annotation|
       next if annotation.blank?
-      @annotation = @slide.annotations.new(annotation: annotation)
+      @annotation = @slide.annotations.new(annotation: annotation, last_author: current_user)
       authorize! :create, @annotation
 
         if @annotation.save
@@ -54,6 +54,7 @@ class AnnotationsController < ApplicationController
     @annotation = @slide.annotations.find(params[:id])
     authorize! :mark_deleted, @annotation
     @annotation.deleted = true
+    @annotation.last_author = current_user
 
     respond_to do |format|
       if @annotation.save
@@ -72,6 +73,7 @@ class AnnotationsController < ApplicationController
     @annotation = @slide.annotations.find(params[:id])
     authorize! :unmark_deleted, @annotation
     @annotation.deleted = false
+    @annotation.last_author = current_user
 
     respond_to do |format|
       if @annotation.save
