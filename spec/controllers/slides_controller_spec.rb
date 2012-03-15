@@ -137,7 +137,7 @@ describe SlidesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Slide.any_instance.stub(:save).and_return(false)
         put :update, {:id => slide.to_param, :slide => {},slideset_id:@slideset.id}, valid_session
-        response.should render_template("edit")
+        response.should render_template("show")
       end
     end
   end

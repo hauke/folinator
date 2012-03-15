@@ -30,6 +30,20 @@ class SlidesController < ApplicationController
 
     @slides = annotations.map{ |annotation| annotation.slide }
     @slides.uniq!
+    @lectures = {}
+    @slides.each do |slide|
+      slideset = slide.slideset
+      lecture = slideset.lecture
+      @lectures[lecture] = {} unless @lectures[lecture]
+      @lectures[lecture][slideset] = [] unless @lectures[lecture][slideset]
+      @lectures[lecture][slideset] << slide
+    end
+    @lectures.each do |lecture, slidesets|
+      slidesets.each do |slideset, slides|
+        slides.sort!{|x,y| x.position <=> y.position } 
+      end
+    end
+    
     @search = params[:search]
     authorize! :read, @slides
 
@@ -42,16 +56,6 @@ class SlidesController < ApplicationController
   # GET /slides/1
   # GET /slides/1.json
   def show
-    fill_for_show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @slide }
-    end
-  end
-
-  # GET /slides/1
-  # GET /slides/1.json
-  def edit
     fill_for_show
     respond_to do |format|
       format.html # show.html.erb
@@ -79,13 +83,7 @@ class SlidesController < ApplicationController
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.new(params[:slide])
     authorize! :create, @slide
-    if params[:slide_after] && params[:slide_after] != "first"
-      position = @slideset.slides.find(params[:slide_after]).position + 1
-    else
-      position = 0
-      position = @slideset.slides[0].position if !@slideset.slides.empty? && @slideset.slides[0].position
-    end
-    @slide.insert_at(position)
+    @slide.insert_at(params[:slide_after].to_i + 1)
 
     respond_to do |format|
       if @slide.save
@@ -110,7 +108,7 @@ class SlidesController < ApplicationController
         format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "show" }
         format.json { render json: @slide.errors, status: :unprocessable_entity }
       end
     end
