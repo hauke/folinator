@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
+# -*- encoding : utf-8 -*-
 require File.expand_path('../../config/environment',  __FILE__)
 require 'optparse'
+
 
 options = {}
  
@@ -8,13 +10,17 @@ optparse = OptionParser.new do|opts|
 
   opts.banner = "Usage: importer.rb [options]"
   
-  options[:path] = ""
+  options[:path]
   opts.on( '-p', '--path PATH', 'Path to the Slideset') do |path|
     options[:path] = path
   end
   
+  options[:lecture] 
+  opts.on( '-l', '--lecture LECTURE', 'Lecture') do |lecture|
+    options[:lecture]= lecture  
+  end
   
-  options[:slideset] = ""
+  options[:slideset] 
   opts.on( '-s', '--slideset SLIDESET', 'Name of the Slideset') do |slideset|
     options[:slideset] = slideset
   end
@@ -27,11 +33,30 @@ end
  
 optparse.parse!
 
-slideset = Slideset.create(  title: options[:slideset] )
+if options[:lecture] 
+  lecture_id = Lecture.find_by_title(options[:lecture]).id 
+else 
+  $stderr.puts "Keine Veranstalltung angegeben"
+  exit 1
+end
+if options[:slideset]
+  slideset = Slideset.create(  title: options[:slideset], lecture_id: lecture_id )
+else
+  $stderr.puts "Kein Foliensatz angegeben"
+  exit 1
+end
+
 slides = Dir["#{options[:path]}/*.*"]
+if slides.empty?
+  $stderr.puts "#{options[:path]} ist kein korrekter Pfad."
+  exit 1
+end
 slides.sort!
 
 slides.each do|f|
+  print "Lädt #{f}"
   file = File.open(f)
   Slide.create(image: file, slideset: slideset)
+  puts "\t Fertig"
 end
+puts "Alles Fertig"
