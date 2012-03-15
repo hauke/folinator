@@ -102,4 +102,26 @@ class SlidesetsController < ApplicationController
       end
     end
   end
+
+  def show
+    @slideset = Slideset.find(params[:id])
+    authorize! :show, @slideset
+    respond_to do |format|
+      format.pdf {
+        prawnto :prawn => {
+            page_size: 'A4',
+            margin: 0,
+            :info => {
+              :Title => "#{@slideset.lecture.title} | #{@slideset.title}",
+              :Producer => "Folinator",
+              :Creator => "Folinator",
+              :CreationDate => Time.now
+            }
+          },
+          :filename => "#{@slideset.title}.pdf",
+          :inline => false
+        render :layout => false
+      }
+    end
+  end
 end

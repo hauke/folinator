@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     actionmailer (3.2.2)
       actionpack (= 3.2.2)
       mail (~> 2.4.0)
@@ -88,8 +89,17 @@ GEM
     multi_json (1.1.0)
     nokogiri (1.5.2)
     orm_adapter (0.0.6)
+    pdf-reader (1.0.0)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
     pg (0.13.2)
     polyglot (0.3.3)
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
+    prawnto (0.1.0)
+      prawn
+      rails (>= 2.1)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -135,6 +145,7 @@ GEM
       railties (>= 3.0)
       rspec (~> 2.8.0)
     ruby-openid (2.1.8)
+    ruby-rc4 (0.1.5)
     rubyzip (0.9.6.1)
     sass (3.1.15)
     sass-rails (3.2.4)
@@ -156,6 +167,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.32)
     uglifier (1.2.3)
       execjs (>= 0.3.0)
@@ -183,6 +195,7 @@ DEPENDENCIES
   haml
   jquery-rails
   pg (~> 0.13.2)
+  prawnto
   rails (= 3.2.2)
   rails3-jquery-autocomplete
   rmagick
