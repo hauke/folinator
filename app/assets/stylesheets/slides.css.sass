@@ -6,7 +6,6 @@ ol#slides, ol#search_result
     display: inline-block
     padding: .5em
     width: 200px
-    cursor: move
     
     &:hover
       background: #ffc
@@ -22,3 +21,7 @@ ol#slides, ol#search_result
     
     .title
       min-height: 2em
+
+ol.sortable
+  > li
+    cursor: move

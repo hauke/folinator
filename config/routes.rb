@@ -48,6 +48,8 @@ SlideAnnotator::Application.routes.draw do
 
   match 'searchresults' => 'slides#search_by_annotation'
 
+  get "static/logout_info"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
