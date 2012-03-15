@@ -9,6 +9,10 @@ class SlidesController < ApplicationController
     @slide_new = Slide.new
     @lecture = @slideset.lecture
 
+    if !is_admin
+      @slides.select!{|slide| !slide.deleted}
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @slides }
@@ -189,6 +193,40 @@ class SlidesController < ApplicationController
       slide.save
     end
     render :nothing => true
+  end
+
+  def mark_deleted
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    authorize! :mark_deleted, @slide
+    @slide.deleted = true
+
+    respond_to do |format|
+      if @slide.save
+        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.position}\" wurde erfolgreich ausgeblendet" }
+        format.json { render json: @slide, status: :created, location: @slide }
+      else
+        format.html { redirect_to slideset_slides_path(@slideset) }
+        format.json { render json: @slide.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unmark_deleted
+    @slideset = Slideset.find(params[:slideset_id])
+    @slide = @slideset.slides.find(params[:id])
+    authorize! :mark_deleted, @slide
+    @slide.deleted = false
+
+    respond_to do |format|
+      if @slide.save
+        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.position}\" wurde erfolgreich eingeblendet" }
+        format.json { render json: @slide, status: :created, location: @slide }
+      else
+        format.html { redirect_to slideset_slides_path(@slideset) }
+        format.json { render json: @slide.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 protected

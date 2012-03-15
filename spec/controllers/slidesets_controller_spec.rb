@@ -150,7 +150,7 @@ describe SlidesetsController do
     it "redirects to the slidesets list" do
       slideset = Slideset.create! valid_attributes
       delete :destroy, {:id => slideset.to_param}, valid_session
-      response.should redirect_to(slidesets_url)
+      response.should redirect_to(lecture_path(slideset.lecture))
     end
   end
 

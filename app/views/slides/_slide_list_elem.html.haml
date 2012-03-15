@@ -8,5 +8,13 @@
       = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
     .functions
       = link_to 'Anzeigen', [slide.slideset, slide]
+      - if slide.deleted
+        - if can? :unmark_deleted, slide
+          |
+          =link_to 'Einblenden', unmark_deleted_slideset_slide_path(slide.slideset, slide), method: :post
+      - else
+        - if can? :mark_deleted, slide
+          | 
+          =link_to 'Ausblenden', mark_deleted_slideset_slide_path(slide.slideset, slide), method: :post
       - if can? :delete, slide
         | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.position}\" entgültig löschen wollen?", method: :delete}
