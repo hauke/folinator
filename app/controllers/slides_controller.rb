@@ -38,6 +38,9 @@ class SlidesController < ApplicationController
     @slides.each do |slide|
       slideset = slide.slideset
       lecture = slideset.lecture
+      if !is_admin
+        next if slide.deleted || slideset.deleted || lecture.deleted
+      end
       @lectures[lecture] = {} unless @lectures[lecture]
       @lectures[lecture][slideset] = [] unless @lectures[lecture][slideset]
       @lectures[lecture][slideset] << slide
