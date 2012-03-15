@@ -16,52 +16,66 @@
             = f.submit "Folie ersetzen"
   .span6
     %h2 Schlagworte
-    = form_tag set_title_slideset_slide_path(@slideset, @slide) do
-      %table.table-striped.table-bordered.table-condensed
-        %tr
-          %th Title
-          %th Schlagwort
-          %th
-          - if can? :edit, @slidesets
-            %th
-        - @annotations.each do |annotation|
+    - if @annotations.empty?
+      %p keine Schlagwort vorhanden
+    - else
+      = form_tag set_title_slideset_slide_path(@slideset, @slide) do
+        %table.table-striped.table-bordered.table-condensed
           %tr
-            %td= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title
-            - if can? :edit, @annotation
-              %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation, class: "annotation-text"
-            - else
-              %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
-            - if !can? :delete, annotation
-              %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
-            - if can? :delete, annotation
-              - if annotation.deleted
-                %td= link_to 'Einblenden', unmark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+            %th Title
+            %th Schlagwort
+            %th
+            - if can? :edit, @slidesets
+              %th
+          - @annotations.each do |annotation|
+            %tr
+              %td= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title, title: "#{annotation.annotation} zum Titel der Folie machen"
+              - if can? :edit, @annotation
+                %td
+                  .annotation-text
+                    %i.icon-pencil
+                    = annotation.annotation
               - else
-                %td= link_to 'Ausblenden', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
-              %td= link_to 'Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie das Schlagwort \"#{annotation.annotation}\" endgütig löschen?", method: :delete
+                %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
+              - if !can? :delete, annotation
+                %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
+              - if can? :delete, annotation
+                - if annotation.deleted
+                  %td= link_to 'Einblenden', unmark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+                - else
+                  %td= link_to 'Ausblenden', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+                %td= link_to 'Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie das Schlagwort \"#{annotation.annotation}\" endgütig löschen?", method: :delete
+            - if can? :edit, @annotation
+              %tr{class: "annotation-admin"}
+                %td
+                %td{colspan:3}
+                  %p Umbenennen in:
+                  = autocomplete_field_tag "annotation_#{annotation.id}","", autocomplete_annotation_annotation_annotations_path
+              %tr{class: "annotation-admin"}
+                %td
+                %td{colspan:3}
+                  %ul.annotation_rename_scope
+                    %li= radio_button_tag "rename_scope_#{annotation.id}", 'all'
+                    %li= label_tag "rename_scope_#{annotation.id}_all", "Alles"
+                    %li= radio_button_tag "rename_scope_#{annotation.id}", 'lecture' 
+                    %li= label_tag "rename_scope_#{annotation.id}_lecture", "Vorlesung"
+                    %li= radio_button_tag "rename_scope_#{annotation.id}", 'slideset', true
+                    %li= label_tag "rename_scope_#{annotation.id}_slideset", "Foliensatz"
+        .actions
           - if can? :edit, @annotation
-            %tr{class: "annotation-admin"}
-              %td
-              %td{colspan:3}
-                %p Umbenennen in:
-                = autocomplete_field_tag "annotation_#{annotation.id}","", autocomplete_annotation_annotation_annotations_path
-            %tr{class: "annotation-admin"}
-              %td
-              %td{colspan:3}
-                %ul.annotation_rename_scope
-                  %li= radio_button_tag "rename_scope_#{annotation.id}", 'all'
-                  %li= label_tag "rename_scope_#{annotation.id}_all", "Alles"
-                  %li= radio_button_tag "rename_scope_#{annotation.id}", 'lecture' 
-                  %li= label_tag "rename_scope_#{annotation.id}_lecture", "Vorlesung"
-                  %li= radio_button_tag "rename_scope_#{annotation.id}", 'slideset', true
-                  %li= label_tag "rename_scope_#{annotation.id}_slideset", "Foliensatz"
+            = submit_tag "Speichern"
+          - else
+            = submit_tag "Als Titel setzen"
+
+    %h3 Schlagwort hinzufügen
+    = form_tag slideset_slide_annotations_path(@slideset, @slide) do
+      .field{ class: 'autoextend'}
+        = autocomplete_field_tag "annotation[]","", autocomplete_annotation_annotation_annotations_path
       .actions
-        - if can? :edit, @annotation
-          = submit_tag "Speichern"
-        - else
-          = submit_tag "Als Titel setzen"
-    .annotation-surrounding-head
-      <i class="icon-plus-sign"></i>
+        = submit_tag("Schlagwort hinzufügen")
+
+    .annotation-surrounding-head{title: "Klicken zum öffnen"}
+      %i.icon-arrow-down
       Schlagworte von benachbarten Folien
     .annotation-surrounding.annotation-surrounding-hide
       = form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do
@@ -75,9 +89,3 @@
               %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
       .actions
         = submit_tag "Schlagworte hinzufügen"
-    %h3 Schlagwort hinzufügen
-    = form_tag slideset_slide_annotations_path(@slideset, @slide) do
-      .field{ class: 'autoextend'}
-        = autocomplete_field_tag "annotation[]","", autocomplete_annotation_annotation_annotations_path
-      .actions
-        = submit_tag("Schlagwort hinzufügen")
