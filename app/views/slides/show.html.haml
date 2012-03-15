@@ -28,7 +28,7 @@
             - if can? :edit, @annotations
               %th
             - if can? :edit, @annotations
-              %th Letzer Author
+              %th Letzter Autor
           - @annotations.each do |annotation|
             %tr
               %td= radio_button_tag 'annotation_id', annotation.id, annotation.slide_title, title: "#{annotation.annotation} zum Titel der Folie machen"
