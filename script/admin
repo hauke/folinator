@@ -32,23 +32,25 @@ end
  
 optparse.parse!
 
-puts options
 
 if options[:new]
   if user = User.find_by_identity_url("https://openid.tzi.de/#{options[:login]}")
     user.admin = true
-    puts "#{user.name} is an admin now" 
+    user.save
+    puts "#{user.name} ist nun ein Admin " 
   else
     if user = User.create!(identity_url: "https://openid.tzi.de/#{options[:login]}")
-      puts "New user #{user.name} is an admin now"  
+      user.save
+      puts "Der neue Nutzer #{user.name} ist nun ein Admin"  
     end
   end
 end
 if options[:delete]
   if user = User.find_by_identity_url("https://openid.tzi.de/#{options[:login]}")
-    user.admin = true
-    puts "#{user.name} is no admin anymore"
+    user.admin = false
+    user.save
+    puts "#{user.name} ist nun kein Admin mehr"
   else
-    puts "No user of this name, known"
+    puts "Ist nun ein Admin"
   end
 end  
