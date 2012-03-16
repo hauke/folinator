@@ -111,4 +111,11 @@ describe "Slides" do
       within("#slide_3") { should have_content("3") } && within("#slide_2") { should have_content("2") }
     end  
   end
+  describe "pdf generation" do
+    it "generate valid pdf" do
+      visit slideset_slides_path(@slideset)
+      click_link "Als PDF herunterladen"
+      should have_content("%PDF-1.3")
+    end
+  end
 end
