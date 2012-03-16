@@ -195,6 +195,7 @@ DEPENDENCIES
   haml
   jquery-rails
   pg (~> 0.13.2)
+  prawn
   prawnto
   rails (= 3.2.2)
   rails3-jquery-autocomplete

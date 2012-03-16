@@ -35,6 +35,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'prawn'
 gem 'prawnto'
 
 gem 'acts_as_list'
