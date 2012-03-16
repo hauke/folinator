@@ -17,4 +17,4 @@
           | 
           =link_to 'Ausblenden', mark_deleted_slideset_slide_path(slide.slideset, slide), method: :post
       - if can? :delete, slide
-        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.position}\" entgültig löschen wollen?", method: :delete}
+        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.position}\" endgültig löschen wollen?", method: :delete}
