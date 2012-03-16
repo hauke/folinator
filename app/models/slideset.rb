@@ -18,4 +18,17 @@ class Slideset < ActiveRecord::Base
 
   validates :lecture_id, presence: true
   validates :title, presence: true
+  
+  def reoder_numbers
+    i = 0
+    slides.each do |slide|
+      if slide.deleted
+        slide.number = 0
+      else
+        i += 1
+        slide.number = i
+      end
+      slide.save
+    end
+  end
 end

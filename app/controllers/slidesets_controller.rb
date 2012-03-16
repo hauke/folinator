@@ -105,6 +105,7 @@ class SlidesetsController < ApplicationController
 
   def show
     @slideset = Slideset.find(params[:id])
+    @slides = @slideset.slides.select{|slide| !slide.deleted}
     authorize! :show, @slideset
     respond_to do |format|
       format.pdf {

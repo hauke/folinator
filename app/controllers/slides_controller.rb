@@ -94,6 +94,7 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       if @slide.save
+        @slideset.reoder_numbers
         format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully created.' }
         format.json { render json: @slide, status: :created, location: @slide }
       else
@@ -112,6 +113,7 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       if @slide.update_attributes(params[:slide])
+        @slideset.reoder_numbers
         format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
@@ -129,6 +131,7 @@ class SlidesController < ApplicationController
     @slide = @slideset.slides.find(params[:id])
     authorize! :destroy, @slide
     @slide.destroy
+    @slideset.reoder_numbers
 
     respond_to do |format|
       format.html { redirect_to slideset_slides_url(@slideset) }
@@ -195,6 +198,8 @@ class SlidesController < ApplicationController
       slide.position = params['slide'].index(slide.id.to_s) + 1
       slide.save
     end
+    @slideset.reload
+    @slideset.reoder_numbers
     render :nothing => true
   end
 
@@ -206,7 +211,8 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       if @slide.save
-        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.position}\" wurde erfolgreich ausgeblendet" }
+        @slideset.reoder_numbers
+        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich ausgeblendet" }
         format.json { render json: @slide, status: :created, location: @slide }
       else
         format.html { redirect_to slideset_slides_path(@slideset) }
@@ -223,7 +229,8 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       if @slide.save
-        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.position}\" wurde erfolgreich eingeblendet" }
+        @slideset.reoder_numbers
+        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich eingeblendet" }
         format.json { render json: @slide, status: :created, location: @slide }
       else
         format.html { redirect_to slideset_slides_path(@slideset) }

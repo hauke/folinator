@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20120312103931) do
     t.string   "image"
     t.integer  "slideset_id"
     t.boolean  "deleted",     :default => false, :null => false
+    t.integer  "number"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.integer  "position"

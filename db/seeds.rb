@@ -75,3 +75,7 @@ slides[7].annotations[0].slide_title = slides[7]
 slides[7].title.save!
 slides[8].annotations[0].slide_title = slides[8]
 slides[8].title.save!
+
+slidesets.each do |slideset|
+  slideset.reoder_numbers
+end

@@ -2,8 +2,8 @@
   %li{:id => "slide_#{slide.id}"}
     .title
       = check_box_tag "slide_ids[]", slide.id
-      = link_to "#{slide.position} #{slide.title.annotation}", [slide.slideset, slide] if slide.title
-      = link_to slide.position, [slide.slideset, slide] unless slide.title
+      = link_to "#{slide.number} #{slide.title.annotation}", [slide.slideset, slide] if slide.title
+      = link_to slide.number, [slide.slideset, slide] unless slide.title
     .image
       = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
     .functions
@@ -17,4 +17,4 @@
           | 
           =link_to 'Ausblenden', mark_deleted_slideset_slide_path(slide.slideset, slide), method: :post
       - if can? :delete, slide
-        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.position}\" endgültig löschen wollen?", method: :delete}
+        | #{link_to 'Löschen', [slide.slideset, slide], confirm: "Sind sie sich sicher, dass sie die Folie \"#{slide.title ? slide.title.annotation : slide.number}\" endgültig löschen wollen?", method: :delete}

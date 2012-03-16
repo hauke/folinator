@@ -5,6 +5,7 @@ class CreateSlides < ActiveRecord::Migration
       t.string :image
       t.integer :slideset_id
       t.boolean :deleted, null: false, default: false
+      t.integer :number
 
       t.timestamps
     end
