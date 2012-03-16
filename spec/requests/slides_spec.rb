@@ -85,4 +85,30 @@ describe "Slides" do
       @annotation.reload}.to change(@annotation, :last_author_id).to(@user.id)   
     end 
   end   
+  describe "mark slide as deleted" do
+    it "should mark slide as deleted" do
+      visit slideset_slides_path(@slideset)
+      within("#slide_1") { click_link "Ausblenden" }
+      within("#slide_1") { should have_content("Einblenden") }
+    end 
+    it "should leave the slide numbers sorted" do
+      visit slideset_slides_path(@slideset)
+      within("#slide_2") { click_link "Ausblenden" }
+      within("#slide_3") { should have_content("2") }
+    end  
+  end
+  describe "unmark slide as deleted" do
+    it "should mark slide as deleted" do
+      visit slideset_slides_path(@slideset)
+      within("#slide_1") { click_link "Ausblenden" }
+      within("#slide_1") { click_link "Einblenden" }
+      within("#slide_1") { should have_content("Ausblenden") }
+    end 
+    it "should leave the slide numbers sorted" do
+      visit slideset_slides_path(@slideset)
+      within("#slide_2") { click_link "Ausblenden" }
+      within("#slide_2") { click_link "Einblenden" }     
+      within("#slide_3") { should have_content("3") } && within("#slide_2") { should have_content("2") }
+    end  
+  end
 end
