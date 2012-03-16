@@ -149,12 +149,19 @@ class SlidesController < ApplicationController
       return
     end
     @slides = @slideset.slides.find(params[:slide_ids])
+    successful = []
+    error = []
     @slides.each do |slide|
       annotation = slide.annotations.new(annotation: params[:annotation], last_author: current_user)
       authorize! :create, annotation
-      annotation.save!
+      if annotation.save
+        successful << slide
+      else
+        error << slide
+      end
     end
-    flash[:notice] = "Annotation #{params[:annotation]} added"
+    flash[:notice] = "Schlagwort #{params[:annotation]} wurde zu Folien #{successful.map {|slide| slide.number}} hinzugefügt" unless successful.empty?
+    flash[:alert] = "Schlagwort #{params[:annotation]} konnte nicht zu Folien #{error.map {|slide| slide.number}} hinzugefügt werden" unless error.empty?
     redirect_to slideset_slides_path(@slideset)
   end
 
