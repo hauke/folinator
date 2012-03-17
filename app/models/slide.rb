@@ -16,7 +16,7 @@
 
 class Slide < ActiveRecord::Base
 
-  attr_accessible :image
+  attr_accessible :image, :slideset, :slideset_id
 
   belongs_to :slideset
   has_many :annotations, dependent: :destroy

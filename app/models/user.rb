@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
 
   validates_with OnlyTziOpenID
 
+  attr_accessible :identity_url
+
   def self.build_from_identity_url(identity_url)
     User.new(identity_url: identity_url)
   end

@@ -22,7 +22,7 @@ end
 
 class Annotation < ActiveRecord::Base
 
-  attr_accessible :annotation
+  attr_accessible :annotation, :last_author, :slide_id
 
   belongs_to :slide
   belongs_to :last_author, class_name: "User"
