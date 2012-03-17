@@ -226,7 +226,7 @@ module Devise
           flash[:error] = "Dieser Benutzer wurde blockiert, bitte kontaktieren sie den Administrator"
           static_logout_info_path
         else
-          orig_after_sign_in_path_for
+          orig_after_sign_in_path_for resource
         end
       end
     end
