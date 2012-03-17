@@ -37,6 +37,7 @@ end
 gem 'jquery-rails'
 gem 'prawn'
 gem 'prawnto'
+gem "foreigner", "~> 1.1.5"
 
 gem 'acts_as_list'
 gem "rmagick"

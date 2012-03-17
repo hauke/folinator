@@ -5,10 +5,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.openid_authenticatable
       t.string :email
       t.string :name
-      t.boolean :admin
+      t.boolean :admin, :null => false, :default => false
 
-
-      t.timestamps
+      t.timestamps :null => false
     end
 
     add_index :users, :identity_url, :unique => true
