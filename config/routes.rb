@@ -4,7 +4,7 @@ SlideAnnotator::Application.routes.draw do
   devise_for :users
 
   resources :lectures do
-    resources :slidesets
+    resources :slidesets, only: [:new, :create, :update]
 
     member do
       post 'mark_deleted'
@@ -12,9 +12,9 @@ SlideAnnotator::Application.routes.draw do
     end
   end
 
-  resources :slidesets do
-    resources :slides do
-      resources :annotations do
+  resources :slidesets, expect: [:index, :show, :new, :create, :update] do
+    resources :slides, expect: [:new, :edit] do
+      resources :annotations, only: [:create, :destroy] do
         member do
           post 'mark_deleted'
           post 'unmark_deleted'
@@ -38,7 +38,7 @@ SlideAnnotator::Application.routes.draw do
     end
   end
 
-  resources :annotations do
+  resources :annotations, only: [:index] do
     get :autocomplete_annotation_annotation, :on => :collection
   end
 
