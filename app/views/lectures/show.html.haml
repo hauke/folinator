@@ -17,12 +17,12 @@
         %td= link_to 'Bearbeiten', edit_slideset_path(slideset)
       - if slideset.deleted
         - if can? :unmark_deleted, slideset
-          %td= link_to 'Einblenden', unmark_deleted_slideset_path(slideset), method: :post
+          %td= button_to 'Einblenden', unmark_deleted_slideset_path(slideset), method: :post
       - else
         - if can? :mark_deleted, slideset
-          %td= link_to 'Ausblenden', mark_deleted_slideset_path(slideset), method: :post
+          %td= button_to 'Ausblenden', mark_deleted_slideset_path(slideset), method: :post
       - if can? :delete, slideset
-        %td= link_to 'Löschen', slideset, confirm: "Sind sie sich sicher, dass sie #{slideset.title} endgültig löschen wollen?", method: :delete
+        %td= button_to 'Löschen', slideset, confirm: "Sind sie sich sicher, dass sie #{slideset.title} endgültig löschen wollen?", method: :delete
 - if can? :create, @slidesets
   %br/
   .footer_menu

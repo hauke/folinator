@@ -21,7 +21,7 @@ describe "Slidesets" do
     fill_in("slideset_description", :with => "Testtesttest")
     expect { click_button "Update Slideset" }.to change{current_path}.to(slideset_slides_path(@slideset))  and have_content("Testtesttest")
   end
-
+  
   describe "GET /slidesets/new" do
     it "should return new_slideset" do
       visit lecture_path(@lecture)
@@ -36,22 +36,22 @@ describe "Slidesets" do
   describe "POST mark_deleted_slidesets" do
     it "should mark slideset as deleted" do
       visit lecture_path(@lecture)
-      click_link "Ausblenden"
-      should have_content("Einblenden")
+      click_button "Ausblenden"
+      should have_button("Einblenden")
     end   
   end
   describe "POST unmark_deleted_lecture" do
     it "should bring back slideset" do
       visit lecture_path(@lecture)
-      click_link "Ausblenden"
-      click_link "Einblenden"
-      should have_content("Ausblenden")
+      click_button "Ausblenden"
+      click_button "Einblenden"
+      should have_button("Ausblenden")
     end   
   end
   describe "POST delete_slideset" do
     it "should delete the slideset" do
       visit lecture_path(@lecture)
-      expect { click_link "Löschen" }.to change(Slideset, :count).by(-1)
+      expect { click_button "Löschen" }.to change(Slideset, :count).by(-1)
     end
   end
 end

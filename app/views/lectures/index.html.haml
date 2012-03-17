@@ -15,12 +15,12 @@
         %td= link_to 'Bearbeiten', edit_lecture_path(lecture)
       - if lecture.deleted
         - if can? :unmark_deleted, lecture
-          %td= link_to 'Einblenden', unmark_deleted_lecture_path(lecture), method: :post
+          %td= button_to 'Einblenden', unmark_deleted_lecture_path(lecture), method: :post
       - else
         - if can? :mark_deleted, lecture
-          %td= link_to 'Ausblenden', mark_deleted_lecture_path(lecture), method: :post
+          %td= button_to 'Ausblenden', mark_deleted_lecture_path(lecture), method: :post
       - if can? :delete, lecture
-        %td= link_to 'Löschen', lecture, confirm: "Sind sie sich sicher, dass sie #{lecture.title} engdültig löschen wollen?", method: :delete
+        %td= button_to 'Löschen', lecture, confirm: "Sind sie sich sicher, dass sie #{lecture.title} engdültig löschen wollen?", method: :delete
 - if can? :create, @lectures
   %br/
   .footer_menu
