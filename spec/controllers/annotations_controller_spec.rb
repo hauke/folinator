@@ -79,7 +79,7 @@ describe AnnotationsController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Annotation.any_instance.stub(:save).and_return(false)
-        post :create, {:annotation => {}, slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
+        post :create, {:annotation => [], slide_id:@slide.id, slideset_id:@slideset.id}, valid_session
         response.should redirect_to([@slideset,@slide])
       end
     end

@@ -5,6 +5,7 @@
   %p Schlagwort zu allen ausgewählten Folien hinzufügen
   %p  Schlagwort: #{autocomplete_field_tag "annotation","", autocomplete_annotation_annotation_annotations_path}
   = submit_tag "Schlagwort hinzufügen"
+%br/
 = link_to "Als PDF herunterladen", slideset_path(@slideset, format: 'pdf')
 %br/
 - if can? :create, @slides

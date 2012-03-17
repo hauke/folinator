@@ -9,25 +9,30 @@ class AnnotationsController < ApplicationController
   def create
     @slideset = Slideset.find(params[:slideset_id])
     @slide = @slideset.slides.find(params[:slide_id])
+    if !params[:annotation] || params[:annotation].empty?
+      authorize! :edit, @slide.annotations
+      flash[:error]= 'Kein Schlgawort angegeben.'
+    end
+    error = []
+    successful = []
     params[:annotation].each do |annotation|
       next if annotation.blank?
       @annotation = @slide.annotations.new(annotation: annotation, last_author: current_user)
       authorize! :create, @annotation
-
-        if @annotation.save
-          flash[:notice]= 'Annotation was successfully created.'
-        else
-          flash[:error]= 'can not add Annotation.' 
-        end
-      
+      if @annotation.save
+        successful << @annotation.annotation
+      else
+        error << @annotation.annotation
+      end
     end
-    
+    flash[:notice] = "Schlagworte #{successful} erfolgrch hinzugefügt." unless successful.empty?
+    flash[:notce] = "Schlagworte #{error} konnten nicht hinzugefügt werden." unless error.empty?
     respond_to do |format|
-      unless flash[:error]
-        format.html { redirect_to slideset_slide_path(@slideset, @slide), notice: 'Annotation was successfully created.' }
+      unless successful.empty?
+        format.html { redirect_to slideset_slide_path(@slideset, @slide)}
         format.json { render json: @annotation, status: :created, location: @annotation }
       else
-        format.html { redirect_to slideset_slide_path(@slideset, @slide), error: 'can not add Annotation.' }
+        format.html { redirect_to slideset_slide_path(@slideset, @slide)}
         format.json { render json: @annotation.errors, status: :unprocessable_entity }
       end
     end
