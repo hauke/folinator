@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
 class AnnotationsController < ApplicationController
 
-  skip_authorization_check # TODO remove this line, we have to secure the autocomplete wih cancan
   autocomplete :annotation, :annotation, :full => true, scopes: ["distincttag"]
+  load_and_authorize_resource :only => [:autocomplete_annotation_annotation]
 
   # POST /annotations
   # POST /annotations.json
