@@ -10,7 +10,15 @@ describe "Slides" do
     page.select("#{@user.name} (#{@user.email})", :from => 'user_id' ) 
     click_button "Sign in"
     @slideset= Factory :slideset
-    @slide, @slide2, @slide3 = 3.times.map{ Factory :slide, :slideset => @slideset }
+    @slieds = 3.times.map{ Factory :slide, :slideset => @slideset }
+    @slide, @slide2, @slide3 = @slieds
+    i = 0
+    @slieds.each do |slide|
+      3.times.map do
+        i += 1
+        Factory :annotation, slide: slide, annotation: "annotation#{i}"
+      end
+    end
   end
   
   subject { page }
@@ -116,6 +124,36 @@ describe "Slides" do
       visit slideset_slides_path(@slideset)
       click_link "Als PDF herunterladen"
       should have_content("%PDF-1.3")
+    end
+    it "generate valid pdf" do
+      visit slideset_slides_path(@slideset)
+      within("#slide_2") { click_button "Ausblenden" }
+      click_link "Als PDF herunterladen"
+      should have_content("%PDF-1.3")
+    end
+  end
+  describe "annotations from different slide" do
+    it "generate valid pdf" do
+      visit slideset_slide_path(@slideset, @slide2)
+      within "#annotations" do
+        should_not have_content Annotation.find_by_id(9).annotation
+      end
+      within "#annotation-surrounding" do
+        should have_content Annotation.find_by_id(9).annotation
+      end
+      should have_css("table#annotation-surrounding tr", :count => 7)
+      check "annotation_id_9"
+      check "annotation_id_2"
+      click_button "Schlagworte hinzufügen"
+      should have_css("table#annotation-surrounding tr", :count => 5)
+      within "#annotations" do
+        should have_content Annotation.find_by_id(9).annotation
+        should have_content Annotation.find_by_id(2).annotation
+      end
+      within "#annotation-surrounding" do
+        should_not have_content Annotation.find_by_id(9).annotation
+        should_not have_content Annotation.find_by_id(2).annotation
+      end
     end
   end
 end

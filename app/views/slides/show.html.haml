@@ -20,7 +20,7 @@
       %p keine Schlagwort vorhanden
     - else
       = form_tag set_title_slideset_slide_path(@slideset, @slide) do
-        %table.table-striped.table-bordered.table-condensed
+        %table#annotations.table-striped.table-bordered.table-condensed
           %tr
             %th Title
             %th Schlagwort
@@ -83,13 +83,13 @@
       Schlagworte von benachbarten Folien
     .annotation-surrounding.annotation-surrounding-hide
       = form_tag copy_annotations_slideset_slide_path(@slideset, @slide) do
-        %table.table-striped.table-bordered.table-condensed
+        %table#annotation-surrounding.table-striped.table-bordered.table-condensed
           %tr
             %th Auswahl
             %th Schlagwort
           - @surrounding_annotations.each do |annotation|
             %tr
-              %td= check_box_tag "annotations_id[]", annotation.id
+              %td= check_box_tag "annotations_id[]", annotation.id, false, id: "annotation_id_#{annotation.id}"
               %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
         .actions
           = submit_tag "Schlagworte hinzufügen"
