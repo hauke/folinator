@@ -12,13 +12,6 @@ describe "Slides" do
     @slideset= Factory :slideset
     @slieds = 3.times.map{ Factory :slide, :slideset => @slideset }
     @slide, @slide2, @slide3 = @slieds
-    i = 0
-    @slieds.each do |slide|
-      3.times.map do
-        i += 1
-        Factory :annotation, slide: slide, annotation: "annotation#{i}"
-      end
-    end
   end
   
   subject { page }
@@ -89,7 +82,8 @@ describe "Slides" do
     end
     it "should remember last Author" do
       visit slideset_slide_path(@slideset, @slide)
-      expect { click_button "Ausblenden" 
+      expect { 
+      click_button "Ausblenden" 
       @annotation.reload}.to change(@annotation, :last_author_id).to(@user.id)   
     end 
   end   
@@ -133,6 +127,15 @@ describe "Slides" do
     end
   end
   describe "annotations from different slide" do
+    before do
+      i = 0
+      @slieds.each do |slide|
+        3.times.map do
+          i += 1
+          Factory :annotation, slide: slide, annotation: "annotation#{i}"
+         end
+       end
+     end
     it "generate valid pdf" do
       visit slideset_slide_path(@slideset, @slide2)
       within "#annotations" do
