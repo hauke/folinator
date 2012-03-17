@@ -79,4 +79,10 @@ describe "Lectures" do
       expect { click_button "Löschen" }.to change(Lecture, :count).by(-1)
     end
   end
+  describe "GET latest Changes" do
+    it "should get to annotation index" do
+      visit root_path
+      expect { click_link "Letzte Änderungen"}.to change{current_path}.to(annotations_path)
+    end
+  end
 end

@@ -25,5 +25,6 @@
   %br/
   .footer_menu
     = link_to 'Neue Vorlesung hinzufügen', new_lecture_path
-    %br/
-    = link_to 'Letzte Änderungen', annotations_path
+- if can? :index, Annotation.all  
+  %br/
+  = link_to 'Letzte Änderungen', annotations_path

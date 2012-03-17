@@ -46,7 +46,8 @@ describe AnnotationsController do
   def valid_session
     {}
   end
-
+  
+  
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Annotation" do
@@ -66,7 +67,7 @@ describe AnnotationsController do
         response.should redirect_to([@slideset,@slide])
       end
     end
-
+   
     describe "with invalid params" do
       it "assigns a newly created but unsaved annotation as @annotation" do
         # Trigger the behavior that occurs when invalid params are submitted

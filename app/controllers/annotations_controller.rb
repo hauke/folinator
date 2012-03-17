@@ -32,6 +32,7 @@ class AnnotationsController < ApplicationController
       end
     end
   end
+  
   def index
     @annotations = Annotation.all.sort_by{|x| x['updated_at']}
     authorize! :index, @annotations
