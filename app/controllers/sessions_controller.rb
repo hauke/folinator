@@ -25,14 +25,5 @@ class SessionsController < ApplicationController
   rescue ActionController::RedirectBackError
     redirect_to root_path
   end
-
- def after_sign_in_path_for(resource)
-    if resource.is_a?(User) && resource.banned?
-      sign_out resource
-      flash[:error] = "Dieser Benutzer wurde blockiert, bitte kontaktieren sie den Administrator"
-      root_path
-    else
-      super
-    end
-  end
+  
 end

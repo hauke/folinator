@@ -6,7 +6,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :name
       t.boolean :admin, :null => false, :default => false
-      t.boolean :banned, :null => false, :default => false
 
       t.timestamps :null => false
     end

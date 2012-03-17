@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(:version => 20120309162123) do
     t.string   "email"
     t.string   "name"
     t.boolean  "admin",        :default => false, :null => false
-    t.boolean  "banned",       :default => false, :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
