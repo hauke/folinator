@@ -4,13 +4,14 @@
 # Table name: slides
 #
 #  id          :integer         not null, primary key
-#  image       :string(255)
-#  slideset_id :integer
-#  deleted     :boolean
+#  image       :string(255)     not null
+#  slideset_id :integer         not null
+#  deleted     :boolean         default(FALSE), not null
+#  number      :integer
+#  position    :integer         not null
+#  title_id    :integer
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
-#  position    :integer
-#  title_id    :integer
 #
 
 require 'spec_helper'

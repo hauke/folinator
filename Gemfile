@@ -8,7 +8,7 @@ gem 'haml'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.5'
-  gem 'annotate'
+  gem 'annotate', '~> 2.4.1.beta'
   gem 'rspec-rails', '~> 2.8.1'
   gem 'faker'
 end
