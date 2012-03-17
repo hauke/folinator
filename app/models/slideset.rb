@@ -13,6 +13,9 @@
 #
 
 class Slideset < ActiveRecord::Base
+
+  attr_accessible :description, :title
+
   belongs_to :lecture
   has_many :slides, dependent: :destroy, :order => "position"
 

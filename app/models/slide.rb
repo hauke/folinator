@@ -15,6 +15,9 @@
 #
 
 class Slide < ActiveRecord::Base
+
+  attr_accessible :image
+
   belongs_to :slideset
   has_many :annotations, dependent: :destroy
   belongs_to :title, class_name: "Annotation", foreign_key: "title_id"

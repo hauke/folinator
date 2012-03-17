@@ -21,6 +21,9 @@ class DoubleAnnotation < ActiveModel::Validator
 end
 
 class Annotation < ActiveRecord::Base
+
+  attr_accessible :annotation
+
   belongs_to :slide
   belongs_to :last_author, class_name: "User"
   has_one :slide_title, class_name: "Slide", foreign_key: "title_id"
