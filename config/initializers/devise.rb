@@ -218,7 +218,17 @@ module Devise
       def after_sign_out_path_for(resource_or_scope)
         static_logout_info_path
       end
+
+      alias :orig_after_sign_in_path_for :after_sign_in_path_for
+      def after_sign_in_path_for(resource)
+        if resource.is_a?(User) && resource.banned?
+          sign_out resource
+          flash[:error] = "Dieser Benutzer wurde blockiert, bitte kontaktieren sie den Administrator"
+          static_logout_info_path
+        else
+          orig_after_sign_in_path_for
+        end
+      end
     end
   end
 end
-
