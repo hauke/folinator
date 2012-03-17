@@ -39,7 +39,8 @@ class AnnotationsController < ApplicationController
   end
   
   def index
-    @annotations = Annotation.all.sort_by{|x| x['updated_at']}
+    # TODO convert to SQL
+    @annotations = Annotation.all.sort_by{|x| x['updated_at']}.reverse
     authorize! :index, @annotations
     @annotations.index
   end

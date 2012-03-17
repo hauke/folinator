@@ -1,0 +1,14 @@
+%h1 Letzte Änderungen der Schagworte
+%table.table-striped.table-bordered.table-condensed 
+  %tr
+    %th Schlagwort
+    %th letzte Änderung
+    %th Autor
+   
+  - @annotations.each do |annotation|
+    %tr
+      %td= link_to annotation.annotation, [annotation.slide.slideset, annotation.slide]
+      %td= annotation.updated_at
+      %td= annotation.last_author.identifier
+      
+
