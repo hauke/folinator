@@ -81,7 +81,7 @@ describe "Slides" do
     end
     it "should remember last Author" do
       visit slideset_slide_path(@slideset, @slide)
-      expect { click_link "Ausblenden" 
+      expect { click_button "Ausblenden" 
       @annotation.reload}.to change(@annotation, :last_author_id).to(@user.id)   
     end 
   end   

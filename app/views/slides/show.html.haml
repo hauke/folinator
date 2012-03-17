@@ -40,13 +40,13 @@
               - else
                 %td= label_tag "annotation_id_#{annotation.id}", annotation.annotation
               - if !can? :delete, annotation
-                %td= link_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
+                %td= button_to 'Löschen', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie die Annotation \"#{annotation.annotation}\" wirklich löschen?", method: :post
               - if can? :delete, annotation
                 - if annotation.deleted
-                  %td= link_to 'Einblenden', unmark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+                  %td= button_to 'Einblenden', unmark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
                 - else
-                  %td= link_to 'Ausblenden', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
-                %td= link_to 'Löschen', [@slideset, @slide, annotation], confirm: "Möchten sie das Schlagwort \"#{annotation.annotation}\" endgütig löschen?", method: :delete
+                  %td= button_to 'Ausblenden', mark_deleted_slideset_slide_annotation_path(@slideset, @slide, annotation), method: :post
+                %td= button_to 'Löschen', delete_slideset_slide_annotation_path(@slideset, @slide, annotation), confirm: "Möchten sie das Schlagwort \"#{annotation.annotation}\" endgütig löschen?", method: :post
                 - if can? :edit, annotation
                   %td= annotation.last_author.identifier
             - if can? :edit, @annotation

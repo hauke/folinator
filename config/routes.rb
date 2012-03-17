@@ -18,6 +18,7 @@ SlideAnnotator::Application.routes.draw do
         member do
           post 'mark_deleted'
           post 'unmark_deleted'
+          post "delete"
         end
       end
 
