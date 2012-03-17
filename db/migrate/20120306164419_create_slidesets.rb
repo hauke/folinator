@@ -5,6 +5,7 @@ class CreateSlidesets < ActiveRecord::Migration
       t.string :title
       t.integer :lecture_id
       t.boolean :deleted, null: false, default: false
+      t.text :description
 
       t.timestamps
     end
