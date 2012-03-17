@@ -5,10 +5,10 @@ gem 'rails', '3.2.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'haml'
-
+gem 'kaminari'
 group :development, :test do
   gem 'sqlite3', '~> 1.3.5'
-  gem 'annotate'
+  gem 'annotate', '~> 2.4.1.beta'
   gem 'faker'
 end
 
@@ -36,6 +36,7 @@ end
 gem 'jquery-rails'
 gem 'prawn'
 gem 'prawnto'
+gem "foreigner", "~> 1.1.5"
 
 gem 'acts_as_list'
 gem "rmagick"

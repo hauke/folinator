@@ -10,8 +10,8 @@ describe "Slides" do
     page.select("#{@user.name} (#{@user.email})", :from => 'user_id' ) 
     click_button "Sign in"
     @slideset= Factory :slideset
-    @slieds = 3.times.map{ Factory :slide, :slideset => @slideset }
-    @slide, @slide2, @slide3 = @slieds
+    @slides = 3.times.map{ Factory :slide, :slideset => @slideset }
+    @slide, @slide2, @slide3 = @slides
   end
   
   subject { page }
@@ -90,27 +90,27 @@ describe "Slides" do
   describe "mark slide as deleted" do
     it "should mark slide as deleted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_1") { click_button "Ausblenden" }
-      within("#slide_1") { should have_button("Einblenden") }
+      within("#slide_#{@slideset.slides[0].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { should have_button("Einblenden") }
     end 
     it "should leave the slide numbers sorted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_2") { click_button "Ausblenden" }
-      within("#slide_3") { should have_content("2") }
+      within("#slide_#{@slideset.slides[1].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[2].id}") { should have_content("2") }
     end  
   end
   describe "unmark slide as deleted" do
     it "should mark slide as deleted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_1") { click_button "Ausblenden" }
-      within("#slide_1") { click_button "Einblenden" }
-      within("#slide_1") { should have_button("Ausblenden") }
+      within("#slide_#{@slideset.slides[0].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { click_button "Einblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { should have_button("Ausblenden") }
     end 
     it "should leave the slide numbers sorted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_2") { click_button "Ausblenden" }
-      within("#slide_2") { click_button "Einblenden" }     
-      within("#slide_3") { should have_content("3") } && within("#slide_2") { should have_content("2") }
+      within("#slide_#{@slideset.slides[1].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[1].id}") { click_button "Einblenden" }     
+      within("#slide_#{@slideset.slides[2].id}") { should have_content("3") } && within("#slide_#{@slideset.slides[1].id}") { should have_content("2") }
     end  
   end
   describe "pdf generation" do
@@ -121,7 +121,7 @@ describe "Slides" do
     end
     it "generate valid pdf" do
       visit slideset_slides_path(@slideset)
-      within("#slide_2") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[2].id}") { click_button "Ausblenden" }
       click_link "Als PDF herunterladen"
       should have_content("%PDF-1.3")
     end
@@ -129,33 +129,34 @@ describe "Slides" do
   describe "annotations from different slide" do
     before do
       i = 0
-      @slieds.each do |slide|
+      @slides.each do |slide|
         3.times.map do
           i += 1
           Factory :annotation, slide: slide, annotation: "annotation#{i}"
-         end
-       end
-     end
+        end
+        slide.reload
+      end
+    end
     it "generate valid pdf" do
-      visit slideset_slide_path(@slideset, @slide2)
+      visit slideset_slide_path(@slideset, @slides[1])
       within "#annotations" do
-        should_not have_content Annotation.find_by_id(9).annotation
+        should_not have_content @slides[2].annotations[2].annotation
       end
       within "#annotation-surrounding" do
-        should have_content Annotation.find_by_id(9).annotation
+        should have_content @slides[2].annotations[2].annotation
       end
       should have_css("table#annotation-surrounding tr", :count => 7)
-      check "annotation_id_9"
-      check "annotation_id_2"
+      check "annotation_id_#{@slides[2].annotations[2].id}"
+      check "annotation_id_#{@slides[0].annotations[1].id}"
       click_button "Schlagworte hinzufügen"
       should have_css("table#annotation-surrounding tr", :count => 5)
       within "#annotations" do
-        should have_content Annotation.find_by_id(9).annotation
-        should have_content Annotation.find_by_id(2).annotation
+        should have_content @slides[2].annotations[2].annotation
+        should have_content @slides[0].annotations[1].annotation
       end
       within "#annotation-surrounding" do
-        should_not have_content Annotation.find_by_id(9).annotation
-        should_not have_content Annotation.find_by_id(2).annotation
+        should_not have_content @slides[2].annotations[2].annotation
+        should_not have_content @slides[0].annotations[1].annotation
       end
     end
   end

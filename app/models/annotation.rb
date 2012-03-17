@@ -21,6 +21,9 @@ class DoubleAnnotation < ActiveModel::Validator
 end
 
 class Annotation < ActiveRecord::Base
+
+  attr_accessible :annotation, :last_author, :slide_id
+
   belongs_to :slide
   belongs_to :last_author, class_name: "User"
   has_one :slide_title, class_name: "Slide", foreign_key: "title_id"
@@ -41,7 +44,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def self.search_by_lecture(search, lecture)
-    find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
+    find(:all, :include => [:slide], :conditions => ['annotations.annotation LIKE ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM slidesets WHERE ( slidesets.lecture_id = ? ))', "%#{search}%", false, lecture.id])
   end
 
   def self.find_for_rename(search)
@@ -53,6 +56,6 @@ class Annotation < ActiveRecord::Base
   end
 
   def self.find_for_rename_by_lecture(search, lecture)
-    find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM "slidesets" WHERE ( slidesets.lecture_id = ? ))', search, false, lecture.id])
+    find(:all, :include => [:slide], :conditions => ['annotations.annotation = ? AND annotations.deleted = ? AND annotations.slide_id = slides.id AND slides.slideset_id IN (SELECT slidesets.id FROM slidesets WHERE ( slidesets.lecture_id = ? ))', search, false, lecture.id])
   end
 end

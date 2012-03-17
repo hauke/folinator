@@ -2,30 +2,15 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
-      # t.database_authenticatable :null => false
       t.openid_authenticatable
       t.string :email
       t.string :name
-      t.boolean :admin
-      # t.recoverable
-      # t.rememberable
-      # t.trackable
+      t.boolean :admin, :null => false, :default => false
 
-      # t.encryptable
-      # t.confirmable
-      # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
-      # t.token_authenticatable
-
-
-      t.timestamps
+      t.timestamps :null => false
     end
 
     add_index :users, :identity_url, :unique => true
-    # add_index :users, :email,                :unique => true
-    # add_index :users, :reset_password_token, :unique => true
-    # add_index :users, :confirmation_token,   :unique => true
-    # add_index :users, :unlock_token,         :unique => true
-    # add_index :users, :authentication_token, :unique => true
   end
 
 end
