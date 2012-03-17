@@ -83,33 +83,33 @@ describe "Slides" do
     it "should remember last Author" do
       visit slideset_slide_path(@slideset, @slide)
       expect { 
-      click_button "Ausblenden" 
+      click_link "Ausblenden" 
       @annotation.reload}.to change(@annotation, :last_author_id).to(@user.id)   
     end 
   end   
   describe "mark slide as deleted" do
     it "should mark slide as deleted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_#{@slideset.slides[0].id}") { click_button "Ausblenden" }
-      within("#slide_#{@slideset.slides[0].id}") { should have_button("Einblenden") }
+      within("#slide_#{@slideset.slides[0].id}") { click_link "Ausblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { should have_link("Einblenden") }
     end 
     it "should leave the slide numbers sorted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_#{@slideset.slides[1].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[1].id}") { click_link "Ausblenden" }
       within("#slide_#{@slideset.slides[2].id}") { should have_content("2") }
     end  
   end
   describe "unmark slide as deleted" do
     it "should mark slide as deleted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_#{@slideset.slides[0].id}") { click_button "Ausblenden" }
-      within("#slide_#{@slideset.slides[0].id}") { click_button "Einblenden" }
-      within("#slide_#{@slideset.slides[0].id}") { should have_button("Ausblenden") }
+      within("#slide_#{@slideset.slides[0].id}") { click_link "Ausblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { click_link "Einblenden" }
+      within("#slide_#{@slideset.slides[0].id}") { should have_link("Ausblenden") }
     end 
     it "should leave the slide numbers sorted" do
       visit slideset_slides_path(@slideset)
-      within("#slide_#{@slideset.slides[1].id}") { click_button "Ausblenden" }
-      within("#slide_#{@slideset.slides[1].id}") { click_button "Einblenden" }     
+      within("#slide_#{@slideset.slides[1].id}") { click_link "Ausblenden" }
+      within("#slide_#{@slideset.slides[1].id}") { click_link "Einblenden" }     
       within("#slide_#{@slideset.slides[2].id}") { should have_content("3") } && within("#slide_#{@slideset.slides[1].id}") { should have_content("2") }
     end  
   end
@@ -121,7 +121,7 @@ describe "Slides" do
     end
     it "generate valid pdf" do
       visit slideset_slides_path(@slideset)
-      within("#slide_#{@slideset.slides[2].id}") { click_button "Ausblenden" }
+      within("#slide_#{@slideset.slides[2].id}") { click_link "Ausblenden" }
       click_link "Als PDF herunterladen"
       should have_content("%PDF-1.3")
     end
