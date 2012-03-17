@@ -9,7 +9,6 @@ gem 'haml'
 group :development, :test do
   gem 'sqlite3', '~> 1.3.5'
   gem 'annotate'
-  gem 'rspec-rails', '~> 2.8.1'
   gem 'faker'
 end
 
@@ -18,6 +17,7 @@ group :production do
 end
 
 group :test do
+  gem 'rspec-rails', '~> 2.8.1'
   gem 'factory_girl_rails'
   gem 'capybara'  
 end
@@ -26,7 +26,6 @@ end
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
