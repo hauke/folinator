@@ -26,7 +26,7 @@ describe LecturesController do
   # Lecture. As you add validations to Lecture, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {title: "test"}
   end
   
   # This should return the minimal set of values that should be in the session

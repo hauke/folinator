@@ -31,7 +31,7 @@ describe "Slidesets" do
   describe "GET /slidesets/edit"
    it "should return edit_slideset" do
      visit lecture_path(@lecture)
-     expect { click_link "Bearbeiten"}.to change{current_path}.to(edit_slideset_path(@lecture))
+     expect { click_link "Bearbeiten"}.to change{current_path}.to(edit_slideset_path(@slideset))
   end
   describe "POST mark_deleted_slidesets" do
     it "should mark slideset as deleted" do
