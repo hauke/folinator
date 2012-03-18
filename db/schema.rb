@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20120309162123) do
 
   add_index "annotations", ["annotation"], :name => "index_annotations_on_annotation"
   add_index "annotations", ["last_author_id"], :name => "index_annotations_on_last_author_id"
-  add_index "annotations", ["slide_id"], :name => "index_annotations_on_slide_id"
+  add_index "annotations", ["slide_id", "deleted"], :name => "index_annotations_on_slide_id_and_deleted"
 
   create_table "lectures", :force => true do |t|
     t.string   "title",                         :null => false
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20120309162123) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
+
+  add_index "lectures", ["deleted", "title"], :name => "index_lectures_on_deleted_and_title"
 
   create_table "slides", :force => true do |t|
     t.string   "image",                          :null => false
@@ -44,8 +46,7 @@ ActiveRecord::Schema.define(:version => 20120309162123) do
     t.datetime "updated_at",                     :null => false
   end
 
-  add_index "slides", ["position"], :name => "index_slides_on_position"
-  add_index "slides", ["slideset_id"], :name => "index_slides_on_slideset_id"
+  add_index "slides", ["slideset_id", "deleted", "position"], :name => "index_slides_on_slideset_id_and_deleted_and_position"
   add_index "slides", ["title_id"], :name => "index_slides_on_title_id"
 
   create_table "slidesets", :force => true do |t|
@@ -57,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20120309162123) do
     t.datetime "updated_at",                     :null => false
   end
 
-  add_index "slidesets", ["lecture_id"], :name => "index_slidesets_on_lecture_id"
+  add_index "slidesets", ["lecture_id", "deleted", "title"], :name => "index_slidesets_on_lecture_id_and_deleted_and_title"
 
   create_table "users", :force => true do |t|
     t.string   "identity_url"

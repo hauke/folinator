@@ -136,7 +136,7 @@ class SlidesetsController < ApplicationController
   end
   
   def collection
-    @slidesets ||= end_of_association_chain.all
+    @slidesets ||= end_of_association_chain.order(:title).all
   end
   
 end

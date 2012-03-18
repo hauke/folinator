@@ -3,12 +3,11 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   def index
-    @lectures = end_of_association_chain.all
-    authorize! :read,  @lectures
+    authorize! :read, collection
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @lectures }
+      format.json { render json: collection }
     end
   end
 
@@ -124,6 +123,10 @@ class LecturesController < ApplicationController
     chain = Lecture
     chain = chain.available unless is_admin
     chain
+  end
+  
+  def collection
+    @lectures ||= end_of_association_chain.order(:title).all
   end
   
   def resource

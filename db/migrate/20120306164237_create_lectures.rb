@@ -7,5 +7,8 @@ class CreateLectures < ActiveRecord::Migration
 
       t.timestamps :null => false
     end
+    change_table :lectures do |t|
+      t.index [:deleted, :title]
+    end
   end
 end
