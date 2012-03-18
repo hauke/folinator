@@ -27,4 +27,7 @@ class Slide < ActiveRecord::Base
   validates :slideset_id, presence: true
   validates :image, presence: true
   mount_uploader :image, SlideUploader
+  
+  scope :available, where(deleted: false)
+  
 end
