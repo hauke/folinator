@@ -11,7 +11,7 @@ class CreateAnnotations < ActiveRecord::Migration
     end
     change_table :annotations do |t|
       t.index :annotation
-      t.index :slide_id
+      t.index [:slide_id, :deleted]
       t.index :last_author_id
       t.foreign_key :slides, :dependent => :delete
       t.foreign_key :users, :column => 'last_author_id'

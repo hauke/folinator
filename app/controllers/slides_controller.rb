@@ -3,19 +3,13 @@ class SlidesController < ApplicationController
   # GET /slides
   # GET /slides.json
   def index
-    @slideset = Slideset.find(params[:slideset_id])
-    @slides = @slideset.slides
-    authorize! :read, @slides
+    authorize! :read, collection
     @slide_new = Slide.new
-    @lecture = @slideset.lecture
-
-    if !is_admin
-      @slides.select!{|slide| !slide.deleted}
-    end
+    @lecture = parent.lecture
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @slides }
+      format.json { render json: collection }
     end
   end
 
@@ -27,9 +21,8 @@ class SlidesController < ApplicationController
         @lecture = Lecture.find(params[:lecture_id])
         annotations = Annotation.search_by_lecture((params[:search]), @lecture)
       when "slideset"
-        @slideset = Slideset.find(params[:slideset_id])
-        @lecture = @slideset.lecture
-        annotations = Annotation.search_by_slideset((params[:search]), @slideset)
+        @lecture = parent.lecture
+        annotations = Annotation.search_by_slideset((params[:search]), parent)
     end
 
     @slides = annotations.map{ |annotation| annotation.slide }
@@ -66,40 +59,36 @@ class SlidesController < ApplicationController
     fill_for_show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @slide }
+      format.json { render json: resource }
     end
   end
   
   # GET /slides/new
   # GET /slides/new.json
   def new
-    @slideset = Slideset.find(params[:slideset_id])
-    @lecture = @slideset.lecture
-    @slide = @slideset.slides.new
-    authorize! :create, @slide
+    authorize! :create, build_resource
+    @lecture = parent.lecture
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @slide }
+      format.json { render json: resource }
     end
   end
 
   # POST /slides
   # POST /slides.json
   def create
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.new(params[:slide])
-    authorize! :create, @slide
-    @slide.insert_at(params[:slide_after].to_i + 1)
+    authorize! :create, build_resource
+    build_resource.insert_at(params[:slide_after].to_i + 1)
 
     respond_to do |format|
-      if @slide.save
-        @slideset.reoder_numbers
-        format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully created.' }
-        format.json { render json: @slide, status: :created, location: @slide }
+      if resource.save
+        parent.reoder_numbers
+        format.html { redirect_to [parent, resource], notice: 'Slide was successfully created.' }
+        format.json { render json: resource, status: :created, location: resource }
       else
         format.html { render action: "index" }
-        format.json { render json: @slide.errors, status: :unprocessable_entity }
+        format.json { render json: resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -107,18 +96,16 @@ class SlidesController < ApplicationController
   # PUT /slides/1
   # PUT /slides/1.json
   def update
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :update, @slide
+    authorize! :update, resource
 
     respond_to do |format|
-      if @slide.update_attributes(params[:slide])
-        @slideset.reoder_numbers
-        format.html { redirect_to [@slideset, @slide], notice: 'Slide was successfully updated.' }
+      if resource.update_attributes(params[:slide])
+        parent.reoder_numbers
+        format.html { redirect_to [parent, resource], notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "show" }
-        format.json { render json: @slide.errors, status: :unprocessable_entity }
+        format.json { render json: resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -126,29 +113,25 @@ class SlidesController < ApplicationController
   # DELETE /slides/1
   # DELETE /slides/1.json
   def destroy
-    @slideset = Slideset.find(params[:slideset_id])
-    @lecture = @slideset.lecture
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :destroy, @slide
-    @slide.destroy
-    @slideset.reoder_numbers
+    authorize! :destroy, resource
+    resource.destroy
+    parent.reoder_numbers
 
     respond_to do |format|
-      format.html { redirect_to slideset_slides_url(@slideset) }
+      format.html { redirect_to [parent, :slides] }
       format.json { head :no_content }
     end
   end
 
   def edit_multiple
-    @slideset = Slideset.find(params[:slideset_id])
-    @lecture = @slideset.lecture
+    @lecture = parent.lecture
     unless (params[:slide_ids])
-      authorize! :read, @slideset
+      authorize! :read, parent
       flash[:alert] = "No slides to annotate selected."
-      redirect_to slideset_slides_path(@slideset)
+      redirect_to slideset_slides_path(parent)
       return
     end
-    @slides = @slideset.slides.find(params[:slide_ids])
+    @slides = end_of_association_chain.find(params[:slide_ids])
     successful = []
     error = []
     @slides.each do |slide|
@@ -166,13 +149,11 @@ class SlidesController < ApplicationController
   end
 
   def set_title
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :set_title,  @slide
-    @annotations = @slide.annotations
+    authorize! :set_title, resource
+    @annotations = resource.annotations
     @annotation_new = Annotation.new
     @annotation = @annotations.find(params[:annotation_id])
-    @annotation.slide_title = @slide
+    @annotation.slide_title = resource
     rename_annotation
     fill_for_show
     respond_to do |format|
@@ -181,12 +162,10 @@ class SlidesController < ApplicationController
     end
   end
     
-  def copy_annotations 
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
+  def copy_annotations
     @annotations = Annotation.find(params[:annotations_id])
     @annotations.each do |annotation|
-      new_annotation = @slide.annotations.new(annotation: annotation.annotation, last_author: current_user)
+      new_annotation = resource.annotations.new(annotation: annotation.annotation, last_author: current_user)
       authorize! :create, annotation
       new_annotation.save
     end
@@ -198,63 +177,77 @@ class SlidesController < ApplicationController
   end
 
   def sort
-    @slideset = Slideset.find(params[:slideset_id])
-    @slides = @slideset.slides
-    authorize! :update, @slides
-    @slides.each do |slide|
+    authorize! :update, collection
+    collection.each do |slide|
       slide.position = params['slide'].index(slide.id.to_s) + 1
       slide.save
     end
-    @slideset.reload
-    @slideset.reoder_numbers
+    parent.reload
+    parent.reoder_numbers
     render :nothing => true
   end
 
   def mark_deleted
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :mark_deleted, @slide
-    @slide.deleted = true
+    authorize! :mark_deleted, resource
+    resource.deleted = true
 
     respond_to do |format|
-      if @slide.save
-        @slideset.reoder_numbers
-        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich ausgeblendet" }
-        format.json { render json: @slide, status: :created, location: @slide }
+      if resource.save
+        parent.reoder_numbers
+        format.html { redirect_to slideset_slides_path(parent), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich ausgeblendet" }
+        format.json { render json: resource, status: :created, location: resource }
       else
-        format.html { redirect_to slideset_slides_path(@slideset) }
-        format.json { render json: @slide.errors, status: :unprocessable_entity }
+        format.html { redirect_to slideset_slides_path(parent) }
+        format.json { render json: resource.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def unmark_deleted
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    authorize! :mark_deleted, @slide
-    @slide.deleted = false
+    authorize! :mark_deleted, resource
+    resource.deleted = false
 
     respond_to do |format|
-      if @slide.save
-        @slideset.reoder_numbers
-        format.html { redirect_to slideset_slides_path(@slideset), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich eingeblendet" }
-        format.json { render json: @slide, status: :created, location: @slide }
+      if resource.save
+        parent.reoder_numbers
+        format.html { redirect_to slideset_slides_path(parent), notice: "Die Folie \"#{@slide.title ? @slide.title.annotation : @slide.number}\" wurde erfolgreich eingeblendet" }
+        format.json { render json: resource, status: :created, location: resource }
       else
-        format.html { redirect_to slideset_slides_path(@slideset) }
-        format.json { render json: @slide.errors, status: :unprocessable_entity }
+        format.html { redirect_to slideset_slides_path(parent) }
+        format.json { render json: resource.errors, status: :unprocessable_entity }
       end
     end
   end
 
 protected
+
+  def parent
+    @slideset ||= Slideset.find(params[:slideset_id])
+  end
+  
+  def resource
+    @slide ||= end_of_association_chain.find(params[:id])
+  end
+  
+  def build_resource
+    @slide ||= end_of_association_chain.build(params[:slide])
+  end
+  
+  def end_of_association_chain
+    scope = parent.slides
+    scope = scope.available unless is_admin
+    scope
+  end
+  
+  def collection
+    @slides ||= end_of_association_chain.all
+  end
+  
   def fill_for_show
-    @slideset = Slideset.find(params[:slideset_id])
-    @slide = @slideset.slides.find(params[:id])
-    @lecture = @slideset.lecture
-    @annotations = @slide.annotations
-    if !is_admin
-      @annotations.select!{|annotation| !annotation.deleted}
-    end
+    @lecture     = parent.lecture
+    @annotations = resource.annotations
+    @annotations = @annotations.available unless is_admin
+    
     @annotation_new = Annotation.new
     authorize! :read, @slide
     @surrounding_annotations = surrounding_annotations

@@ -12,9 +12,8 @@ class CreateSlides < ActiveRecord::Migration
       t.timestamps :null => false
     end
     change_table :slides do |t|
-      t.index :position
+      t.index [:slideset_id, :deleted, :position]
       t.index :title_id
-      t.index :slideset_id
       t.foreign_key :slidesets, :dependent => :delete
       t.foreign_key :annotations, :column => 'title_id'
     end

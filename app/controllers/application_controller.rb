@@ -14,12 +14,11 @@ protected
   end
 
   def is_admin
-    return false unless current_user
-    current_user.admin
+    current_user.try(:admin)
   end
 
   def banned?
-    if current_user.present? && current_user.banned?
+    if current_user.try(:banned?)
       sign_out current_user
       flash[:error] = "Dieser Benutzer wurde blockiert, bitte kontaktieren sie den Administrator"
       root_path

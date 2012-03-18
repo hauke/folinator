@@ -3,29 +3,21 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   def index
-    @lectures = Lecture.all
-    authorize! :read,  @lectures
-
-    if !is_admin
-      @lectures.select!{|lecture| !lecture.deleted}
-    end
+    authorize! :read, collection
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @lectures }
+      format.json { render json: collection }
     end
   end
 
   # GET /lectures/1
   # GET /lectures/1.json
   def show
-    @lecture = Lecture.find(params[:id])
-    @slidesets = @lecture.slidesets
-    authorize! :read,  @lecture
-
-    if !is_admin
-      @slidesets.select!{|slideset| !slideset.deleted}
-    end
+    authorize! :read, resource
+    
+    @slidesets = resource.slidesets
+    @slidesets = @slidesets.available unless is_admin
 
     respond_to do |format|
       format.html # show.html.erb
@@ -47,8 +39,7 @@ class LecturesController < ApplicationController
 
   # GET /lectures/1/edit
   def edit
-    @lecture = Lecture.find(params[:id])
-    authorize! :update,  @lecture
+    authorize! :update, resource
   end
 
   # POST /lectures
@@ -71,8 +62,7 @@ class LecturesController < ApplicationController
   # PUT /lectures/1
   # PUT /lectures/1.json
   def update
-    @lecture = Lecture.find(params[:id])
-    authorize! :update,  @lecture
+    authorize! :update, resource
 
     respond_to do |format|
       if @lecture.update_attributes(params[:lecture])
@@ -88,9 +78,8 @@ class LecturesController < ApplicationController
   # DELETE /lectures/1
   # DELETE /lectures/1.json
   def destroy
-    @lecture = Lecture.find(params[:id])
-    authorize! :delete,  @lecture
-    @lecture.destroy
+    authorize! :delete, resource
+    resource.destroy
 
     respond_to do |format|
       format.html { redirect_to lectures_url }
@@ -99,9 +88,8 @@ class LecturesController < ApplicationController
   end
 
   def mark_deleted
-    @lecture = Lecture.find(params[:id])
-    authorize! :mark_deleted, @lecture
-    @lecture.deleted = true
+    authorize! :mark_deleted, resource
+    resource.deleted = true
 
     respond_to do |format|
       if @lecture.save
@@ -115,9 +103,8 @@ class LecturesController < ApplicationController
   end
 
   def unmark_deleted
-    @lecture = Lecture.find(params[:id])
-    authorize! :unmark_deleted, @lecture
-    @lecture.deleted = false
+    authorize! :unmark_deleted, resource
+    resource.deleted = false
 
     respond_to do |format|
       if @lecture.save
@@ -129,4 +116,21 @@ class LecturesController < ApplicationController
       end
     end
   end
+  
+  protected
+  
+  def end_of_association_chain
+    chain = Lecture
+    chain = chain.available unless is_admin
+    chain
+  end
+  
+  def collection
+    @lectures ||= end_of_association_chain.order(:title).all
+  end
+  
+  def resource
+    @lecture ||= end_of_association_chain.find(params[:id])
+  end
+  
 end

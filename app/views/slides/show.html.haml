@@ -4,7 +4,7 @@
     = @slide.title.annotation
 .row
   .span6
-    = image_tag @slide.image_url(:normal) if @slide.image?
+    = image_tag @slide.image_url(:normal), :class => 'slide' if @slide.image?
     .center
       %p #{first_slide_link @slide} | #{previous_slide_link @slide} | #{next_slide_link @slide} | #{last_slide_link @slide}
       - if can? :edit, @slide

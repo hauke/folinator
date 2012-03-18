@@ -6,10 +6,8 @@ ol#slides, ol#search_result
     display: inline-block
     padding: .5em
     width: 200px
+    vertical-align: top
     
-    &:hover
-      background: #ffc
-      border-color: #666
     
     .image
       text-align: center
@@ -19,9 +17,17 @@ ol#slides, ol#search_result
     &:hover .functions
       opacity: 1
     
+    img
+      border: 1px solid #ccc
+      box-shadow: 2px 2px 2px #888
+      &:hover        border-color: #999
+    
     .title
       min-height: 2em
 
 ol.sortable
   > li
     cursor: move
+    &:hover
+      background: #ffc
+      border-color: #666

@@ -34,6 +34,7 @@ class Annotation < ActiveRecord::Base
   validates_with DoubleAnnotation
   
   scope :distincttag, :group => ('annotations.annotation'), :conditions => ['deleted = ?', false]
+  scope :available, where(deleted: false)
 
   def self.search(search)
     find(:all, :conditions => ['annotation LIKE ? AND deleted = ?', "%#{search}%", false])

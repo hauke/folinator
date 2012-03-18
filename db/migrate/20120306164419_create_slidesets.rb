@@ -10,7 +10,7 @@ class CreateSlidesets < ActiveRecord::Migration
       t.timestamps :null => false
     end
     change_table :slidesets do |t|
-      t.index :lecture_id
+      t.index [:lecture_id, :deleted, :title]
       t.foreign_key :lectures, :dependent => :delete
     end
   end

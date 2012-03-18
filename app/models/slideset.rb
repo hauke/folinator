@@ -22,6 +22,8 @@ class Slideset < ActiveRecord::Base
   validates :lecture_id, presence: true
   validates :title, presence: true
   
+  scope :available, where(deleted: false)
+  
   def reoder_numbers
     i = 0
     slides.each do |slide|

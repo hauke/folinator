@@ -7,7 +7,6 @@
     .image
       = link_to image_tag(slide.image_url(:thumb)), [slide.slideset, slide] if slide.image?
     .functions
-      = link_to 'Anzeigen', [slide.slideset, slide]
       - if slide.deleted
         - if can? :unmark_deleted, slide
           %br/
