@@ -12,20 +12,10 @@ def get_image_stream filename
 end
 
 users = User.create!([
-  {identity_url: "https://openid.tzi.de/foo"},
-  {identity_url: "https://openid.tzi.de/bar"},
-  {identity_url: "https://openid.tzi.de/admin"},
-])
-users[0].name = "Foo Foo"
-users[1].name = "Bar Bar"
-users[2].name = "Admin"
-users[0].email = "foo@tzi.de"
-users[1].email = "bar@tzi.de"
-users[2].email = "admin@tzi.de"
-users[2].admin = true
-users.each do |user|
-  user.save
-end
+  {name: 'Foo Foo', email: 'foo@tzi.de', identity_url: "https://openid.tzi.de/foo"},
+  {name: 'Bar Bar', email: 'bar@tzi.de', identity_url: "https://openid.tzi.de/bar"},
+  {name: 'Admin',   email: 'admin@tzi.de', identity_url: "https://openid.tzi.de/admin", admin: true},
+], without_protection: true)
 
 lectures = Lecture.create!([
   {title: "Technische Informatik 2"},
