@@ -1,0 +1,19 @@
+TODOs die nochmal jemand machne sollte
+
+ * Teilwiese Englische Buttons ins Deutsche übersetzten, z.B. Vorlesung bearbeiten Button
+ * Ändern der Sortierung von Vorlesungen und Foliensätzen durch den Admin erlauben
+ * Gescannte Bilder beim Import automatisch Konvertieren, bzw. Option dazu
+ * Folienbild vergrößern bei Mouse Over oder anderen Mechanismus zur Anzeige in original Größe
+
+ * Foliennummer beim Verschieben automatisch aktualisieren
+ * Folie kann nicht gedreht werden (JQuery Plugin oder mit CSS?, dann auch im pdf gedreht) 
+ * Adminflag bei Nutzern per Webinterface setzen
+ * Admin optisch hervorheben
+ * Mail, wenn man Admin wird
+ * Blacklistingfunktion über die Webgui bzw. irgendetwas besseres als direkt über die DB
+ * Meldenfunktion von Vandalismus
+ * Social Features +1-Funktion
+ * letzter Satz fehlt manchmal in den Folien dafür einen Text damit an den ergänzen kann (Beispiele an Niels melden)
+ * Letzte Änderung Funktion
+ * OpenID schön machen (kein javascript forward, und nicht ext0, ext1 anzeigen)
+ * OpenID absichern, nur zugriff über den TZI OpenID Provider erlauben
